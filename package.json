@@ -9,7 +9,7 @@
   "scripts": {
      "generate": "tree-sitter generate",
      "test": "tree-sitter generate && tree-sitter test",
-     "example1": "tree-sitter parse example1.adb"
+     "update-test": "tree-sitter test --update"
   },
   "main": "bindings/node"
 }
