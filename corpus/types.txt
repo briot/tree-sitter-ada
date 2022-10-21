@@ -12,8 +12,7 @@ end P;
   (compilation_unit
     (package_specification
       (name
-        (direct_name
-          (identifier)))
+        (identifier))
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -31,8 +30,7 @@ end P;
                       (primary
                         (numeric_literal))))))))))
       (name
-        (direct_name
-          (identifier))))))
+        (identifier)))))
 
 ================================================================================
 Derived type
@@ -48,8 +46,7 @@ end P;
   (compilation_unit
     (package_specification
       (name
-        (direct_name
-          (identifier)))
+        (identifier))
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -57,8 +54,6 @@ end P;
             (derived_type_definition
               (subtype_indication
                 (name
-                  (direct_name
-                    (identifier))))))))
+                  (identifier)))))))
       (name
-        (direct_name
-          (identifier))))))
+        (identifier)))))

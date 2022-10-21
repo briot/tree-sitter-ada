@@ -1,18 +1,15 @@
-function toCaseInsensitive(a) {
-   var ca = a.charCodeAt(0);
-   if (ca>=97 && ca<=122) return `[${a}${a.toUpperCase()}]`;
-   if (ca>=65 && ca<= 90) return `[${a.toLowerCase()}${a}]`;
-   return a;
-}
-
-function caseInsensitive(keyword) {
-   //return keyword;  //  Easier to read conflict messages
-   return new RegExp(keyword
-      .split('')
-      .map(toCaseInsensitive)
-      .join('')
-   )
-}
+/**
+ * A case-insensitive keyword (copied from VHDL grammar)
+ */
+const reservedWord = word =>
+   // word ||  // when debugging conflict error msgs
+   alias(reserved(caseInsensitive(word)), word)
+   ;
+const reserved = regex => token(prec(2, new RegExp(regex)));
+const caseInsensitive = word =>
+  word.split('')
+    .map(letter => `[${letter}${letter.toUpperCase()}]`)
+    .join('');
 
 /**
  * A list of rules
@@ -42,13 +39,9 @@ module.exports = grammar({
       $.comment,
    ],
 
-//   word: $ => $.keyword,
    word: $ => $.identifier,
 
    conflicts: $ => [
-      // "name" can be either a simple name, or a defining_identifier_list
-//      [$.direct_name, $.defining_identifier_list],
-
       // "function_specification is" could be either an expression function
       // specification, or a function specification
       // ??? Maybe we can merge both in the grammar
@@ -57,7 +50,7 @@ module.exports = grammar({
       // ??? Maybe we can merge these
       [$.null_procedure_declaration, $.subprogram_specification],
 
-      // "'for' direct_name * 'use'"  could also be "'for' name * 'use'" as
+      // "'for' _direct_name * 'use'"  could also be "'for' name * 'use'" as
       // specified in at_clause.
       [$.at_clause, $.name],
 
@@ -78,7 +71,6 @@ module.exports = grammar({
          $.compilation_unit,
       ),
 
-      keyword: $ => /[a-zA-Z]+/,
       identifier: $ =>
          /[a-zA-Z\u{80}-\u{10FFFF}][0-9a-zA-Z_\u{80}-\u{10FFFF}]*/u,
       comment: $ => token(seq('--', /.*/)),
@@ -86,8 +78,7 @@ module.exports = grammar({
       character_literal: $ => token(/'.'/),
       numeric_literal: $ => token(
          choice(
-            /[0-9]/,
-            /[0-9_]+(\.[0-9]+)?([eE][0-9_-]+)?/,
+            /[0-9][0-9_]*(\.[0-9]+)?([eE][0-9_-]+)?/,
             /[0-9]+#[0-9a-fA-F._-]+#/
          )
       ),
@@ -99,26 +90,37 @@ module.exports = grammar({
          '\'',    // But is not the start of a character_literal
       ),
 
-      name_list: $ => comma_separated_list_of($.name),
-      name: $ => choice(
-         $.direct_name,
-         $.explicit_dereference,
-         $.selected_component,
-         $.attribute_reference,
-         $.function_call,
-         $.character_literal,
-         $.qualified_expression,
-         '@',
-      ),
-      defining_identifier_list: $ => comma_separated_list_of($.identifier),
-      direct_name: $ => choice(
+      // Simpler definition for games than the standard grammer
+//      name: $ => choice(
+//         $._direct_name,
+//         $.explicit_dereference,
+//         $.selected_component,
+//         $.attribute_reference,
+//         $.function_call,
+//         $.character_literal,
+//         $.qualified_expression,
+//         '@',
+//      ),
+//      _direct_name: $ => choice(
+//         $.identifier,
+//         $.string_literal,
+//      ),
+
+      _direct_name: $ => $.identifier,
+      name: $ => seq(
          $.identifier,
-         $.string_literal,
+         repeat(seq(
+            '.',
+            $.identifier,
+         )),
       ),
+      name_list: $ => comma_separated_list_of($.name),
+      defining_identifier_list: $ => comma_separated_list_of($.identifier),
+
       explicit_dereference: $ => seq(
          $.name,
          '.',
-         caseInsensitive('all'),
+         reservedWord('all'),
       ),
       selected_component: $ => seq(
          $.name,
@@ -126,9 +128,9 @@ module.exports = grammar({
          $.selector_name,
       ),
       selector_name: $ => choice(
-         $.direct_name,
+         $._direct_name,
          $.character_literal,
-         caseInsensitive('others'),
+         reservedWord('others'),
       ),
       attribute_reference: $ => choice(
          seq(
@@ -157,7 +159,7 @@ module.exports = grammar({
 //    value_sequence: $ => seq(
 //       '[',
 //         optional(seq(
-//             field('is_parallel', caseInsensitive('parallel')),
+//             field('is_parallel', reservedWord('parallel')),
 //             optional(seq(
 //                '(',
 //                $.chunk_specification,
@@ -171,18 +173,18 @@ module.exports = grammar({
          $.simple_expression,
          seq(
             $.identifier,
-            caseInsensitive('in'),
+            reservedWord('in'),
             $.discrete_subtype_definition,
          ),
       ),
       iterated_element_association: $ => seq(
-         caseInsensitive('for'),
+         reservedWord('for'),
          choice(
             $.loop_parameter_specification,
             $.iterator_specification,
          ),
          optional(seq(
-            caseInsensitive('use'),
+            reservedWord('use'),
             $.expression,
          )),
          $.assoc_expression,
@@ -193,8 +195,8 @@ module.exports = grammar({
       ),
       loop_parameter_specification: $ => seq(
          $.identifier,
-         caseInsensitive('in'),
-         optional(caseInsensitive('reverse')),
+         reservedWord('in'),
+         optional(reservedWord('reverse')),
          $.discrete_subtype_definition,
          optional($.iterator_filter),
       ),
@@ -203,7 +205,7 @@ module.exports = grammar({
          $.access_definition,
       ),
       iterator_filter: $ => seq(
-         caseInsensitive('when'),
+         reservedWord('when'),
          $.condition,
       ),
       iterator_specification: $ => seq(
@@ -213,19 +215,19 @@ module.exports = grammar({
             $.loop_parameter_subtype_indication,
          )),
          choice(
-            caseInsensitive('in'),
-            caseInsensitive('of'),
+            reservedWord('in'),
+            reservedWord('of'),
          ),
-         optional(caseInsensitive('reverse')),
+         optional(reservedWord('reverse')),
          $.name,
          optional($.iterator_filter),
       ),
       attribute_designator: $ => choice(
          $.identifier,
-         caseInsensitive('access'),
-         caseInsensitive('delta'),
-         caseInsensitive('digits'),
-         caseInsensitive('mod'),
+         reservedWord('access'),
+         reservedWord('delta'),
+         reservedWord('digits'),
+         reservedWord('mod'),
       ),
       function_call: $ => seq(
          $.name,
@@ -239,7 +241,7 @@ module.exports = grammar({
       compilation_unit: $ => choice(
          $.with_clause,
          seq(
-            optional(caseInsensitive('private')),
+            optional(reservedWord('private')),
             $._declarative_item,
          ),
          $.statement,
@@ -276,38 +278,38 @@ module.exports = grammar({
          ';',
       ),
       package_specification: $ => seq(
-         caseInsensitive('package'),
-         field('name', $.name),  //  $.defining_program_unit_name),
+         reservedWord('package'),
+         field('name', $.name),
          optional($.aspect_specification),
-         caseInsensitive('is'),
+         reservedWord('is'),
          optional($._basic_declarative_item_list),
          optional(seq(
-             caseInsensitive('private'),
+             reservedWord('private'),
              optional($._basic_declarative_item_list),
          )),
-         caseInsensitive('end'),
+         reservedWord('end'),
          field('endname', optional($.name)),
       ),
       with_clause: $ => seq(
-         field('is_limited', optional(caseInsensitive('limited'))),
-         field('is_private', optional(caseInsensitive('private'))),
-         caseInsensitive('with'),
+         field('is_limited', optional(reservedWord('limited'))),
+         field('is_private', optional(reservedWord('private'))),
+         reservedWord('with'),
          field('names', $.name_list),
          ';',
       ),
       use_clause: $ => seq(
-         caseInsensitive('use'),
+         reservedWord('use'),
          optional(seq(
-            field('is_all', optional(caseInsensitive('all'))),
-            field('is_type', caseInsensitive('type')),
+            field('is_all', optional(reservedWord('all'))),
+            field('is_type', reservedWord('type')),
          )),
          $.name_list,
          ';',
       ),
-      subunit: $ => seq(
-         caseInsensitive('separate'),
+      subunit: $ => seq(   //  10.1.3
+         reservedWord('separate'),
          '(',
-         $.name,
+         field('parent_unit_name', $.name),
          ')',
          $.proper_body,
       ),
@@ -318,17 +320,17 @@ module.exports = grammar({
 //         $.protected_body,
       ),
       package_body: $ => seq(
-         caseInsensitive('package'),
-         caseInsensitive('body'),
+         reservedWord('package'),
+         reservedWord('body'),
          $.name,
          optional($.aspect_specification),
-         caseInsensitive('is'),
+         reservedWord('is'),
          optional($.non_empty_declarative_part),
          optional(seq(
-            caseInsensitive('begin'),
+            reservedWord('begin'),
             $.handled_sequence_of_statements,
          )),
-         caseInsensitive('end'),
+         reservedWord('end'),
          optional($.name),
          ';',
       ),
@@ -355,7 +357,7 @@ module.exports = grammar({
          ),
       ),
       range_constraint: $ => seq(
-         caseInsensitive('range'),
+         reservedWord('range'),
          $.range_g,
       ),
       condition: $ => seq(
@@ -378,25 +380,25 @@ module.exports = grammar({
          ),
       ),
       AND_relation_list: $ => repeat1(seq(
-         caseInsensitive('and'),
+         reservedWord('and'),
          $.relation,
       )),
       AND_THEN_relation_list: $ => repeat1(seq(
-         caseInsensitive('and'),
-         caseInsensitive('then'),
+         reservedWord('and'),
+         reservedWord('then'),
          $.relation,
       )),
       OR_relation_list: $ => repeat1(seq(
-         caseInsensitive('or'),
+         reservedWord('or'),
          $.relation,
       )),
       OR_ELSE_relation_list: $ => repeat1(seq(
-         caseInsensitive('or'),
-         caseInsensitive('else'),
+         reservedWord('or'),
+         reservedWord('else'),
          $.relation,
       )),
       XOR_relation_list: $ => repeat1(seq(
-         caseInsensitive('xor'),
+         reservedWord('xor'),
          $.relation,
       )),
       relation: $ => choice(
@@ -409,8 +411,8 @@ module.exports = grammar({
          ),
 //         seq(
 //            $.simple_expression,
-//            optional(caseInsensitive('not')),
-//            caseInsensitive('in'),
+//            optional(reservedWord('not')),
+//            reservedWord('in'),
 //            $.membership_choice_list,
 //         ),
 //         $.raise_expression,
@@ -439,37 +441,37 @@ module.exports = grammar({
             )),
          ),
          seq(
-            caseInsensitive('abs'),
+            reservedWord('abs'),
             $.primary,
          ),
          seq(
-            caseInsensitive('not'),
+            reservedWord('not'),
             $.primary,
          ),
       ),
       primary: $ => choice(
          $.numeric_literal,
-         caseInsensitive('null'),
+         reservedWord('null'),
          $.aggregate,
          $.name,
 //         $.allocator,
       ),
       access_definition: $ => seq(
          optional($.null_exclusion),
-         caseInsensitive('access'),
+         reservedWord('access'),
          choice(
             seq(
-               optional(caseInsensitive('constant')),
+               optional(reservedWord('constant')),
                $.name,
             ),
             seq(
-               optional(caseInsensitive('protected')),
-               caseInsensitive('procedure'),
+               optional(reservedWord('protected')),
+               reservedWord('procedure'),
                optional($.non_empty_parameter_profile),
             ),
             seq(
-               optional(caseInsensitive('protected')),
-               caseInsensitive('function'),
+               optional(reservedWord('protected')),
+               reservedWord('function'),
                $.parameter_and_result_profile,
             ),
          ),
@@ -523,13 +525,13 @@ module.exports = grammar({
       record_component_association_list: $ => choice(
 //         comma_separated_list_of($.record_component_association),
          seq(
-            caseInsensitive('null'),
-            caseInsensitive('record'),
+            reservedWord('null'),
+            reservedWord('record'),
          ),
       ),
       null_exclusion: $ => seq(
-         caseInsensitive('not'),
-         caseInsensitive('null'),
+         reservedWord('not'),
+         reservedWord('null'),
       ),
       index_constraint: $ => seq(
          '(',
@@ -537,12 +539,12 @@ module.exports = grammar({
          ')',
       ),
       digits_constraint: $ => seq(
-         caseInsensitive('digits'),
+         reservedWord('digits'),
          $.simple_expression,
          optional($.range_constraint),
       ),
       delta_constraint: $ => seq(
-         caseInsensitive('delta'),
+         reservedWord('delta'),
          $.simple_expression,
          optional($.range_constraint),
       ),
@@ -561,10 +563,10 @@ module.exports = grammar({
       ),
       full_type_declaration: $ => choice(
          seq(
-            caseInsensitive('type'),
+            reservedWord('type'),
             $.identifier,
 //            optional($.known_discriminant_part),
-            caseInsensitive('is'),
+            reservedWord('is'),
             $.type_definition,
 //            optional($.aspect_specification),
             ';',
@@ -587,39 +589,39 @@ module.exports = grammar({
 //         $.modular_type_definition,
       ),
       signed_integer_type_definition: $ => seq(
-         caseInsensitive('range'),
+         reservedWord('range'),
          $.simple_expression,
          '..',
          $.simple_expression,
       ),
       derived_type_definition: $ => seq(
-         optional(caseInsensitive('abstract')),
-         optional(caseInsensitive('limited')),
-         caseInsensitive('new'),
+         optional(reservedWord('abstract')),
+         optional(reservedWord('limited')),
+         reservedWord('new'),
          $.subtype_indication,
          optional(seq(
 //            optional(seq(
-//               caseInsensitive('and'),
+//               reservedWord('and'),
 //               $.interface_list,
 //            )),
             $.record_extension_part,
          )),
       ),
       record_extension_part: $ => seq(
-         caseInsensitive('with'),
+         reservedWord('with'),
          $.record_definition,
       ),
       record_definition: $ => choice(
          seq(
-            caseInsensitive('record'),
+            reservedWord('record'),
             $.component_list,
-            caseInsensitive('end'),
-            caseInsensitive('record'),
+            reservedWord('end'),
+            reservedWord('record'),
             optional($.identifier),
          ),
          seq(
-            caseInsensitive('null'),
-            caseInsensitive('record'),
+            reservedWord('null'),
+            reservedWord('record'),
          ),
       ),
       component_list: $ => choice(
@@ -628,7 +630,7 @@ module.exports = grammar({
 //            optional($.component_item),
 //            $.variant_part,
 //         ),
-         caseInsensitive('null'),
+         reservedWord('null'),
       ),
       component_item: $ => seq(
          $.component_declaration,
@@ -643,7 +645,7 @@ module.exports = grammar({
          ';'
       ),
       component_definition: $ => seq(
-         optional(caseInsensitive('aliased')),
+         optional(reservedWord('aliased')),
          choice(
             $.subtype_indication,
 //            $.access_definition,
@@ -654,8 +656,8 @@ module.exports = grammar({
       abstract_subprogram_declaration: $ => seq(
          optional($.overriding_indicator),
          $.subprogram_specification,
-         caseInsensitive('is'),
-         caseInsensitive('abstract'),
+         reservedWord('is'),
+         reservedWord('abstract'),
          $.aspect_specification,
          ';',
       ),
@@ -690,23 +692,24 @@ module.exports = grammar({
       ),
       aspect_mark_list: $ => comma_separated_list_of($.aspect_association),
       aspect_specification: $ => seq(
-         caseInsensitive('with'),
+         reservedWord('with'),
          $.aspect_mark_list,
       ),
       at_clause: $ => seq(
-         caseInsensitive('for'),
-         $.direct_name,
-         caseInsensitive('use'),
-         caseInsensitive('at'),
+         reservedWord('for'),
+         $.identifier,
+//         $._direct_name,
+         reservedWord('use'),
+         reservedWord('at'),
          $.expression,
          ';',
       ),
       attribute_definition_clause: $ => seq(
-         caseInsensitive('for'),
+         reservedWord('for'),
          $.name,
          $.tick,
          $.attribute_designator,
-         caseInsensitive('use'),
+         reservedWord('use'),
          $.expression,
          ';',
       ),
@@ -719,9 +722,9 @@ module.exports = grammar({
       choice_parameter_specification: $ => $.identifier,  // ??? inline
       component_clause: $ => seq(
          $.name,
-         caseInsensitive('at'),
+         reservedWord('at'),
          field('position', $.expression),
-         caseInsensitive('range'),
+         reservedWord('range'),
          field('first_bit', $.simple_expression),
          '..',
          field('last_bit', $.simple_expression),
@@ -736,7 +739,7 @@ module.exports = grammar({
       ),
       entry_declaration: $ => seq(
          optional($.overriding_indicator),
-         caseInsensitive('entry'),
+         reservedWord('entry'),
          $.identifier,
          optional(seq(
             '(',
@@ -749,26 +752,26 @@ module.exports = grammar({
       ),
       enumeration_aggregate: $ => $.array_aggregate,   //  ??? inline
       enumeration_representation_clause: $ => seq(
-         caseInsensitive('for'),
+         reservedWord('for'),
          $.name,
-         caseInsensitive('use'),
+         reservedWord('use'),
          $.enumeration_aggregate,
          ';',
       ),
       exception_choice_list: $ => list_of('|', $.exception_choice),
       exception_choice: $ => choice(
          $.name,
-         caseInsensitive('others'),
+         reservedWord('others'),
       ),
       exception_declaration: $ => seq(
          $.defining_identifier_list,
          ':',
-         caseInsensitive('exception'),
+         reservedWord('exception'),
          optional($.aspect_specification),
          ';',
       ),
       exception_handler: $ => seq(
-         caseInsensitive('when'),
+         reservedWord('when'),
          optional(seq(
             $.choice_parameter_specification,
             ':',
@@ -784,7 +787,7 @@ module.exports = grammar({
       expression_function_declaration: $ => seq(
          optional($.overriding_indicator),
          $.function_specification,
-         caseInsensitive('is'),
+         reservedWord('is'),
          '(',
          $.expression,
          ')',
@@ -797,7 +800,7 @@ module.exports = grammar({
          ')',
       ),
       function_specification: $ => seq(
-         caseInsensitive('function'),
+         reservedWord('function'),
          $.name,
          $.parameter_and_result_profile,
       ),
@@ -806,7 +809,7 @@ module.exports = grammar({
          $.generic_package_declaration,
       ),
       generic_formal_part: $ => seq(
-         caseInsensitive('generic'),
+         reservedWord('generic'),
          repeat($.generic_formal_parameter_declaration),
       ),
       generic_formal_parameter_declaration: $ => choice(
@@ -830,18 +833,18 @@ module.exports = grammar({
       ),
       generic_instantiation: $ => seq(
          choice(
-            caseInsensitive('package'),
+            reservedWord('package'),
             seq(
                optional($.overriding_indicator),
                choice(
-                  caseInsensitive('procedure'),
-                  caseInsensitive('function'),
+                  reservedWord('procedure'),
+                  reservedWord('function'),
                ),
             ),
          ),
          $.name,
-         caseInsensitive('is'),
-         caseInsensitive('new'),
+         reservedWord('is'),
+         reservedWord('new'),
          $.name,   //  includes the generic_actual_part
          optional($.aspect_specification),
          ';',
@@ -867,7 +870,7 @@ module.exports = grammar({
       ),
       global_mode: $ => choice(
          $.non_empty_mode,
-         caseInsensitive('overriding'),
+         reservedWord('overriding'),
       ),
       global_set: $ => prec.left(
          comma_separated_list_of($.name),   // ??? name_list
@@ -875,44 +878,44 @@ module.exports = grammar({
       handled_sequence_of_statements: $ => seq(
          $.sequence_of_statements,
          optional(seq(
-            caseInsensitive('exception'),
+            reservedWord('exception'),
             $.exception_handler_list,
          )),
       ),
       label: $ => seq(
          '<<',
-         field('statement_identifier', $.direct_name),
+         field('statement_identifier', $._direct_name),
          '>>',
       ),
       mod_clause: $ => seq(
-         caseInsensitive('at'),
-         caseInsensitive('mod'),
+         reservedWord('at'),
+         reservedWord('mod'),
          $.expression,
          ';',
       ),
       non_empty_mode: $ => choice(
-         caseInsensitive('in'),
+         reservedWord('in'),
          seq(
-            caseInsensitive('in'),
-            caseInsensitive('out'),
+            reservedWord('in'),
+            reservedWord('out'),
          ),
-         caseInsensitive('out'),
+         reservedWord('out'),
       ),
       null_procedure_declaration: $ => seq(
          optional($.overriding_indicator),
          $.procedure_specification,
-         caseInsensitive('is'),
-         caseInsensitive('null'),
+         reservedWord('is'),
+         reservedWord('null'),
 //         optional($.aspect_specification),
       ),
       null_statement: $ => seq(
-         caseInsensitive('null'),
+         reservedWord('null'),
          ';',
       ),
       number_declaration: $ => seq(
          $.defining_identifier_list,
          ';',
-         caseInsensitive('constant'),
+         reservedWord('constant'),
 //         $.assign_value,
          ';',
       ),
@@ -920,8 +923,8 @@ module.exports = grammar({
          seq(
             $.defining_identifier_list,
             ':',
-            caseInsensitive('aliased'),
-            caseInsensitive('constant'),
+            reservedWord('aliased'),
+            reservedWord('constant'),
             choice(
                $.subtype_indication,
                $.access_definition,
@@ -935,8 +938,8 @@ module.exports = grammar({
 //         $.single_protected_declaration,
       ),
       overriding_indicator: $ => seq(
-         optional(caseInsensitive('not')),
-         caseInsensitive('overriding'),
+         optional(reservedWord('not')),
+         reservedWord('overriding'),
       ),
       non_empty_parameter_profile: $ =>  // ??? inline
          $.formal_part,
@@ -947,7 +950,7 @@ module.exports = grammar({
       parameter_specification: $ => seq(
          $.defining_identifier_list,
          ':',
-         optional(caseInsensitive('aliased')),
+         optional(reservedWord('aliased')),
          optional($.non_empty_mode),
          optional($.null_exclusion),
          $.name,
@@ -958,7 +961,7 @@ module.exports = grammar({
          $.parameter_specification,
       ),
       pragma_g: $ => seq(
-         caseInsensitive('pragma'),
+         reservedWord('pragma'),
          $.identifier,
          optional(seq(
             '(',
@@ -971,19 +974,19 @@ module.exports = grammar({
          ';'
       ),
       procedure_specification: $ => seq(
-         caseInsensitive('procedure'),
+         reservedWord('procedure'),
          $.name,
          optional($.non_empty_parameter_profile),
       ),
       record_representation_clause: $ => prec.left(seq(
-         caseInsensitive('for'),
+         reservedWord('for'),
          $.name,
-         caseInsensitive('use'),
-         caseInsensitive('record'),
+         reservedWord('use'),
+         reservedWord('record'),
          optional($.mod_clause),
          repeat($.component_clause),
-         caseInsensitive('end'),
-         caseInsensitive('record'),
+         reservedWord('end'),
+         reservedWord('record'),
          optional($.name),
       )),
       renaming_declaration: $ => choice(
@@ -994,7 +997,7 @@ module.exports = grammar({
 //         $.generic_renaming_declaration,
       ),
       result_profile: $ => seq(
-         caseInsensitive('return'),
+         reservedWord('return'),
          choice(
             seq(
                optional($.null_exclusion),
@@ -1038,9 +1041,9 @@ module.exports = grammar({
          $.function_specification,
       ),
       subtype_declaration: $ => seq(
-         caseInsensitive('subtype'),
+         reservedWord('subtype'),
          $.identifier,
-         caseInsensitive('is'),
+         reservedWord('is'),
          $.subtype_indication,
          optional($.aspect_specification),
          ';',

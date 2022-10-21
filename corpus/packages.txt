@@ -15,50 +15,35 @@ use Ada.Text_IO, System;
     (with_clause
       (name_list
         (name
-          (selected_component
-            (name
-              (direct_name
-                (identifier)))
-            (selector_name
-              (direct_name
-                (identifier)))))
+          (identifier)
+          (identifier))
         (name
-          (direct_name
-            (identifier))))))
+          (identifier)))))
   (comment)
   (compilation_unit
     (with_clause
       (name_list
         (name
-          (direct_name
-            (identifier))))))
+          (identifier)))))
   (comment)
   (compilation_unit
     (with_clause
       (name_list
         (name
-          (direct_name
-            (identifier))))))
+          (identifier)))))
   (compilation_unit
     (with_clause
       (name_list
         (name
-          (direct_name
-            (identifier))))))
+          (identifier)))))
   (compilation_unit
     (use_clause
       (name_list
         (name
-          (selected_component
-            (name
-              (direct_name
-                (identifier)))
-            (selector_name
-              (direct_name
-                (identifier)))))
+          (identifier)
+          (identifier))
         (name
-          (direct_name
-            (identifier)))))))
+          (identifier))))))
 
 =====
 Case insensitive
@@ -72,7 +57,8 @@ enD;
 (compilation
   (compilation_unit
     (package_specification
-      (name))))
+      (name
+         (identifier)))))
 
 ================================================================================
 multiple compilation units
@@ -93,28 +79,19 @@ end;
   (compilation_unit
     (package_specification
       (name
-        (direct_name
-          (identifier)))
+        (identifier))
       (package_specification
         (name
-          (direct_name
-            (identifier)))
+          (identifier))
         (name
-          (direct_name
-            (identifier))))
+          (identifier)))
       (name
-        (direct_name
-          (identifier)))))
+        (identifier))))
   (compilation_unit
     (package_specification
       (name
-        (selected_component
-          (name
-            (direct_name
-              (identifier)))
-          (selector_name
-            (direct_name
-              (identifier)))))
+        (identifier)
+        (identifier))
       (comment))))
 
 =========
@@ -136,41 +113,29 @@ end Child.P2;
     (proper_body
       (package_body
         (name
-          (selected_component
-            (name
-              (direct_name
-                (identifier)))
-            (selector_name
-              (direct_name
-                (identifier)))))
+          (identifier)
+          (identifier))
         (non_empty_declarative_part
           (declarative_item_pragma
             (proper_body
               (package_body
                 (name
-                  (direct_name
-                    (identifier)))
+                  (identifier))
                 (handled_sequence_of_statements
                   (sequence_of_statements
                     (statement
                       (simple_statement
                         (null_statement)))))
                 (name
-                  (direct_name
-                    (identifier)))))))
+                  (identifier))))))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (null_statement)))))
         (name
-          (selected_component
-            (name
-              (direct_name
-                (identifier)))
-            (selector_name
-              (direct_name
-                (identifier)))))))))
+          (identifier)
+          (identifier))))))
 
 ================================================================================
 separate
@@ -185,10 +150,8 @@ end;
    (compilation_unit
      (subunit
        (name
-         (direct_name
-           (identifier)))
+         (identifier))
        (proper_body
          (package_body
            (name
-             (direct_name
-               (identifier))))))))
+             (identifier)))))))
