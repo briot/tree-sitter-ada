@@ -588,11 +588,44 @@ module.exports = grammar({
          $.enumeration_type_definition,
          $.integer_type_definition,
          $.real_type_definition,
-//         $.array_type_definition,
+         $.array_type_definition,
 //         $.record_type_definition,
 //         $.access_type_definition,
          $.derived_type_definition,
 //         $.interface_type_definition,
+      ),
+      array_type_definition: $ => choice(
+         $.unconstrained_array_definition,
+         $.constrained_array_definition,
+      ),
+      unconstrained_array_definition: $ => seq(
+         reservedWord('array'),
+         '(',
+         $._index_subtype_definition_list,
+         ')',
+         reservedWord('of'),
+         $.component_definition,
+      ),
+      constrained_array_definition: $ => seq(
+         reservedWord('array'),
+         '(',
+         $._discrete_subtype_definition_list,
+         ')',
+         reservedWord('of'),
+         $.component_definition,
+      ),
+      _discrete_subtype_definition_list: $ =>
+         comma_separated_list_of($.discrete_subtype_definition),
+      discrete_subtype_definition: $ => choice(
+         $.subtype_indication,
+         $.range_g,
+      ),
+      _index_subtype_definition_list: $ =>
+         comma_separated_list_of($.index_subtype_definition),
+      index_subtype_definition: $ => seq(
+         $.name,
+         reservedWord('range'),
+         '<>',
       ),
       enumeration_type_definition: $ => seq(
          '(',
@@ -696,7 +729,7 @@ module.exports = grammar({
          $.defining_identifier_list,
          ':',
          $.component_definition,
-//         optional($.assign_value),
+         optional($.assign_value),
          optional($.aspect_specification),
          ';'
       ),
@@ -803,6 +836,10 @@ module.exports = grammar({
       aspect_specification: $ => seq(
          reservedWord('with'),
          $.aspect_mark_list,
+      ),
+      assign_value: $ => seq(
+         ':=',
+         $.expression,
       ),
       at_clause: $ => seq(
          reservedWord('for'),
@@ -1025,21 +1062,21 @@ module.exports = grammar({
          $.defining_identifier_list,
          ';',
          reservedWord('constant'),
-//         $.assign_value,
+         $.assign_value,
          ';',
       ),
       object_declaration: $ => choice(
          seq(
             $.defining_identifier_list,
             ':',
-            reservedWord('aliased'),
-            reservedWord('constant'),
+            optional(reservedWord('aliased')),
+            optional(reservedWord('constant')),
             choice(
                $.subtype_indication,
                $.access_definition,
-//               $.array_type_definition,
+               $.array_type_definition,
             ),
-//            optional($.assign_value),
+            optional($.assign_value),
             optional($.aspect_specification),
             ';',
          ),
@@ -1063,7 +1100,7 @@ module.exports = grammar({
          optional($.non_empty_mode),
          optional($.null_exclusion),
          $.name,
-//         optional($.assign_value),
+         optional($.assign_value),
       ),
       parameter_specification_list: $ => list_of(
          ';',
