@@ -310,10 +310,7 @@ end;
                                     (identifier))))))))
                       (variant
                         (discrete_choice_list
-                          (discrete_choice
-                            (subtype_indication
-                              (name
-                                (identifier)))))
+                          (discrete_choice))
                         (component_list)))))))))))))
 
 ================================================================================

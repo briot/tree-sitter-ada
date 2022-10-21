@@ -41,8 +41,6 @@ procedures
 package P is
    procedure A (P1, P2 : Integer; P3 : Float)
       with Inline;
-   procedure B is abstract;
-   procedure C is abstract with Inline;
 end;
 
 --------------------------------------------------------------------------------
@@ -75,13 +73,31 @@ end;
           (aspect_mark_list
             (aspect_association
               (aspect_mark
-                (identifier))))))
-      (abstract_subprogram_declaration
+                (identifier)))))))))
+
+================================================================================
+abstract procedures
+================================================================================
+
+package P is
+   procedure B is abstract;
+   overriding procedure C is abstract with Inline;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (subprogram_declaration
         (subprogram_specification
           (procedure_specification
             (name
               (identifier)))))
-      (abstract_subprogram_declaration
+      (subprogram_declaration
+        (overriding_indicator)
         (subprogram_specification
           (procedure_specification
             (name
@@ -91,6 +107,7 @@ end;
             (aspect_association
               (aspect_mark
                 (identifier)))))))))
+
 
 ================================================================================
 functions
@@ -198,7 +215,7 @@ end;
                   (identifier))))))))))
 
 ================================================================================
-expression function membership
+Expression function membership
 ================================================================================
 
 function F2 (A : Integer) return Boolean
@@ -446,3 +463,143 @@ function F5 (A : Integer) return Boolean
                                           (primary
                                             (name
                                               (identifier))))))))))))))))))))))))
+
+======
+Expression function case
+======
+
+function F (A : Integer) return Boolean
+ is (case A + 1 is
+        when 0 .. 1 | 3 .. 4 => True,
+        when others => False);
+
+------
+
+    (compilation
+      (compilation_unit
+        (expression_function_declaration
+          (function_specification
+            (name
+              (identifier))
+            (parameter_and_result_profile
+              (formal_part
+                (parameter_specification_list
+                  (parameter_specification
+                    (defining_identifier_list
+                      (identifier))
+                    (name
+                      (identifier)))))
+              (result_profile
+                (name
+                  (identifier)))))
+          (aggregate
+            (conditional_expression
+              (case_expression
+                (expression
+                  (relation
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (name
+                              (identifier)))))
+                      (binary_adding_operator)
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal)))))))
+                (case_expression_alternative
+                  (discrete_choice_list
+                    (discrete_choice
+                      (range_g
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))))
+                    (discrete_choice
+                      (range_g
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal))))))))
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (name
+                                (identifier)))))))))
+                (case_expression_alternative
+                  (discrete_choice_list
+                    (discrete_choice))
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (name
+                                (identifier)))))))))))))))
+
+=====
+Expression function quantified
+=====
+
+function F (A : My_Array) return Boolean
+   is (for some E of A => E = 1);
+
+
+------
+
+    (compilation
+      (compilation_unit
+        (expression_function_declaration
+          (function_specification
+            (name
+              (identifier))
+            (parameter_and_result_profile
+              (formal_part
+                (parameter_specification_list
+                  (parameter_specification
+                    (defining_identifier_list
+                      (identifier))
+                    (name
+                      (identifier)))))
+              (result_profile
+                (name
+                  (identifier)))))
+          (aggregate
+            (quantified_expression
+              (quantifier)
+              (iterator_specification
+                (identifier)
+                (name
+                  (identifier)))
+              (assoc_expression
+                (expression
+                  (relation
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (name
+                              (identifier))))))
+                    (relational_operator)
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal)))))))))))))

@@ -42,13 +42,9 @@ module.exports = grammar({
    word: $ => $.identifier,
 
    conflicts: $ => [
-      // "function_specification is" could be either an expression function
-      // specification, or a function specification
-      // ??? Maybe we can merge both in the grammar
-      [$.expression_function_declaration, $.subprogram_specification],
-
       // ??? Maybe we can merge these
       [$.null_procedure_declaration, $.subprogram_specification],
+      [$.expression_function_declaration, $.subprogram_specification],
 
       // "'for' _direct_name * 'use'"  could also be "'for' name * 'use'" as
       // specified in at_clause.
@@ -280,9 +276,8 @@ module.exports = grammar({
          $.object_declaration,
          $.number_declaration,
          $.subprogram_declaration,
-         $.abstract_subprogram_declaration,
-         $.null_procedure_declaration,
          $.expression_function_declaration,
+         $.null_procedure_declaration,
          $._package_declaration,
          $.renaming_declaration,
          $.exception_declaration,
@@ -402,12 +397,13 @@ module.exports = grammar({
          list_of(seq(reservedWord('or'), reservedWord('else')), $.relation),
          list_of(reservedWord('xor'), $.relation),
       ),
-      assoc_expression: $ => seq(
+      assoc_expression: $ => choice(
+         seq('=>', '<>'),
+         $._non_default_assoc_expression,
+      ),
+      _non_default_assoc_expression: $ => seq(
          '=>',
-         choice(
-            $.expression,
-            '<>',
-         ),
+         $.expression,
       ),
       relation: $ => choice(
          seq(
@@ -519,7 +515,38 @@ module.exports = grammar({
       ),
       conditional_expression: $ => choice(
          $.if_expression,
-//         $.case_expression,
+         $.case_expression,
+      ),
+      conditional_quantified_expression: $ => choice(
+         $.if_expression,
+         $.case_expression,
+         $.quantified_expression,
+      ),
+      quantified_expression: $ => seq(
+         reservedWord('for'),
+         $.quantifier,
+         choice(
+            $.loop_parameter_specification,
+            $.iterator_specification,
+         ),
+         $.assoc_expression,
+      ),
+      quantifier: $ => choice(
+         reservedWord('all'),
+         reservedWord('some'),
+      ),
+      case_expression: $ => seq(
+         reservedWord('case'),
+         $.expression,
+         reservedWord('is'),
+         comma_separated_list_of($.case_expression_alternative),
+      ),
+      case_expression_alternative: $ => seq(
+         reservedWord('when'),
+         $.discrete_choice_list,
+         $._non_default_assoc_expression,
+//         '=>',
+//         $.expression,
       ),
       component_choice_list: $ =>
          list_of('|', $.selector_name),
@@ -532,7 +559,7 @@ module.exports = grammar({
             '(',
             choice(
                $.conditional_expression,
-//               $.quantified_expression,
+               $.quantified_expression,
 //               $.declare_expression,
             ),
             ')',
@@ -796,14 +823,6 @@ module.exports = grammar({
             $.access_definition,
          ),
       ),
-      abstract_subprogram_declaration: $ => seq(
-         optional($.overriding_indicator),
-         $.subprogram_specification,
-         reservedWord('is'),
-         reservedWord('abstract'),
-         optional($.aspect_specification),
-         ';',
-      ),
       array_aggregate: $ => choice(
          $.positional_array_aggregate,
          $.null_array_aggregate,
@@ -861,6 +880,7 @@ module.exports = grammar({
          $.expression,
          $.subtype_indication,
          $.range_g,
+         reservedWord('others'),
       ),
       aspect_association: $ => seq(
          $.aspect_mark,
@@ -898,7 +918,6 @@ module.exports = grammar({
       at_clause: $ => seq(
          reservedWord('for'),
          $.identifier,
-//         $._direct_name,
          reservedWord('use'),
          reservedWord('at'),
          $.expression,
@@ -984,14 +1003,6 @@ module.exports = grammar({
          $.exception_handler,
          $.pragma_g,
       )),
-      expression_function_declaration: $ => seq(
-         optional($.overriding_indicator),
-         $.function_specification,
-         reservedWord('is'),
-         $.aggregate,
-         optional($.aspect_specification),
-         ';',
-      ),
       formal_part: $ => seq(
          '(',
          $.parameter_specification_list,
@@ -1172,11 +1183,6 @@ module.exports = grammar({
          )),
          ';'
       ),
-      conditional_quantified_expression: $ => choice(
-         $.if_expression,
-//         $.case_expression,
-//         $.quantified_expression,
-      ),
       if_expression: $ => seq(
          reservedWord('if'),
          field('condition', $.expression),
@@ -1255,6 +1261,18 @@ module.exports = grammar({
       subprogram_declaration: $ => seq(
          optional($.overriding_indicator),
          $.subprogram_specification,
+         field('is_abstract', optional(seq(
+            reservedWord('is'),
+            reservedWord('abstract'),
+         ))),
+         optional($.aspect_specification),
+         ';',
+      ),
+      expression_function_declaration: $ => seq(
+         optional($.overriding_indicator),
+         $.function_specification,
+         reservedWord('is'),
+         $.aggregate,
          optional($.aspect_specification),
          ';',
       ),

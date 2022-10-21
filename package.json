@@ -8,7 +8,7 @@
   },
   "scripts": {
      "generate": "tree-sitter generate",
-     "test": "tree-sitter generate && tree-sitter test",
+     "test": "tree-sitter generate && time tree-sitter test",
      "update-test": "tree-sitter test --update"
   },
   "main": "bindings/node"

@@ -128,10 +128,7 @@ end P;
                                               (identifier))))))))))
                             (array_component_association
                               (discrete_choice_list
-                                (discrete_choice
-                                  (subtype_indication
-                                    (name
-                                      (identifier)))))
+                                (discrete_choice))
                               (assoc_expression
                                 (expression
                                   (relation
