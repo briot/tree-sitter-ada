@@ -62,7 +62,11 @@ module.exports = grammar({
       [$.generic_package_declaration, $._package_declaration],
 
       [$.attribute_definition_clause, $.attribute_reference],
-      [$.record_extension_part, $.derived_type_definition],
+
+      // 'type' identifier 'is' 'new' subtype_indication . 'with'
+      // which could be either a record_extension_part or
+      // an aspect_specification.
+      [$.derived_type_definition],
 
       // 'for' name 'use' '(' name . '=>' ...
       //    The name could either be from a primary or a subtype_indication.
@@ -70,6 +74,7 @@ module.exports = grammar({
 
       // 'for' name 'use' '(' 'for' identifier 'in' name . 'use'
       [$.iterator_specification, $.subtype_indication],
+
 
    ],
 
@@ -575,7 +580,7 @@ module.exports = grammar({
          seq(
             reservedWord('type'),
             $.identifier,
-//            optional($.known_discriminant_part),
+            optional($.known_discriminant_part),
             reservedWord('is'),
             $.type_definition,
             optional($.aspect_specification),
@@ -584,15 +589,34 @@ module.exports = grammar({
 //         $.task_type_declaration,
 //         $.protected_type_declaration,
       ),
+      known_discriminant_part: $ => seq(
+         '(',
+         $.discriminant_specification_list,
+         ')',
+      ),
+      discriminant_specification_list: $ =>
+         list_of(';', $.discriminant_specification),
+      discriminant_specification: $ => seq(
+         $.defining_identifier_list,
+         ':',
+         choice(
+            seq(
+               optional($.null_exclusion),
+               $.name,
+            ),
+            $.access_definition,
+         ),
+         optional($.assign_value),
+      ),
       type_definition: $ => choice(
          $.enumeration_type_definition,
          $.integer_type_definition,
          $.real_type_definition,
          $.array_type_definition,
-//         $.record_type_definition,
+         $.record_type_definition,
 //         $.access_type_definition,
          $.derived_type_definition,
-//         $.interface_type_definition,
+         $.interface_type_definition,
       ),
       array_type_definition: $ => choice(
          $.unconstrained_array_definition,
@@ -683,21 +707,44 @@ module.exports = grammar({
          '..',
          $.simple_expression,
       ),
-      derived_type_definition: $ => prec.left(seq(
+      derived_type_definition: $ => seq(
          optional(reservedWord('abstract')),
          optional(reservedWord('limited')),
          reservedWord('new'),
          $.subtype_indication,
          optional(seq(
-//            optional(seq(
-//               reservedWord('and'),
-//               $.interface_list,
-//            )),
+            optional(seq(
+               reservedWord('and'),
+               $.interface_list,
+            )),
             $.record_extension_part,
          )),
-      )),
+      ),
+      interface_type_definition: $ => seq(
+         optional(choice(
+            reservedWord('limited'),
+            reservedWord('task'),
+            reservedWord('protected'),
+            reservedWord('synchronized'),
+         )),
+         reservedWord('interface'),
+         optional(seq(
+            reservedWord('and'),
+            $.interface_list,
+         )),
+      ),
+      interface_list: $ =>
+         list_of(reservedWord('and'), $.name),
       record_extension_part: $ => seq(
-         reservedWord('with'),
+         reservedWord('with'),   // record_extension_part in Ada grammar
+         $.record_definition,
+      ),
+      record_type_definition: $ => seq(
+         optional(seq(
+            optional(reservedWord('abstract')),
+            reservedWord('tagged'),
+         )),
+         optional(reservedWord('limited')),
          $.record_definition,
       ),
       record_definition: $ => choice(
@@ -715,13 +762,16 @@ module.exports = grammar({
       ),
       component_list: $ => choice(
          repeat1($.component_item),
-//         seq(
-//            optional($.component_item),
-//            $.variant_part,
-//         ),
-         reservedWord('null'),
+         seq(
+            optional($.component_item),
+            $.variant_part,
+         ),
+         seq(
+            reservedWord('null'),
+            reservedWord(';'),
+         ),
       ),
-      component_item: $ => seq(
+      component_item: $ => choice(
          $.component_declaration,
          $.aspect_clause,
       ),
@@ -740,8 +790,6 @@ module.exports = grammar({
 //            $.access_definition,
          ),
       ),
-
-
       abstract_subprogram_declaration: $ => seq(
          optional($.overriding_indicator),
          $.subprogram_specification,
@@ -1134,6 +1182,7 @@ module.exports = grammar({
          reservedWord('end'),
          reservedWord('record'),
          optional($.name),
+         ';',
       )),
       renaming_declaration: $ => choice(
 //         $.object_renaming_declaration,
@@ -1193,6 +1242,22 @@ module.exports = grammar({
          $.subtype_indication,
          optional($.aspect_specification),
          ';',
+      ),
+      variant_part: $ => seq(
+         reservedWord('case'),
+         $._direct_name,
+         reservedWord('is'),
+         $.variant_list,
+         reservedWord('end'),
+         reservedWord('case'),
+         ';',
+      ),
+      variant_list: $ => repeat1($.variant),
+      variant: $ => seq(
+         reservedWord('when'),
+         $.discrete_choice_list,
+         '=>',
+         $.component_list,
       ),
    }
 });

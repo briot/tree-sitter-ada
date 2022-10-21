@@ -1,0 +1,332 @@
+================================================================================
+null record
+================================================================================
+
+package P is
+   type R is null record;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (record_type_definition
+              (record_definition))))))))
+
+================================================================================
+records
+================================================================================
+
+package P is
+   type R2 is record
+      A : Integer;
+      --  B : Integer range 0 .. 2;
+      --  null;
+   end record;
+
+   for R2 use record
+      A at 0 range 0 .. 31;
+   end record;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (record_type_definition
+              (record_definition
+                (component_list
+                  (component_item
+                    (component_declaration
+                      (defining_identifier_list
+                        (identifier))
+                      (component_definition
+                        (subtype_indication
+                          (name
+                            (identifier)))))))
+                (comment)
+                (comment))))))
+      (aspect_clause
+        (record_representation_clause
+          (name
+            (identifier))
+          (component_clause
+            (name
+              (identifier))
+            (expression
+              (relation
+                (simple_expression
+                  (term
+                    (factor
+                      (primary
+                        (numeric_literal)))))))
+            (simple_expression
+              (term
+                (factor
+                  (primary
+                    (numeric_literal)))))
+            (simple_expression
+              (term
+                (factor
+                  (primary
+                    (numeric_literal)))))))))))
+
+================================================================================
+Multiple fields on one line
+================================================================================
+
+package P is
+   type R is record
+      A, B : Integer;
+   end record;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (record_type_definition
+              (record_definition
+                (component_list
+                  (component_item
+                    (component_declaration
+                      (defining_identifier_list
+                        (identifier)
+                        (identifier))
+                      (component_definition
+                        (subtype_indication
+                          (name
+                            (identifier)))))))))))))))
+
+================================================================================
+Discriminated
+================================================================================
+
+package P is
+   type R (A : Integer; B : Integer) is record
+      F : Float;
+   end record;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (known_discriminant_part
+            (discriminant_specification_list
+              (discriminant_specification
+                (defining_identifier_list
+                  (identifier))
+                (name
+                  (identifier)))
+              (discriminant_specification
+                (defining_identifier_list
+                  (identifier))
+                (name
+                  (identifier)))))
+          (type_definition
+            (record_type_definition
+              (record_definition
+                (component_list
+                  (component_item
+                    (component_declaration
+                      (defining_identifier_list
+                        (identifier))
+                      (component_definition
+                        (subtype_indication
+                          (name
+                            (identifier)))))))))))))))
+
+================================================================================
+tagged
+================================================================================
+
+package P is
+   type T is abstract tagged limited null record;
+   type T2 is new T with record
+      F : Integer;
+   end record;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (record_type_definition
+              (record_definition)))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (derived_type_definition
+              (subtype_indication
+                (name
+                  (identifier)))
+              (record_extension_part
+                (record_definition
+                  (component_list
+                    (component_item
+                      (component_declaration
+                        (defining_identifier_list
+                          (identifier))
+                        (component_definition
+                          (subtype_indication
+                            (name
+                              (identifier))))))))))))))))
+
+================================================================================
+Variant
+================================================================================
+
+package P is
+   type R (A : Integer) is record
+      case A is
+         when 0 | 1 .. 2 =>
+            B : Integer;
+         when others =>
+            null;
+      end case;
+   end record;
+end;
+
+--------------------------------------------------------------------------------
+
+    (compilation
+      (compilation_unit
+        (package_specification
+          (name
+            (identifier))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (known_discriminant_part
+                (discriminant_specification_list
+                  (discriminant_specification
+                    (defining_identifier_list
+                      (identifier))
+                    (name
+                      (identifier)))))
+              (type_definition
+                (record_type_definition
+                  (record_definition
+                    (component_list
+                      (variant_part
+                        (identifier)
+                        (variant_list
+                          (variant
+                            (discrete_choice_list
+                              (discrete_choice
+                                (expression
+                                  (relation
+                                    (simple_expression
+                                      (term
+                                        (factor
+                                          (primary
+                                            (numeric_literal))))))))
+                              (discrete_choice
+                                (range_g
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (numeric_literal)))))
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (numeric_literal))))))))
+                            (component_list
+                              (component_item
+                                (component_declaration
+                                  (defining_identifier_list
+                                    (identifier))
+                                  (component_definition
+                                    (subtype_indication
+                                      (name
+                                        (identifier))))))))
+                          (variant
+                            (discrete_choice_list
+                              (discrete_choice
+                                (subtype_indication
+                                  (name
+                                    (identifier)))))
+                            (component_list)))))))))))))
+
+
+================================================================================
+interface
+================================================================================
+
+package P is
+    type R is interface;
+    type R2 is interface and Intf1;
+    type R3 is new Root and R with null record;
+end;
+
+--------------------------------------------------------------------------------
+
+    (compilation
+      (compilation_unit
+        (package_specification
+          (name
+            (identifier))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (interface_type_definition))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (interface_type_definition
+                  (interface_list
+                    (name
+                      (identifier)))))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (derived_type_definition
+                  (subtype_indication
+                    (name
+                      (identifier)))
+                  (interface_list
+                    (name
+                      (identifier)))
+                  (record_extension_part
+                    (record_definition)))))))))
