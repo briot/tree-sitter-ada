@@ -75,6 +75,10 @@ module.exports = grammar({
       // 'for' name 'use' '(' 'for' identifier 'in' name . 'use'
       [$.iterator_specification, $.subtype_indication],
 
+      // 'type' identifier 'is' 'mod' 'raise' name . 'with' ...
+      // ??? This appears legal Ada per the grammar, but doesn't make sense.
+      // ??? This results in a large slowdown of the parser
+      [$.raise_expression],
 
    ],
 
@@ -326,10 +330,22 @@ module.exports = grammar({
          $.proper_body,
       ),
       proper_body: $ => choice(
-//         $.subprogram_body,
+         $.subprogram_body,
          $.package_body,
 //         $.task_body,
 //         $.protected_body,
+      ),
+      subprogram_body: $ => seq(
+         optional($.overriding_indicator),
+         $.subprogram_specification,
+         optional($.aspect_specification),
+         reservedWord('is'),
+         optional($.non_empty_declarative_part),
+         reservedWord('begin'),
+         $.handled_sequence_of_statements,
+         reservedWord('end'),
+         optional($.name),
+         ';'
       ),
       package_body: $ => seq(
          reservedWord('package'),
@@ -380,12 +396,11 @@ module.exports = grammar({
          comma_separated_list_of($.expression),
       ),
       expression: $ => choice(
-         $.relation,
-         seq($.relation, $.AND_relation_list),
-         seq($.relation, $.AND_THEN_relation_list),
-         seq($.relation, $.OR_relation_list),
-         seq($.relation, $.OR_ELSE_relation_list),
-         seq($.relation, $.XOR_relation_list),
+         list_of(reservedWord('and'), $.relation),
+         list_of(seq(reservedWord('and'), reservedWord('then')), $.relation),
+         list_of(reservedWord('or'), $.relation),
+         list_of(seq(reservedWord('or'), reservedWord('else')), $.relation),
+         list_of(reservedWord('xor'), $.relation),
       ),
       assoc_expression: $ => seq(
          '=>',
@@ -394,43 +409,36 @@ module.exports = grammar({
             '<>',
          ),
       ),
-      AND_relation_list: $ => repeat1(seq(
-         reservedWord('and'),
-         $.relation,
-      )),
-      AND_THEN_relation_list: $ => repeat1(seq(
-         reservedWord('and'),
-         reservedWord('then'),
-         $.relation,
-      )),
-      OR_relation_list: $ => repeat1(seq(
-         reservedWord('or'),
-         $.relation,
-      )),
-      OR_ELSE_relation_list: $ => repeat1(seq(
-         reservedWord('or'),
-         reservedWord('else'),
-         $.relation,
-      )),
-      XOR_relation_list: $ => repeat1(seq(
-         reservedWord('xor'),
-         $.relation,
-      )),
       relation: $ => choice(
          seq(
             $.simple_expression,
             optional(seq(
                $.relational_operator,
                $.simple_expression,
-            ))
+            )),
          ),
-//         seq(
-//            $.simple_expression,
-//            optional(reservedWord('not')),
-//            reservedWord('in'),
-//            $.membership_choice_list,
-//         ),
-//         $.raise_expression,
+         seq(
+            $.simple_expression,
+            optional(reservedWord('not')),
+            reservedWord('in'),
+            $.membership_choice_list,
+         ),
+         $.raise_expression,
+      ),
+      raise_expression: $ => seq(
+         reservedWord('raise'),
+         $.name,
+         optional(seq(
+            reservedWord('with'),
+            $.simple_expression,
+         )),
+      ),
+      membership_choice_list: $ => prec.right(
+         list_of('|', $.membership_choice),
+      ),
+      membership_choice: $ => choice(
+         $.simple_expression,
+         $.range_g,
       ),
       simple_expression: $ => seq(
          optional($.unary_adding_operator),
@@ -495,7 +503,7 @@ module.exports = grammar({
          '(',
          choice(
             comma_separated_list_of($.parameter_association),
-//            $.conditional_expression,
+            $.conditional_expression,
 //            $.quantified_expression,
 //            $.declare_expression,
          ),
@@ -509,28 +517,26 @@ module.exports = grammar({
          $.expression,
          '<>',
       ),
-      component_choice_list: $ => choice(
-         $.selector_name,
-         seq(
-            $.component_choice_list,
-            '|',
-            $.selector_name,
-         ),
+      conditional_expression: $ => choice(
+         $.if_expression,
+//         $.case_expression,
       ),
+      component_choice_list: $ =>
+         list_of('|', $.selector_name),
       aggregate: $ => choice(
          $.record_aggregate,
 //         $.extension_aggregate,
          $.array_aggregate,
 //         $.delta_aggregate,
-//         seq(
-//            '(',
-//            choice(
-//               $.conditional_expression,
+         seq(
+            '(',
+            choice(
+               $.conditional_expression,
 //               $.quantified_expression,
 //               $.declare_expression,
-//            ),
-//            ')',
-//         ),
+            ),
+            ')',
+         ),
       ),
       record_aggregate: $ => seq(
          '(',
@@ -787,7 +793,7 @@ module.exports = grammar({
          optional(reservedWord('aliased')),
          choice(
             $.subtype_indication,
-//            $.access_definition,
+            $.access_definition,
          ),
       ),
       abstract_subprogram_declaration: $ => seq(
@@ -795,7 +801,7 @@ module.exports = grammar({
          $.subprogram_specification,
          reservedWord('is'),
          reservedWord('abstract'),
-         $.aspect_specification,
+         optional($.aspect_specification),
          ';',
       ),
       array_aggregate: $ => choice(
@@ -982,9 +988,7 @@ module.exports = grammar({
          optional($.overriding_indicator),
          $.function_specification,
          reservedWord('is'),
-         '(',
-         $.expression,
-         ')',
+         $.aggregate,
          optional($.aspect_specification),
          ';',
       ),
@@ -1100,7 +1104,8 @@ module.exports = grammar({
          $.procedure_specification,
          reservedWord('is'),
          reservedWord('null'),
-//         optional($.aspect_specification),
+         optional($.aspect_specification),
+         ';',
       ),
       null_statement: $ => seq(
          reservedWord('null'),
@@ -1161,11 +1166,33 @@ module.exports = grammar({
             '(',
             choice(
 //               $.pragma_argument_association_list,
-//               $.conditional_quantified_expression,
+               $.conditional_quantified_expression,
             ),
             ')',
          )),
          ';'
+      ),
+      conditional_quantified_expression: $ => choice(
+         $.if_expression,
+//         $.case_expression,
+//         $.quantified_expression,
+      ),
+      if_expression: $ => seq(
+         reservedWord('if'),
+         field('condition', $.expression),
+         reservedWord('then'),
+         $.expression,
+         repeat($.elsif_expression_item),
+         optional(seq(
+            reservedWord('else'),
+            $.expression,
+         )),
+      ),
+      elsif_expression_item: $ => seq(
+         reservedWord('elsif'),
+         field('condition', $.expression),
+         reservedWord('then'),
+         $.expression,
       ),
       procedure_specification: $ => seq(
          reservedWord('procedure'),
