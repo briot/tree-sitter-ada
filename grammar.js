@@ -64,6 +64,13 @@ module.exports = grammar({
       [$.attribute_definition_clause, $.attribute_reference],
       [$.record_extension_part, $.derived_type_definition],
 
+      // 'for' name 'use' '(' name . '=>' ...
+      //    The name could either be from a primary or a subtype_indication.
+      [$.subtype_indication, $.primary],
+
+      // 'for' name 'use' '(' 'for' identifier 'in' name . 'use'
+      [$.iterator_specification, $.subtype_indication],
+
    ],
 
    rules: {
@@ -364,6 +371,9 @@ module.exports = grammar({
          $.expression,
          ';',
       ),
+      expression_list: $ => prec.left(
+         comma_separated_list_of($.expression),
+      ),
       expression: $ => choice(
          $.relation,
          seq($.relation, $.AND_relation_list),
@@ -505,7 +515,7 @@ module.exports = grammar({
       aggregate: $ => choice(
          $.record_aggregate,
 //         $.extension_aggregate,
-//         $.array_aggregate,
+         $.array_aggregate,
 //         $.delta_aggregate,
 //         seq(
 //            '(',
@@ -575,7 +585,7 @@ module.exports = grammar({
 //         $.protected_type_declaration,
       ),
       type_definition: $ => choice(
-//         $.enumeration_type_definition,
+         $.enumeration_type_definition,
          $.integer_type_definition,
          $.real_type_definition,
 //         $.array_type_definition,
@@ -583,6 +593,17 @@ module.exports = grammar({
 //         $.access_type_definition,
          $.derived_type_definition,
 //         $.interface_type_definition,
+      ),
+      enumeration_type_definition: $ => seq(
+         '(',
+         $._enumeration_literal_list,
+         ')',
+      ),
+      _enumeration_literal_list: $ =>
+         comma_separated_list_of($._enumeration_literal_specification),
+      _enumeration_literal_specification: $ => choice(
+         $.identifier,
+         $.character_literal,
       ),
       integer_type_definition: $ => choice(
          $.signed_integer_type_definition,
@@ -697,9 +718,62 @@ module.exports = grammar({
          ';',
       ),
       array_aggregate: $ => choice(
-//         $.position_array_aggregate,
-//         $.null_array_aggregate,
-//         $.named_array_aggregate,
+         $.positional_array_aggregate,
+         $.null_array_aggregate,
+         $.named_array_aggregate,
+      ),
+      positional_array_aggregate: $ => choice(
+         seq(
+            '(',
+            $.expression_list,
+            optional(seq(
+               ',',
+               reservedWord('others'),
+               $.assoc_expression,
+            )),
+            ')',
+         ),
+         seq(
+            '[',
+            $.expression_list,
+            optional(seq(
+               ',',
+               reservedWord('others'),
+               $.assoc_expression,
+            )),
+            ']',
+         ),
+      ),
+      null_array_aggregate: $ => seq(
+         '[',
+         ']',
+      ),
+      named_array_aggregate: $ => choice(
+         seq(
+            '(',
+            $._array_component_association_list,
+            ')',
+         ),
+         seq(
+            '[',
+            $._array_component_association_list,
+            ']',
+         ),
+      ),
+      _array_component_association_list: $ =>
+         comma_separated_list_of($.array_component_association),
+      array_component_association: $ => choice(
+         seq(
+            $.discrete_choice_list,
+            $.assoc_expression,
+         ),
+         $.iterated_element_association,
+      ),
+      discrete_choice_list: $ => list_of('|', $.discrete_choice),
+      discrete_choice: $ => choice(
+         $.expression,
+         $.subtype_indication,
+         $.range_g,
       ),
       aspect_association: $ => seq(
          $.aspect_mark,
