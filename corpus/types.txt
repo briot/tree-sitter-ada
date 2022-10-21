@@ -37,7 +37,8 @@ Derived type
 ================================================================================
 
 package P is
-   type B is new Integer;
+   type B is new Integer
+     with Size => 8;
 end P;
 
 --------------------------------------------------------------------------------
@@ -54,6 +55,138 @@ end P;
             (derived_type_definition
               (subtype_indication
                 (name
-                  (identifier)))))))
+                  (identifier)))))
+          (aspect_specification
+            (aspect_mark_list
+              (aspect_association
+                (aspect_mark
+                  (identifier))
+                (aspect_definition
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal)))))))))))))
+      (name
+        (identifier)))))
+
+================================================================================
+Modular types
+================================================================================
+
+package P is
+   type C is mod 256;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (integer_type_definition
+              (modular_type_definition
+                (expression
+                  (relation
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal))))))))))))
+      (name
+        (identifier)))))
+
+================================================================================
+Fixed points
+================================================================================
+
+package P is
+   type B is new Float range 0.0 .. 1.0;
+   type D is delta 0.1 digits 8;
+   type E is delta 0.1 range 0.0 .. 1.0;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (derived_type_definition
+              (subtype_indication
+                (name
+                  (identifier))
+                (constraint
+                  (scalar_constraint
+                    (range_constraint
+                      (range_g
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal))))))))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (real_type_definition
+              (fixed_point_definition
+                (decimal_fixed_point_definition
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal)))))))
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal)))))))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (real_type_definition
+              (fixed_point_definition
+                (ordinary_fixed_point_definition
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal)))))))
+                  (real_range_specification
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal)))))
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal))))))))))))
       (name
         (identifier)))))

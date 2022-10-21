@@ -2,7 +2,7 @@
  * A case-insensitive keyword (copied from VHDL grammar)
  */
 const reservedWord = word =>
-   // word ||  // when debugging conflict error msgs
+   //word ||  // when debugging conflict error msgs
    alias(reserved(caseInsensitive(word)), word)
    ;
 const reserved = regex => token(prec(2, new RegExp(regex)));
@@ -568,7 +568,7 @@ module.exports = grammar({
 //            optional($.known_discriminant_part),
             reservedWord('is'),
             $.type_definition,
-//            optional($.aspect_specification),
+            optional($.aspect_specification),
             ';',
          ),
 //         $.task_type_declaration,
@@ -577,7 +577,7 @@ module.exports = grammar({
       type_definition: $ => choice(
 //         $.enumeration_type_definition,
          $.integer_type_definition,
-//         $.real_type_definition,
+         $.real_type_definition,
 //         $.array_type_definition,
 //         $.record_type_definition,
 //         $.access_type_definition,
@@ -586,7 +586,42 @@ module.exports = grammar({
       ),
       integer_type_definition: $ => choice(
          $.signed_integer_type_definition,
-//         $.modular_type_definition,
+         $.modular_type_definition,
+      ),
+      modular_type_definition: $ => seq(
+         reservedWord('mod'),
+         $.expression,
+      ),
+      real_type_definition: $ => choice(
+         $.floating_point_definition,
+         $.fixed_point_definition,
+      ),
+      floating_point_definition: $ => seq(
+         reservedWord('digits'),
+         $.expression,
+         optional($.real_range_specification),
+      ),
+      real_range_specification: $ => seq(
+         reservedWord('range'),
+         $.simple_expression,
+         '..',
+         $.simple_expression,
+      ),
+      fixed_point_definition: $ => choice(
+         $.ordinary_fixed_point_definition,
+         $.decimal_fixed_point_definition,
+      ),
+      decimal_fixed_point_definition: $ => seq(
+         reservedWord('delta'),
+         $.expression,
+         reservedWord('digits'),
+         $.expression,
+         optional($.real_range_specification),
+      ),
+      ordinary_fixed_point_definition: $ => seq(
+         reservedWord('delta'),
+         $.expression,
+         $.real_range_specification,
       ),
       signed_integer_type_definition: $ => seq(
          reservedWord('range'),
@@ -594,7 +629,7 @@ module.exports = grammar({
          '..',
          $.simple_expression,
       ),
-      derived_type_definition: $ => seq(
+      derived_type_definition: $ => prec.left(seq(
          optional(reservedWord('abstract')),
          optional(reservedWord('limited')),
          reservedWord('new'),
@@ -606,7 +641,7 @@ module.exports = grammar({
 //            )),
             $.record_extension_part,
          )),
-      ),
+      )),
       record_extension_part: $ => seq(
          reservedWord('with'),
          $.record_definition,
