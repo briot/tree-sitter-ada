@@ -1,0 +1,15 @@
+{
+  "name": "tree-sitter-ada",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+     "tree-sitter": "0.20.0",
+     "tree-sitter-cli": "0.20.7"
+  },
+  "scripts": {
+     "generate": "tree-sitter generate",
+     "test": "tree-sitter generate && tree-sitter test",
+     "example1": "tree-sitter parse example1.adb"
+  },
+  "main": "bindings/node"
+}

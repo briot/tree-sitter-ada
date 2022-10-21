@@ -1,0 +1,11 @@
+binding.gyp
+Cargo.toml
+node_modules/
+src/grammar.json
+src/node-types.json
+src/parser.c
+src/tree_sitter/parser.h
+bindings/node/binding.cc 
+bindings/node/index.js
+bindings/rust/build.rs
+bindings/rust/lib.rs

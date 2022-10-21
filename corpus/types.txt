@@ -1,0 +1,81 @@
+================================================================================
+packages
+================================================================================
+
+with Ada.Text_IO;
+package P1 is
+   package Nested is
+   end Nested;
+end P1;
+
+PriVaTe PACKAGE P2 is --  comment to be ignored
+private
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (with_clause
+      (name_list
+        (name
+          (selected_component
+            (name
+              (direct_name
+                (identifier)))
+            (selector_name
+              (direct_name
+                (identifier))))))))
+  (compilation_unit
+    (package_specification
+      (identifier)
+      (package_specification
+        (identifier)
+        (identifier))
+      (identifier)))
+  (compilation_unit
+    (package_specification
+      (identifier)
+      (comment))))
+
+================================================================================
+Types
+================================================================================
+
+package P is
+   type A is range 1 .. 2;
+   type B is new Integer;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (identifier)
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (integer_type_definition
+              (signed_integer_type_definition
+                (simple_expression
+                  (term
+                    (factor
+                      (primary
+                        (numeric_literal)))))
+                (simple_expression
+                  (term
+                    (factor
+                      (primary
+                        (numeric_literal))))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (derived_type_definition
+              (subtype_indication
+                (name
+                  (direct_name
+                    (identifier))))))))
+      (identifier))))
