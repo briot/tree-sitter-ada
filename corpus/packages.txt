@@ -16,7 +16,8 @@ use Ada.Text_IO, System;
       (name_list
         (name
           (identifier)
-          (identifier))
+          (name
+            (identifier)))
         (name
           (identifier)))))
   (comment)
@@ -41,13 +42,14 @@ use Ada.Text_IO, System;
       (name_list
         (name
           (identifier)
-          (identifier))
+          (name
+            (identifier)))
         (name
           (identifier))))))
 
-=====
+================================================================================
 Case insensitive
-=====
+================================================================================
 
 PACkaGe P1 Is
 enD;
@@ -58,7 +60,7 @@ enD;
   (compilation_unit
     (package_specification
       (name
-         (identifier)))))
+        (identifier)))))
 
 ================================================================================
 multiple compilation units
@@ -91,12 +93,13 @@ end;
     (package_specification
       (name
         (identifier)
-        (identifier))
+        (name
+          (identifier)))
       (comment))))
 
-=========
+================================================================================
 body
-=========
+================================================================================
 
 package body Child.P2 is
    package body Nested is
@@ -107,14 +110,16 @@ begin
    null;
 end Child.P2;
 
----
+--------------------------------------------------------------------------------
+
 (compilation
   (compilation_unit
     (proper_body
       (package_body
         (name
           (identifier)
-          (identifier))
+          (name
+            (identifier)))
         (non_empty_declarative_part
           (declarative_item_pragma
             (proper_body
@@ -135,7 +140,8 @@ end Child.P2;
                 (null_statement)))))
         (name
           (identifier)
-          (identifier))))))
+          (name
+            (identifier)))))))
 
 ================================================================================
 separate
@@ -147,18 +153,18 @@ end;
 --------------------------------------------------------------------------------
 
 (compilation
-   (compilation_unit
-     (subunit
-       (name
-         (identifier))
-       (proper_body
-         (package_body
-           (name
-             (identifier)))))))
+  (compilation_unit
+    (subunit
+      (name
+        (identifier))
+      (proper_body
+        (package_body
+          (name
+            (identifier)))))))
 
-==========================
+================================================================================
 private types
-=========================
+================================================================================
 
 package P is
    type A is private;
@@ -166,42 +172,42 @@ package P is
    type C is abstract tagged limited private with Size => 8;
 end;
 
------------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (package_specification
-          (name
-            (identifier))
-          (type_declaration
-            (private_type_declaration
-              (identifier)))
-          (type_declaration
-            (private_extension_declaration
-              (identifier)
-              (subtype_indication
-                (name
-                  (identifier)))))
-          (type_declaration
-            (private_type_declaration
-              (identifier)
-              (aspect_specification
-                (aspect_mark_list
-                  (aspect_association
-                    (aspect_mark
-                      (identifier))
-                    (aspect_definition
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (numeric_literal))))))))))))))))
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (private_type_declaration
+          (identifier)))
+      (type_declaration
+        (private_extension_declaration
+          (identifier)
+          (subtype_indication
+            (name
+              (identifier)))))
+      (type_declaration
+        (private_type_declaration
+          (identifier)
+          (aspect_specification
+            (aspect_mark_list
+              (aspect_association
+                (aspect_mark
+                  (identifier))
+                (aspect_definition
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal))))))))))))))))
 
-==========
+================================================================================
 incomplete types
-==========
+================================================================================
 
 package P is
 private
@@ -211,33 +217,32 @@ private
     type T is tagged;
 end;
 
---------------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (package_specification
-          (name
-            (identifier))
-          (type_declaration
-            (incomplete_type_declaration
-              (identifier)))
-          (type_declaration
-            (incomplete_type_declaration
-              (identifier)
-              (discriminant_part
-                (known_discriminant_part
-                  (discriminant_specification_list
-                    (discriminant_specification
-                      (defining_identifier_list
-                        (identifier))
-                      (name
-                        (identifier))))))))
-          (type_declaration
-            (incomplete_type_declaration
-              (identifier)
-              (discriminant_part
-                (unknown_discriminant_part))))
-          (type_declaration
-            (incomplete_type_declaration
-              (identifier))))))
-
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (incomplete_type_declaration
+          (identifier)))
+      (type_declaration
+        (incomplete_type_declaration
+          (identifier)
+          (discriminant_part
+            (known_discriminant_part
+              (discriminant_specification_list
+                (discriminant_specification
+                  (defining_identifier_list
+                    (identifier))
+                  (name
+                    (identifier))))))))
+      (type_declaration
+        (incomplete_type_declaration
+          (identifier)
+          (discriminant_part
+            (unknown_discriminant_part))))
+      (type_declaration
+        (incomplete_type_declaration
+          (identifier))))))

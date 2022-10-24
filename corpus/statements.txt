@@ -1,0 +1,263 @@
+================================================================================
+While
+================================================================================
+
+procedure P is
+begin
+   while True loop
+      exit;
+      exit when A > 0;
+   end loop;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (compound_statement
+                (loop_statement
+                  (iteration_scheme
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (name
+                                  (identifier)))))))))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (exit_statement)))
+                    (statement
+                      (simple_statement
+                        (exit_statement
+                          (expression
+                            (relation
+                              (simple_expression
+                                (term
+                                  (factor
+                                    (primary
+                                      (name
+                                        (identifier))))))
+                              (relational_operator)
+                              (simple_expression
+                                (term
+                                  (factor
+                                    (primary
+                                      (numeric_literal))))))))))))))))))))
+
+================================================================================
+For loops
+================================================================================
+
+procedure P is
+begin
+   for E in Pkg.Arr'Range loop
+      goto end_loop;
+
+      <<end_loop>>
+   end loop;
+
+   for E of reverse Arr loop
+      delay 1.0;
+   end loop;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (compound_statement
+                (loop_statement
+                  (iteration_scheme
+                    (iterator_specification
+                      (identifier)
+                      (name
+                        (attribute_reference
+                          (name
+                            (identifier)
+                            (name
+                              (identifier)))
+                          (tick)
+                          (attribute_designator
+                            (identifier))))))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (goto_statement
+                          (name
+                            (identifier)))))
+                    (label
+                      (identifier))))))
+            (statement
+              (compound_statement
+                (loop_statement
+                  (iteration_scheme
+                    (iterator_specification
+                      (identifier)
+                      (name
+                        (identifier))))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (delay_statement
+                          (delay_relative_statement
+                            (expression
+                              (relation
+                                (simple_expression
+                                  (term
+                                    (factor
+                                      (primary
+                                        (numeric_literal)))))))))))))))))
+        (name
+          (identifier))))))
+
+================================================================================
+Named loop
+================================================================================
+
+procedure P is
+begin
+    Main:
+    loop
+       exit Main;
+    end loop Main;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (compound_statement
+                (loop_statement
+                  (loop_label
+                    (identifier))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (exit_statement
+                          (name
+                            (identifier))))))
+                  (identifier))))))))))
+
+================================================================================
+Return
+================================================================================
+
+function F return Boolean is
+begin
+   return True;
+end F;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (function_specification
+            (name
+              (identifier))
+            (parameter_and_result_profile
+              (result_profile
+                (name
+                  (identifier))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (simple_return_statement
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (name
+                                (identifier)))))))))))))
+        (name
+          (identifier))))))
+
+================================================================================
+Procedure call
+================================================================================
+
+procedure P (A : Integer) is
+begin
+   P2 (1, False);
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))
+            (non_empty_parameter_profile
+              (formal_part
+                (parameter_specification_list
+                  (parameter_specification
+                    (defining_identifier_list
+                      (identifier))
+                    (name
+                      (identifier))))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (procedure_call_statement
+                  (name
+                    (identifier))
+                  (actual_parameter_part
+                    (parameter_association
+                      (expression
+                        (relation
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (numeric_literal))))))))
+                    (parameter_association
+                      (expression
+                        (relation
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (name
+                                    (identifier)))))))))))))))
+        (name
+          (identifier))))))

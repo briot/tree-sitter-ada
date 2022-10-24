@@ -51,7 +51,8 @@ end P;
                   (identifier))
                 (name
                   (identifier)
-                  (identifier)))))
+                  (name
+                    (identifier))))))
           (declarative_item_pragma
             (renaming_declaration
               (subprogram_renaming_declaration

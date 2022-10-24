@@ -66,9 +66,17 @@ module.exports = grammar({
 
       [$.attribute_definition_clause, $.attribute_reference],
 
+      // _direct_name '.' name . '''
+      // Could be either   _direct_name '.' (attribute_reference name . tick
+      //   or              (name _direct_name '.' name) . '''
+      [$.name, $.attribute_reference],
+
       // identifier . ':' ...
       [$.defining_identifier_list, $.object_renaming_declaration,
          $.exception_renaming_declaration],
+      [$.defining_identifier_list, $.object_renaming_declaration,
+         $.exception_renaming_declaration, $._direct_name],
+      [$.defining_identifier_list, $._direct_name],
 
       // 'generic' . 'package' ...
       [$.generic_formal_part, $.generic_renaming_declaration],
@@ -143,13 +151,21 @@ module.exports = grammar({
 //      ),
 
       _direct_name: $ => $.identifier,
-      name: $ => seq(
-         $._direct_name,
-         repeat(seq(
-            '.',
-            $.identifier,
-         )),
+      name: $ => choice(
+         seq(
+            $._direct_name,
+            optional(seq(
+               '.',
+               $.name,
+            )),
+//            repeat(seq(
+//               '.',
+//               $.identifier,
+//            )),
+         ),
+         $.attribute_reference,
       ),
+
       name_list: $ => comma_separated_list_of($.name),
       defining_identifier_list: $ => comma_separated_list_of($.identifier),
 
@@ -244,7 +260,7 @@ module.exports = grammar({
       ),
       iterator_filter: $ => seq(
          reservedWord('when'),
-         $.condition,
+         field('condition', $.expression),
       ),
       iterator_specification: $ => seq(
          $.identifier,
@@ -261,7 +277,7 @@ module.exports = grammar({
          optional($.iterator_filter),
       ),
       attribute_designator: $ => choice(
-         $.identifier,
+         $.identifier,    //  missing  function_call
          reservedWord('access'),
          reservedWord('delta'),
          reservedWord('digits'),
@@ -408,10 +424,6 @@ module.exports = grammar({
       range_constraint: $ => seq(
          reservedWord('range'),
          $.range_g,
-      ),
-      condition: $ => seq(
-         $.expression,
-         ';',
       ),
       expression_list: $ => prec.left(
          comma_separated_list_of($.expression),
@@ -1249,6 +1261,10 @@ module.exports = grammar({
             $.exception_handler_list,
          )),
       ),
+      loop_label: $ => seq(    // matches label_opt in ada-mode grammar
+         field('statement_identifier', $._direct_name),
+         ':',
+      ),
       label: $ => seq(
          '<<',
          field('statement_identifier', $._direct_name),
@@ -1476,12 +1492,12 @@ module.exports = grammar({
       simple_statement: $ => choice(
          $.null_statement,
          $.assignment_statement,
-//         $.exit_statement,
-//         $.goto_statement,
-//         $.procedure_call_statement,
-//         $.simple_return_statement,
+         $.exit_statement,
+         $.goto_statement,
+         $.procedure_call_statement,
+         $.simple_return_statement,
 //         $.requeue_statement,
-//         $.delay_statement,
+         $.delay_statement,
 //         $.abort_statement,
 //         $.raise_statement,
          $.pragma_g,
@@ -1490,8 +1506,98 @@ module.exports = grammar({
          repeat($.label),
          choice(
             $.simple_statement,
-//            $.compound_statement,
+            $.compound_statement,
          ),
+      ),
+      compound_statement: $ => choice(
+//         $.if_statement,
+//         $.case_statement,
+         $.loop_statement,
+//         $.block_statement,
+//         $.extended_return_statement,
+//         $.parallel_block_statement,
+//         $.accept_statement,
+//         $.select_statement,
+      ),
+      exit_statement: $ => seq(
+         reservedWord('exit'),
+         optional($.name),
+         optional(seq(
+            reservedWord('when'),
+            field('condition', $.expression),
+         )),
+         ';',
+      ),
+      goto_statement: $ => seq(
+         reservedWord('goto'),
+         $.name,
+         ';',
+      ),
+      delay_statement: $ => choice(
+         $.delay_until_statement,
+         $.delay_relative_statement,
+      ),
+      delay_until_statement: $ => seq(
+         reservedWord('delay'),
+         reservedWord('until'),
+         $.expression,
+         ';',
+      ),
+      delay_relative_statement: $ => seq(
+         reservedWord('delay'),
+         $.expression,
+         ';',
+      ),
+      simple_return_statement: $ => seq(
+         reservedWord('return'),
+         optional($.expression),
+         ';',
+      ),
+      procedure_call_statement: $ => seq(
+         $.name,
+         optional($.actual_parameter_part),
+         ';',
+      ),
+      loop_statement: $ => seq(
+         optional($.loop_label),
+         optional($.iteration_scheme),
+         reservedWord('loop'),
+         $.sequence_of_statements,
+         reservedWord('end'),
+         reservedWord('loop'),
+         optional($.identifier),
+         ';',
+      ),
+      iteration_scheme: $ => choice(
+         seq(
+            reservedWord('while'),
+            field('condition', $.expression),
+         ),
+         seq(
+            reservedWord('for'),
+            choice(
+               $.loop_parameter_specification,
+               $.iterator_specification,
+            ),
+         ),
+//         seq(
+//            optional(reservedWord('parallel')),
+//            reservedWord('for'),
+//            $.procedural_iterator,
+//         ),
+//         seq(
+//            reservedWord('parallel'),
+//            optional(seq(
+//               '(',
+//               $.chunk_specification,
+//               ')',
+//            )),
+//            reservedWord('for'),
+//            choice(
+//               $.loop_parameter_specification,
+//               $.iterator_specification,
+//            ),
+//         ),
       ),
       assignment_statement: $ => seq(
          $.name,
