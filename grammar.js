@@ -382,7 +382,10 @@ module.exports = grammar({
          reservedWord('begin'),
          $.handled_sequence_of_statements,
          reservedWord('end'),
-         optional($.name),
+         optional(choice(
+            $.name,
+            $.string_literal,  //  for operators
+         )),
          ';'
       ),
       package_body: $ => seq(
@@ -1257,7 +1260,10 @@ module.exports = grammar({
       ),
       function_specification: $ => seq(
          reservedWord('function'),
-         $.name,
+         choice(
+            $.name,
+            $.string_literal,  // for operators
+         ),
          $.parameter_and_result_profile,
       ),
       generic_declaration: $ => choice(

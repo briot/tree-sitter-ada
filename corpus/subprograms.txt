@@ -660,3 +660,49 @@ function F (A : My_Array) return Boolean
                     (factor
                       (primary
                         (numeric_literal)))))))))))))
+
+================================================================================
+Operators
+================================================================================
+
+overriding function "<" (Left, Right : My_Int) return Boolean is
+begin
+   return False;
+end "<";
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (overriding_indicator)
+        (subprogram_specification
+          (function_specification
+            (string_literal)
+            (parameter_and_result_profile
+              (formal_part
+                (parameter_specification_list
+                  (parameter_specification
+                    (defining_identifier_list
+                      (identifier)
+                      (identifier))
+                    (name
+                      (identifier)))))
+              (result_profile
+                (name
+                  (identifier))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (simple_return_statement
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (name
+                                (identifier)))))))))))))
+        (string_literal)))))
