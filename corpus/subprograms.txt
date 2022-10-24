@@ -108,7 +108,6 @@ end;
               (aspect_mark
                 (identifier)))))))))
 
-
 ================================================================================
 functions
 ================================================================================
@@ -260,6 +259,64 @@ function F2 (A : Integer) return Boolean
                             (primary
                               (name
                                 (identifier)))))))))))))))))
+
+================================================================================
+Expression function declare
+================================================================================
+
+function F2 (A : Integer) return Boolean
+   is (declare B : constant Integer := A + 1; begin B);
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (expression_function_declaration
+      (function_specification
+        (name
+          (identifier))
+        (parameter_and_result_profile
+          (formal_part
+            (parameter_specification_list
+              (parameter_specification
+                (defining_identifier_list
+                  (identifier))
+                (name
+                  (identifier)))))
+          (result_profile
+            (name
+              (identifier)))))
+      (aggregate
+        (declare_expression
+          (declare_item
+            (object_declaration
+              (defining_identifier_list
+                (identifier))
+              (subtype_indication
+                (name
+                  (identifier)))
+              (assign_value
+                (expression
+                  (relation
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (name
+                              (identifier)))))
+                      (binary_adding_operator)
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal))))))))))
+          (expression
+            (relation
+              (simple_expression
+                (term
+                  (factor
+                    (primary
+                      (name
+                        (identifier)))))))))))))
 
 ================================================================================
 Expression function raise
@@ -464,142 +521,142 @@ function F5 (A : Integer) return Boolean
                                             (name
                                               (identifier))))))))))))))))))))))))
 
-======
+================================================================================
 Expression function case
-======
+================================================================================
 
 function F (A : Integer) return Boolean
  is (case A + 1 is
         when 0 .. 1 | 3 .. 4 => True,
         when others => False);
 
-------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (expression_function_declaration
-          (function_specification
-            (name
-              (identifier))
-            (parameter_and_result_profile
-              (formal_part
-                (parameter_specification_list
-                  (parameter_specification
-                    (defining_identifier_list
-                      (identifier))
-                    (name
-                      (identifier)))))
-              (result_profile
+(compilation
+  (compilation_unit
+    (expression_function_declaration
+      (function_specification
+        (name
+          (identifier))
+        (parameter_and_result_profile
+          (formal_part
+            (parameter_specification_list
+              (parameter_specification
+                (defining_identifier_list
+                  (identifier))
                 (name
                   (identifier)))))
-          (aggregate
-            (conditional_expression
-              (case_expression
-                (expression
-                  (relation
+          (result_profile
+            (name
+              (identifier)))))
+      (aggregate
+        (conditional_expression
+          (case_expression
+            (expression
+              (relation
+                (simple_expression
+                  (term
+                    (factor
+                      (primary
+                        (name
+                          (identifier)))))
+                  (binary_adding_operator)
+                  (term
+                    (factor
+                      (primary
+                        (numeric_literal)))))))
+            (case_expression_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (range_g
                     (simple_expression
                       (term
                         (factor
                           (primary
-                            (name
-                              (identifier)))))
-                      (binary_adding_operator)
+                            (numeric_literal)))))
+                    (simple_expression
                       (term
                         (factor
                           (primary
                             (numeric_literal)))))))
-                (case_expression_alternative
-                  (discrete_choice_list
-                    (discrete_choice
-                      (range_g
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal)))))
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal)))))))
-                    (discrete_choice
-                      (range_g
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal)))))
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal))))))))
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (name
-                                (identifier)))))))))
-                (case_expression_alternative
-                  (discrete_choice_list
-                    (discrete_choice))
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (name
-                                (identifier)))))))))))))))
+                (discrete_choice
+                  (range_g
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal)))))
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal))))))))
+              (expression
+                (relation
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (name
+                            (identifier)))))))))
+            (case_expression_alternative
+              (discrete_choice_list
+                (discrete_choice))
+              (expression
+                (relation
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (name
+                            (identifier)))))))))))))))
 
-=====
+================================================================================
 Expression function quantified
-=====
+================================================================================
 
 function F (A : My_Array) return Boolean
    is (for some E of A => E = 1);
 
 
-------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (expression_function_declaration
-          (function_specification
-            (name
-              (identifier))
-            (parameter_and_result_profile
-              (formal_part
-                (parameter_specification_list
-                  (parameter_specification
-                    (defining_identifier_list
-                      (identifier))
-                    (name
-                      (identifier)))))
-              (result_profile
+(compilation
+  (compilation_unit
+    (expression_function_declaration
+      (function_specification
+        (name
+          (identifier))
+        (parameter_and_result_profile
+          (formal_part
+            (parameter_specification_list
+              (parameter_specification
+                (defining_identifier_list
+                  (identifier))
                 (name
                   (identifier)))))
-          (aggregate
-            (quantified_expression
-              (quantifier)
-              (iterator_specification
-                (identifier)
-                (name
-                  (identifier)))
-              (assoc_expression
-                (expression
-                  (relation
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (name
-                              (identifier))))))
-                    (relational_operator)
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (numeric_literal)))))))))))))
+          (result_profile
+            (name
+              (identifier)))))
+      (aggregate
+        (quantified_expression
+          (quantifier)
+          (iterator_specification
+            (identifier)
+            (name
+              (identifier)))
+          (assoc_expression
+            (expression
+              (relation
+                (simple_expression
+                  (term
+                    (factor
+                      (primary
+                        (name
+                          (identifier))))))
+                (relational_operator)
+                (simple_expression
+                  (term
+                    (factor
+                      (primary
+                        (numeric_literal)))))))))))))

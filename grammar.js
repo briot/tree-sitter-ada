@@ -77,6 +77,7 @@ module.exports = grammar({
       [$.defining_identifier_list, $.object_renaming_declaration,
          $.exception_renaming_declaration, $._direct_name],
       [$.defining_identifier_list, $._direct_name],
+      [$.defining_identifier_list, $.object_renaming_declaration],
 
       // 'generic' . 'package' ...
       [$.generic_formal_part, $.generic_renaming_declaration],
@@ -103,6 +104,9 @@ module.exports = grammar({
 
       // 'type' identifier 'is' 'new' subtype_indication . 'with' .
       [$.private_extension_declaration, $.derived_type_definition],
+
+      [$.function_call, $.procedure_call_statement],
+      [$.function_call, $.name],
 
    ],
 
@@ -136,10 +140,8 @@ module.exports = grammar({
 
       // Simpler definition for games than the standard grammer
 //      name: $ => choice(
-//         $._direct_name,
 //         $.explicit_dereference,
 //         $.selected_component,
-//         $.attribute_reference,
 //         $.function_call,
 //         $.character_literal,
 //         $.qualified_expression,
@@ -158,12 +160,11 @@ module.exports = grammar({
                '.',
                $.name,
             )),
-//            repeat(seq(
-//               '.',
-//               $.identifier,
-//            )),
          ),
          $.attribute_reference,
+         $.function_call,
+         //$.string_literal,  // from ada-mode, but seems wrong.
+         //                   // Added to primary instead
       ),
 
       name_list: $ => comma_separated_list_of($.name),
@@ -511,6 +512,7 @@ module.exports = grammar({
          reservedWord('null'),
          $.aggregate,
          $.name,
+         $.string_literal,  // ada-mode puts this in name instead
 //         $.allocator,
       ),
       access_type_definition: $ => seq(
@@ -569,7 +571,7 @@ module.exports = grammar({
             comma_separated_list_of($.parameter_association),
             $.conditional_expression,
             $.quantified_expression,
-//            $.declare_expression,
+            $.declare_expression,
          ),
          ')',
       ),
@@ -599,6 +601,16 @@ module.exports = grammar({
          ),
          $.assoc_expression,
       ),
+      declare_expression: $ => seq(
+         reservedWord('declare'),
+         repeat($.declare_item),
+         reservedWord('begin'),
+         $.expression,
+      ),
+      declare_item: $ => choice(
+         $.object_declaration,
+         $.object_renaming_declaration,
+      ),
       quantifier: $ => choice(
          reservedWord('all'),
          reservedWord('some'),
@@ -626,7 +638,7 @@ module.exports = grammar({
             choice(
                $.conditional_expression,
                $.quantified_expression,
-//               $.declare_expression,
+               $.declare_expression,
             ),
             ')',
          ),
@@ -1499,7 +1511,7 @@ module.exports = grammar({
 //         $.requeue_statement,
          $.delay_statement,
 //         $.abort_statement,
-//         $.raise_statement,
+         $.raise_statement,
          $.pragma_g,
       ),
       statement: $ => seq(
@@ -1556,6 +1568,17 @@ module.exports = grammar({
       procedure_call_statement: $ => seq(
          $.name,
          optional($.actual_parameter_part),
+         ';',
+      ),
+      raise_statement: $ => seq(
+         reservedWord('raise'),
+         optional(seq(
+            $.name,
+            optional(seq(
+               reservedWord('with'),
+               $.expression,  // ada-mode allows "raise CE with raise with ..."
+            )),
+         )),
          ';',
       ),
       loop_statement: $ => seq(

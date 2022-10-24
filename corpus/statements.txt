@@ -261,3 +261,103 @@ end P;
                                     (identifier)))))))))))))))
         (name
           (identifier))))))
+
+================================================================================
+Raise exception
+================================================================================
+
+procedure P is
+begin
+   raise Constraint_Error;
+   raise Constraint_Error with "msg";
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (raise_statement
+                  (name
+                    (identifier)))))
+            (statement
+              (simple_statement
+                (raise_statement
+                  (name
+                    (identifier))
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (string_literal))))))))))))))))
+
+================================================================================
+Function calls
+================================================================================
+
+procedure P is
+  A : Integer;
+begin
+  A := Func (B => 1);
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (object_declaration
+              (defining_identifier_list
+                (identifier))
+              (subtype_indication
+                (name
+                  (identifier))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (name
+                    (identifier))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (name
+                                  (function_call
+                                    (name
+                                      (identifier))
+                                    (actual_parameter_part
+                                      (parameter_association
+                                        (component_choice_list
+                                          (selector_name
+                                            (identifier)))
+                                        (assoc_expression
+                                          (expression
+                                            (relation
+                                              (simple_expression
+                                                (term
+                                                  (factor
+                                                    (primary
+                                                      (numeric_literal))))))))))))))))))))))))))))
