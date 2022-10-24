@@ -110,6 +110,7 @@ module.exports = grammar({
       [$.selector_name, $.primary],
       [$.formal_derived_type_definition],
       [$._direct_name, $.aspect_mark],
+      [$.name, $.attribute_reference, $.qualified_expression],
 
    ],
 
@@ -145,10 +146,6 @@ module.exports = grammar({
 //      name: $ => choice(
 //         $.explicit_dereference,
 //         $.selected_component,
-//         $.function_call,
-//         $.character_literal,
-//         $.qualified_expression,
-//         '@',
 //      ),
 //      _direct_name: $ => choice(
 //         $.identifier,
@@ -166,8 +163,11 @@ module.exports = grammar({
          ),
          $.attribute_reference,
          $.function_call,
-         //$.string_literal,  // from ada-mode, but seems wrong.
-         //                   // Added to primary instead
+         $.qualified_expression,
+         '@',
+         //$.character_literal, //  from adamode, seems wrong.
+         //$.string_literal,    // from ada-mode, but seems wrong.
+         //                     // Added to primary instead
       ),
 
       name_list: $ => comma_separated_list_of($.name),
@@ -517,7 +517,22 @@ module.exports = grammar({
          $.name,
          $.string_literal,  // ada-mode puts this in name instead
          $.character_literal,
-//         $.allocator,
+         $.allocator,
+      ),
+      allocator: $ => seq(
+         reservedWord('new'),
+         optional($.subpool_specification),
+         $.subtype_indication_paren_constraint,
+      ),
+      subtype_indication_paren_constraint: $ => seq(
+         optional($.null_exclusion),
+         $.name,
+         optional($.index_constraint),
+      ),
+      subpool_specification: $ => seq(
+         '(',
+         $.name,
+         ')',
       ),
       access_type_definition: $ => seq(
          optional($.null_exclusion),
