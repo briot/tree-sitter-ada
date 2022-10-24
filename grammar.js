@@ -111,12 +111,9 @@ module.exports = grammar({
       [$.formal_derived_type_definition],
       [$._direct_name, $.aspect_mark],
       [$.name, $.attribute_reference, $.qualified_expression],
+      [$._direct_name, $.package_body_stub],
 
    ],
-
-//   inline: $ => [
-//      $._direct_name,
-//   ],
 
    rules: {
       compilation: $ => repeat(
@@ -1135,10 +1132,45 @@ module.exports = grammar({
          ';',
       ),
       body_stub: $ => choice(
-//         $.subprogram_body_stub,
-//         $.package_body_stub,
-//         $.task_body_stub,
-//         $.protected_body_stub,
+         $.subprogram_body_stub,
+         $.package_body_stub,
+         $.task_body_stub,
+         $.protected_body_stub,
+      ),
+      subprogram_body_stub: $ => seq(
+         optional($.overriding_indicator),
+         $.subprogram_specification,
+         reservedWord('is'),
+         reservedWord('separate'),
+         optional($.aspect_specification),
+         ';',
+      ),
+      package_body_stub: $ => seq(
+         reservedWord('package'),
+         reservedWord('body'),
+         $.identifier,
+         reservedWord('is'),
+         reservedWord('separate'),
+         optional($.aspect_specification),
+         ';',
+      ),
+      task_body_stub: $ => seq(
+         reservedWord('task'),
+         reservedWord('body'),
+         $.identifier,
+         reservedWord('is'),
+         reservedWord('separate'),
+         optional($.aspect_specification),
+         ';',
+      ),
+      protected_body_stub: $ => seq(
+         reservedWord('protected'),
+         reservedWord('body'),
+         $.identifier,
+         reservedWord('is'),
+         reservedWord('separate'),
+         optional($.aspect_specification),
+         ';',
       ),
       choice_parameter_specification: $ => $.identifier,  // ??? inline
       component_clause: $ => seq(
