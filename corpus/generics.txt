@@ -1,0 +1,117 @@
+================================================================================
+generic package
+================================================================================
+
+generic
+   A : Integer := 1;
+   type T (<>) is abstract tagged limited private or use My_Tagged;
+   type I;
+   with package Pro is new My_Pkg (F => 1, others => <>);
+   with procedure Proc is null;
+   with function Func return Boolean is <>;
+package P is
+   pragma Compile_Time_Error (True, "an exception");
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (generic_declaration
+      (generic_package_declaration
+        (generic_formal_part
+          (generic_formal_parameter_declaration
+            (formal_object_declaration
+              (defining_identifier_list
+                (identifier))
+              (name
+                (identifier))
+              (assign_value
+                (expression
+                  (relation
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (numeric_literal))))))))))
+          (generic_formal_parameter_declaration
+            (formal_type_declaration
+              (formal_complete_type_declaration
+                (identifier)
+                (discriminant_part
+                  (unknown_discriminant_part))
+                (formal_type_definition
+                  (formal_private_type_definition))
+                (name
+                  (identifier)))))
+          (generic_formal_parameter_declaration
+            (formal_type_declaration
+              (formal_incomplete_type_declaration
+                (identifier))))
+          (generic_formal_parameter_declaration
+            (formal_package_declaration
+              (identifier)
+              (name
+                (function_call
+                  (name
+                    (identifier))
+                  (actual_parameter_part
+                    (parameter_association
+                      (component_choice_list
+                        (selector_name
+                          (identifier)))
+                      (assoc_expression
+                        (expression
+                          (relation
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (numeric_literal)))))))))
+                    (parameter_association
+                      (component_choice_list
+                        (selector_name
+                          (identifier)))
+                      (assoc_expression)))))))
+          (generic_formal_parameter_declaration
+            (formal_subprogram_declaration
+              (formal_concrete_subprogram_declaration
+                (subprogram_specification
+                  (procedure_specification
+                    (name
+                      (identifier))))
+                (subprogram_default))))
+          (generic_formal_parameter_declaration
+            (formal_subprogram_declaration
+              (formal_concrete_subprogram_declaration
+                (subprogram_specification
+                  (function_specification
+                    (name
+                      (identifier))
+                    (parameter_and_result_profile
+                      (result_profile
+                        (name
+                          (identifier))))))
+                (subprogram_default)))))
+        (package_specification
+          (name
+            (identifier))
+          (pragma_g
+            (identifier)
+            (pragma_argument_association
+              (expression
+                (relation
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (name
+                            (identifier)))))))))
+            (pragma_argument_association
+              (expression
+                (relation
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (string_literal))))))))))))))

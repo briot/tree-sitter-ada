@@ -108,6 +108,8 @@ module.exports = grammar({
       [$.function_call, $.procedure_call_statement],
       [$.function_call, $.name],
       [$.selector_name, $.primary],
+      [$.formal_derived_type_definition],
+      [$._direct_name, $.aspect_mark],
 
    ],
 
@@ -337,10 +339,10 @@ module.exports = grammar({
          field('name', $.name),
          optional($.aspect_specification),
          reservedWord('is'),
-         optional($._basic_declarative_item_list),
+         repeat($._basic_declarative_item_pragma),
          optional(seq(
              reservedWord('private'),
-             optional($._basic_declarative_item_list),
+             repeat($._basic_declarative_item_pragma),
          )),
          reservedWord('end'),
          field('endname', optional($.name)),
@@ -725,9 +727,6 @@ module.exports = grammar({
          reservedWord('delta'),
          $.simple_expression,
          optional($.range_constraint),
-      ),
-      _basic_declarative_item_list: $ => repeat1(
-         $._basic_declarative_item_pragma,
       ),
       _basic_declarative_item_pragma: $ => choice(
          $._basic_declarative_item,
@@ -1206,10 +1205,10 @@ module.exports = grammar({
          repeat($.generic_formal_parameter_declaration),
       ),
       generic_formal_parameter_declaration: $ => choice(
-//         $.formal_objet_declaration,
-//         $.formal_type_declaration,
-//         $.formal_subprogram_declaration,
-//         $.formal_package_declaration,
+         $.formal_object_declaration,
+         $.formal_type_declaration,
+         $.formal_subprogram_declaration,
+         $.formal_package_declaration,
          $.use_clause,
          $.pragma_g,
       ),
@@ -1239,6 +1238,166 @@ module.exports = grammar({
          reservedWord('is'),
          reservedWord('new'),
          $.name,   //  includes the generic_actual_part
+         optional($.aspect_specification),
+         ';',
+      ),
+      formal_object_declaration: $ => choice(
+         seq(
+            $.defining_identifier_list,
+            ':',
+            optional($.non_empty_mode),
+            optional($.null_exclusion),
+            $.name,
+            optional($.assign_value),
+            optional($.aspect_specification),
+            ';',
+         ),
+         seq(
+            $.defining_identifier_list,
+            ':',
+            optional($.non_empty_mode),
+            $.access_definition,
+            optional($.assign_value),
+            optional($.aspect_specification),
+            ';',
+         ),
+      ),
+      formal_type_declaration: $ => choice(
+         $.formal_complete_type_declaration,
+         $.formal_incomplete_type_declaration,
+      ),
+      formal_complete_type_declaration: $ => seq(
+         reservedWord('type'),
+         $.identifier,
+         optional($.discriminant_part),
+         reservedWord('is'),
+         $.formal_type_definition,
+         optional(seq(
+            reservedWord('or'),
+            reservedWord('use'),
+            $.name,
+         )),
+         optional($.aspect_specification),
+         ';',
+      ),
+      formal_incomplete_type_declaration: $ => seq(
+         reservedWord('type'),
+         $.identifier,
+         optional($.discriminant_part),
+         optional(seq(
+            reservedWord('is'),
+            reservedWord('tagged'),
+         )),
+         optional(seq(
+            reservedWord('or'),
+            reservedWord('use'),
+            $.name,
+         )),
+         ';',
+      ),
+      formal_type_definition: $ => choice(
+         $.formal_private_type_definition,
+         $.formal_derived_type_definition,
+         $.formal_discrete_type_definition,
+         $.formal_signed_integer_type_definition,
+         $.formal_modular_type_definition,
+         $.formal_floating_point_definition,
+         $.formal_ordinary_fixed_point_definition,
+         $.formal_decimal_fixed_point_definition,
+         $.formal_array_type_definition,
+         $.formal_access_type_definition,
+         $.formal_interface_type_definition,
+      ),
+      formal_private_type_definition: $ => seq(
+         optional(seq(
+            optional(reservedWord('abstract')),
+            reservedWord('tagged'),
+         )),
+         optional(reservedWord('limited')),
+         reservedWord('private'),
+      ),
+      formal_derived_type_definition: $ => seq(
+         optional(reservedWord('abstract')),
+         optional(choice(
+            reservedWord('limited'),
+            reservedWord('synchronized'),
+         )),
+         reservedWord('new'),
+         $.name,
+         optional(seq(
+            optional(seq(
+               reservedWord('and'),
+               $.interface_list,
+            )),
+            reservedWord('with'),
+            reservedWord('private'),
+         )),
+      ),
+      formal_discrete_type_definition: $ => seq(
+         '(',
+         '<>',
+         ')',
+      ),
+      formal_signed_integer_type_definition: $ => seq(
+         reservedWord('range'),
+         '<>',
+      ),
+      formal_modular_type_definition: $ => seq(
+         reservedWord('mod'),
+         '<>',
+      ),
+      formal_floating_point_definition: $ => seq(
+         reservedWord('digits'),
+         '<>',
+      ),
+      formal_ordinary_fixed_point_definition: $ => seq(
+         reservedWord('delta'),
+         '<>',
+      ),
+      formal_decimal_fixed_point_definition: $ => seq(
+         reservedWord('delta'),
+         '<>',
+         reservedWord('digits'),
+         '<>',
+      ),
+      formal_array_type_definition: $ => $.array_type_definition,
+      formal_access_type_definition: $ => $.access_type_definition,
+      formal_interface_type_definition: $ => $.interface_type_definition,
+      formal_subprogram_declaration: $ => choice(
+         $.formal_concrete_subprogram_declaration,
+         $.formal_abstract_subprogram_declaration,
+      ),
+      formal_concrete_subprogram_declaration: $ => seq(
+         reservedWord('with'),
+         $.subprogram_specification,
+         optional(seq(
+            reservedWord('is'),
+            $.subprogram_default,
+         )),
+         optional($.aspect_specification),
+         ';',
+      ),
+      formal_abstract_subprogram_declaration: $ => seq(
+         reservedWord('with'),
+         $.subprogram_specification,
+         reservedWord('is'),
+         reservedWord('abstract'),
+         optional($.subprogram_default),
+         optional($.aspect_specification),
+         ';',
+      ),
+      subprogram_default: $ => choice(
+         field('default_name', $.name),
+         '<>',
+         reservedWord('null'),
+      ),
+      formal_package_declaration: $ => seq(
+         reservedWord('with'),
+         reservedWord('package'),
+         $.identifier,
+         reservedWord('is'),
+         reservedWord('new'),
+         $.name,
          optional($.aspect_specification),
          ';',
       ),
@@ -1364,12 +1523,19 @@ module.exports = grammar({
          optional(seq(
             '(',
             choice(
-//               $.pragma_argument_association_list,
+               comma_separated_list_of($.pragma_argument_association),
                $.conditional_quantified_expression,
             ),
             ')',
          )),
          ';'
+      ),
+      pragma_argument_association: $ => seq(
+         optional(seq(
+            $.aspect_mark,
+            '=>',
+         )),
+         $.expression,
       ),
       if_expression: $ => seq(
          reservedWord('if'),
