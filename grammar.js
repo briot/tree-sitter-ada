@@ -730,7 +730,7 @@ module.exports = grammar({
       ),
       index_constraint: $ => seq(
          '(',
-//         comma_separated_list_of($.discrete_range),
+         comma_separated_list_of($.discrete_range),
          ')',
       ),
       digits_constraint: $ => seq(
@@ -872,6 +872,10 @@ module.exports = grammar({
       _discrete_subtype_definition_list: $ =>
          comma_separated_list_of($.discrete_subtype_definition),
       discrete_subtype_definition: $ => choice(
+         $.subtype_indication,
+         $.range_g,
+      ),
+      discrete_range: $ => choice(  //  same as discrete_subtype_definition
          $.subtype_indication,
          $.range_g,
       ),

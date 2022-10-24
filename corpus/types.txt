@@ -256,3 +256,72 @@ end P;
                                 (numeric_literal))))))))))))))
       (name
         (identifier)))))
+
+================================================================================
+Subtypes
+================================================================================
+
+package P is
+   subtype T is Integer range 1 .. 2;
+   subtype Arr is MyArray (1 .. 2, 3 .. 4);
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (subtype_declaration
+        (identifier)
+        (subtype_indication
+          (name
+            (identifier))
+          (constraint
+            (scalar_constraint
+              (range_constraint
+                (range_g
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (numeric_literal)))))
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (numeric_literal)))))))))))
+      (subtype_declaration
+        (identifier)
+        (subtype_indication
+          (name
+            (identifier))
+          (constraint
+            (index_constraint
+              (discrete_range
+                (range_g
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (numeric_literal)))))
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (numeric_literal)))))))
+              (discrete_range
+                (range_g
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (numeric_literal)))))
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (numeric_literal)))))))))))
+      (name
+        (identifier)))))
