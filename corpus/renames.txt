@@ -1,0 +1,85 @@
+================================================================================
+Renames object
+================================================================================
+
+procedure P is
+   Threshold renames Global_Threshold;
+   A : Integer renames B;
+   CE : exception renames Constraint_Error;
+   package TIO renames Ada.Text_IO;
+   procedure Proc (A : Integer) renames Process;
+   generic procedure Proc renames Generic_Process;
+begin
+   null;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (renaming_declaration
+              (object_renaming_declaration
+                (identifier)
+                (name
+                  (identifier)))))
+          (declarative_item_pragma
+            (renaming_declaration
+              (object_renaming_declaration
+                (identifier)
+                (name
+                  (identifier))
+                (name
+                  (identifier)))))
+          (declarative_item_pragma
+            (renaming_declaration
+              (exception_renaming_declaration
+                (identifier)
+                (name
+                  (identifier)))))
+          (declarative_item_pragma
+            (renaming_declaration
+              (package_renaming_declaration
+                (name
+                  (identifier))
+                (name
+                  (identifier)
+                  (identifier)))))
+          (declarative_item_pragma
+            (renaming_declaration
+              (subprogram_renaming_declaration
+                (subprogram_specification
+                  (procedure_specification
+                    (name
+                      (identifier))
+                    (non_empty_parameter_profile
+                      (formal_part
+                        (parameter_specification_list
+                          (parameter_specification
+                            (defining_identifier_list
+                              (identifier))
+                            (name
+                              (identifier))))))))
+                (name
+                  (identifier)))))
+          (declarative_item_pragma
+            (renaming_declaration
+              (generic_renaming_declaration
+                (name
+                  (identifier))
+                (name
+                  (identifier))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (null_statement)))))
+        (name
+          (identifier))))))

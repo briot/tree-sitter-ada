@@ -1,0 +1,79 @@
+========
+access types
+========
+
+package P is
+   type A is access Integer;
+   type B is access not null Integer;
+   type C is access constant Integer;
+   type D is access all Integer;
+   type E is access function return Boolean;
+   type F is access protected function return Boolean;
+end;
+
+-------
+
+    (compilation
+      (compilation_unit
+        (package_specification
+          (name
+            (identifier))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (access_type_definition
+                  (access_to_object_definition
+                    (subtype_indication
+                      (name
+                        (identifier))))))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (access_type_definition
+                  (access_to_object_definition
+                    (subtype_indication
+                      (null_exclusion)
+                      (name
+                        (identifier))))))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (access_type_definition
+                  (access_to_object_definition
+                    (general_access_modifier)
+                    (subtype_indication
+                      (name
+                        (identifier))))))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (access_type_definition
+                  (access_to_object_definition
+                    (general_access_modifier)
+                    (subtype_indication
+                      (name
+                        (identifier))))))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (access_type_definition
+                  (access_to_subprogram_definition
+                    (parameter_and_result_profile
+                      (result_profile
+                        (name
+                          (identifier)))))))))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (access_type_definition
+                  (access_to_subprogram_definition
+                    (parameter_and_result_profile
+                      (result_profile
+                        (name
+                          (identifier))))))))))))

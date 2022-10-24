@@ -66,6 +66,13 @@ module.exports = grammar({
 
       [$.attribute_definition_clause, $.attribute_reference],
 
+      // identifier . ':' ...
+      [$.defining_identifier_list, $.object_renaming_declaration,
+         $.exception_renaming_declaration],
+
+      // 'generic' . 'package' ...
+      [$.generic_formal_part, $.generic_renaming_declaration],
+
       // 'type' identifier 'is' 'new' subtype_indication . 'with'
       // which could be either a record_extension_part or
       // an aspect_specification.
@@ -1369,11 +1376,88 @@ module.exports = grammar({
          ';',
       )),
       renaming_declaration: $ => choice(
-//         $.object_renaming_declaration,
-//         $.exception_renaming_declaration,
-//         $.package_renaming_declaration,
-//         $.subprogram_renaming_declaration,
-//         $.generic_renaming_declaration,
+         $.object_renaming_declaration,
+         $.exception_renaming_declaration,
+         $.package_renaming_declaration,
+         $.subprogram_renaming_declaration,
+         $.generic_renaming_declaration,
+      ),
+      object_renaming_declaration: $ => choice(
+         seq(
+            $.identifier,
+            optional(seq(
+               ':',
+               optional($.null_exclusion),
+               $.name,
+            )),
+            reservedWord('renames'),
+            $.name,
+            optional($.aspect_specification),
+            ';',
+         ),
+         seq(
+            $.identifier,
+            ':',
+            $.access_definition,
+            reservedWord('renames'),
+            $.name,
+            optional($.aspect_specification),
+            ';',
+         ),
+      ),
+      exception_renaming_declaration: $ => seq(
+         $.identifier,
+         ':',
+         reservedWord('exception'),
+         reservedWord('renames'),
+         $.name,
+         optional($.aspect_specification),
+         ';',
+      ),
+      package_renaming_declaration: $ => seq(
+         reservedWord('package'),
+         $.name,
+         reservedWord('renames'),
+         $.name,
+         optional($.aspect_specification),
+         ';',
+      ),
+      subprogram_renaming_declaration: $ => seq(
+         optional($.overriding_indicator),
+         $.subprogram_specification,
+         reservedWord('renames'),
+         $.name,
+         optional($.aspect_specification),
+         ';',
+      ),
+      generic_renaming_declaration: $ => choice(
+         seq(
+            reservedWord('generic'),
+            reservedWord('package'),
+            $.name,
+            reservedWord('renames'),
+            $.name,
+            optional($.aspect_specification),
+            ';',
+         ),
+         seq(
+            reservedWord('generic'),
+            reservedWord('procedure'),
+            $.name,
+            reservedWord('renames'),
+            $.name,
+            optional($.aspect_specification),
+            ';',
+         ),
+         seq(
+            reservedWord('generic'),
+            reservedWord('function'),
+            $.name,
+            reservedWord('renames'),
+            $.name,
+            optional($.aspect_specification),
+            ';',
+         ),
       ),
       result_profile: $ => seq(
          reservedWord('return'),
