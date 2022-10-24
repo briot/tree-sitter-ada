@@ -370,7 +370,7 @@ module.exports = grammar({
       proper_body: $ => choice(
          $.subprogram_body,
          $.package_body,
-//         $.task_body,
+         $.task_body,
 //         $.protected_body,
       ),
       subprogram_body: $ => seq(
@@ -1154,6 +1154,19 @@ module.exports = grammar({
          optional($.aspect_specification),
          ';',
       ),
+      task_body: $ => seq(
+         reservedWord('task'),
+         reservedWord('body'),
+         $.identifier,
+         optional($.aspect_specification),
+         reservedWord('is'),
+         optional($.non_empty_declarative_part),
+         reservedWord('begin'),
+         $.handled_sequence_of_statements,
+         reservedWord('end'),
+         optional($.identifier),
+         ';',
+      ),
       task_body_stub: $ => seq(
          reservedWord('task'),
          reservedWord('body'),
@@ -1542,8 +1555,49 @@ module.exports = grammar({
             optional($.aspect_specification),
             ';',
          ),
-//         $.single_task_declaration,
+         $.single_task_declaration,
 //         $.single_protected_declaration,
+      ),
+      single_task_declaration: $ => seq(
+         reservedWord('task'),
+         $.identifier,
+         optional($.aspect_specification),
+         optional(seq(
+            reservedWord('is'),
+            optional(seq(
+               reservedWord('new'),
+               $.interface_list,
+               reservedWord('with'),
+            )),
+            $.task_definition,
+         )),
+         ';',
+      ),
+      entry_declaration: $ => seq(
+         optional($.overriding_indicator),
+         reservedWord('entry'),
+         $.identifier,
+         optional(seq(
+            '(',
+            $.discrete_subtype_definition,
+            ')',
+         )),
+         field('parameter_profile', optional($.formal_part)),
+         optional($.aspect_specification),
+         ';',
+      ),
+      task_item: $ => choice(
+         $.entry_declaration,
+         $.aspect_clause,
+      ),
+      task_definition: $ => seq(
+         repeat1($.task_item),
+         optional(seq(
+            reservedWord('private'),
+            repeat1($.task_item),
+         )),
+         reservedWord('end'),
+         optional($.identifier),
       ),
       overriding_indicator: $ => seq(
          optional(reservedWord('not')),
@@ -1747,8 +1801,81 @@ module.exports = grammar({
          $.block_statement,
          $.extended_return_statement,
 //         $.parallel_block_statement,
-//         $.accept_statement,
-//         $.select_statement,
+         $.accept_statement,
+         $.select_statement,
+      ),
+      select_statement: $ => choice(
+         $.selective_accept,
+         $.timed_entry_call,
+         $.conditional_entry_call,
+//         $.asynchronous_select,
+      ),
+      entry_call_alternative: $ => seq(
+         $.procedure_call_statement,
+         optional($.sequence_of_statements),
+      ),
+      conditional_entry_call: $ => seq(
+         reservedWord('select'),
+         $.entry_call_alternative,
+         reservedWord('else'),
+         $.sequence_of_statements,
+         reservedWord('end'),
+         reservedWord('select'),
+         ';',
+      ),
+      delay_alternative: $ => seq(
+         $.delay_statement,
+         optional($.sequence_of_statements)
+      ),
+      timed_entry_call: $ => seq(
+         reservedWord('select'),
+         $.entry_call_alternative,
+         reservedWord('or'),
+         $.delay_alternative,
+         reservedWord('end'),
+         reservedWord('select'),
+         ';',
+      ),
+      guard: $ => seq(
+         reservedWord('when'),
+         field('condition', $.expression),
+         '=>',
+      ),
+      guard_select: $ => seq(
+         $.guard,
+         $.select_alternative,
+      ),
+      select_alternative: $ => seq(
+         $.accept_statement,
+         optional($.sequence_of_statements),
+      ),
+      selective_accept: $ => seq(
+         reservedWord('select'),
+         list_of(reservedWord('or'), $.guard_select),
+         optional(seq(
+            reservedWord('else'),
+            $.sequence_of_statements,
+         )),
+         reservedWord('end'),
+         reservedWord('select'),
+         reservedWord(';'),
+      ),
+      accept_statement: $ => seq(
+         reservedWord('accept'),
+         $._direct_name,
+         optional(seq(
+            '(',
+            field('entry_index', $.expression),
+            ')',
+         )),
+         field('parameter_profile', optional($.formal_part)),
+         optional(seq(
+            reservedWord('do'),
+            $.handled_sequence_of_statements,
+            reservedWord('end'),
+            optional($.identifier),
+         )),
+         ';',
       ),
       case_statement_alternative: $ => seq(
          reservedWord('when'),

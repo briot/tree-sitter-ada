@@ -1,0 +1,142 @@
+================================================================================
+tasks
+================================================================================
+
+package body P is
+   task T is
+      entry E (A : Integer);
+   private
+      entry E2;
+   end T;
+
+   task body T is
+      A : Integer;
+   begin
+      accept E (A : Integer) do
+         null;
+      end E;
+
+      select
+         Call (1);
+      or
+         delay 1.0;
+      end select;
+
+      select
+         Call (1);
+      else
+         null;
+      end select;
+   end T;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (package_body
+        (name
+          (identifier))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (object_declaration
+              (single_task_declaration
+                (identifier)
+                (task_definition
+                  (task_item
+                    (entry_declaration
+                      (identifier)
+                      (formal_part
+                        (parameter_specification_list
+                          (parameter_specification
+                            (defining_identifier_list
+                              (identifier))
+                            (name
+                              (identifier)))))))
+                  (task_item
+                    (entry_declaration
+                      (identifier)))
+                  (identifier)))))
+          (declarative_item_pragma
+            (proper_body
+              (task_body
+                (identifier)
+                (non_empty_declarative_part
+                  (declarative_item_pragma
+                    (object_declaration
+                      (defining_identifier_list
+                        (identifier))
+                      (subtype_indication
+                        (name
+                          (identifier))))))
+                (handled_sequence_of_statements
+                  (sequence_of_statements
+                    (statement
+                      (compound_statement
+                        (accept_statement
+                          (identifier)
+                          (formal_part
+                            (parameter_specification_list
+                              (parameter_specification
+                                (defining_identifier_list
+                                  (identifier))
+                                (name
+                                  (identifier)))))
+                          (handled_sequence_of_statements
+                            (sequence_of_statements
+                              (statement
+                                (simple_statement
+                                  (null_statement)))))
+                          (identifier))))
+                    (statement
+                      (compound_statement
+                        (select_statement
+                          (timed_entry_call
+                            (entry_call_alternative
+                              (procedure_call_statement
+                                (name
+                                  (identifier))
+                                (actual_parameter_part
+                                  (parameter_association
+                                    (expression
+                                      (relation
+                                        (simple_expression
+                                          (term
+                                            (factor
+                                              (primary
+                                                (numeric_literal)))))))))))
+                            (delay_alternative
+                              (delay_statement
+                                (delay_relative_statement
+                                  (expression
+                                    (relation
+                                      (simple_expression
+                                        (term
+                                          (factor
+                                            (primary
+                                              (numeric_literal))))))))))))))
+                    (statement
+                      (compound_statement
+                        (select_statement
+                          (conditional_entry_call
+                            (entry_call_alternative
+                              (procedure_call_statement
+                                (name
+                                  (identifier))
+                                (actual_parameter_part
+                                  (parameter_association
+                                    (expression
+                                      (relation
+                                        (simple_expression
+                                          (term
+                                            (factor
+                                              (primary
+                                                (numeric_literal)))))))))))
+                            (sequence_of_statements
+                              (statement
+                                (simple_statement
+                                  (null_statement))))))))))
+                (identifier)))))
+        (name
+          (identifier))))))
