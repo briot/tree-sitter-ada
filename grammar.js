@@ -107,6 +107,7 @@ module.exports = grammar({
 
       [$.function_call, $.procedure_call_statement],
       [$.function_call, $.name],
+      [$.selector_name, $.primary],
 
    ],
 
@@ -184,7 +185,7 @@ module.exports = grammar({
       ),
       selector_name: $ => choice(
          $._direct_name,
-         $.character_literal,
+//         $.character_literal,  // was in ada-mode, moved to primary instead
 //         reservedWord('others'),
       ),
       attribute_reference: $ => choice(
@@ -513,6 +514,7 @@ module.exports = grammar({
          $.aggregate,
          $.name,
          $.string_literal,  // ada-mode puts this in name instead
+         $.character_literal,
 //         $.allocator,
       ),
       access_type_definition: $ => seq(
@@ -1522,14 +1524,61 @@ module.exports = grammar({
          ),
       ),
       compound_statement: $ => choice(
-//         $.if_statement,
-//         $.case_statement,
+         $.if_statement,
+         $.case_statement,
          $.loop_statement,
-//         $.block_statement,
-//         $.extended_return_statement,
+         $.block_statement,
+         $.extended_return_statement,
 //         $.parallel_block_statement,
 //         $.accept_statement,
 //         $.select_statement,
+      ),
+      case_statement_alternative: $ => seq(
+         reservedWord('when'),
+         $.discrete_choice_list,
+         '=>',
+         $.sequence_of_statements,
+      ),
+      case_statement: $ => seq(
+         reservedWord('case'),
+         $.expression,
+         reservedWord('is'),
+         repeat1($.case_statement_alternative),
+         reservedWord('end'),
+         reservedWord('case'),
+         ';',
+      ),
+      block_statement: $ => seq(
+         optional($.loop_label),
+         optional(seq(
+            reservedWord('declare'),
+            optional($.non_empty_declarative_part),
+         )),
+         reservedWord('begin'),
+         $.handled_sequence_of_statements,
+         reservedWord('end'),
+         optional($.identifier),
+         ';',
+      ),
+      if_statement: $ => seq(
+         reservedWord('if'),
+         field('condition', $.expression),
+         reservedWord('then'),
+         $.sequence_of_statements,
+         repeat($.elsif_statement_item),
+         optional(seq(
+            reservedWord('else'),
+            $.sequence_of_statements,
+         )),
+         reservedWord('end'),
+         reservedWord('if'),
+         ';',
+      ),
+      elsif_statement_item: $ => seq(
+         reservedWord('elsif'),
+         field('condition', $.expression),
+         reservedWord('then'),
+         $.sequence_of_statements,
       ),
       exit_statement: $ => seq(
          reservedWord('exit'),
@@ -1564,6 +1613,29 @@ module.exports = grammar({
          reservedWord('return'),
          optional($.expression),
          ';',
+      ),
+      extended_return_statement: $ => seq(
+         reservedWord('return'),
+         $.extended_return_object_declaration,
+         optional(seq(
+            reservedWord('do'),
+            $.handled_sequence_of_statements,
+            reservedWord('end'),
+            reservedWord('return'),
+         )),
+         ';',
+      ),
+      extended_return_object_declaration: $ => seq(
+         $.identifier,
+         ':',
+         optional(reservedWord('aliased')),
+         optional(reservedWord('constant')),
+         $.return_subtype_indication,
+         optional($.assign_value),
+      ),
+      return_subtype_indication: $ => choice(
+         $.subtype_indication,
+         $.access_definition,
       ),
       procedure_call_statement: $ => seq(
          $.name,
