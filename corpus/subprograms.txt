@@ -241,9 +241,9 @@ function F2 (A : Integer) return Boolean
             (name
               (identifier)))))
       (aggregate
-        (array_aggregate
-          (positional_array_aggregate
-            (expression_list
+        (record_aggregate
+          (record_component_association_list
+            (record_component_association
               (expression
                 (relation
                   (simple_expression
@@ -281,9 +281,9 @@ function F3 return Boolean
             (name
               (identifier)))))
       (aggregate
-        (array_aggregate
-          (positional_array_aggregate
-            (expression_list
+        (record_aggregate
+          (record_component_association_list
+            (record_component_association
               (expression
                 (relation
                   (raise_expression
@@ -309,9 +309,9 @@ function F4 return Boolean is (True);
             (name
               (identifier)))))
       (aggregate
-        (array_aggregate
-          (positional_array_aggregate
-            (expression_list
+        (record_aggregate
+          (record_component_association_list
+            (record_component_association
               (expression
                 (relation
                   (simple_expression
@@ -421,9 +421,9 @@ function F5 (A : Integer) return Boolean
             (name
               (identifier)))))
       (aggregate
-        (array_aggregate
-          (positional_array_aggregate
-            (expression_list
+        (record_aggregate
+          (record_component_association_list
+            (record_component_association
               (expression
                 (relation
                   (simple_expression

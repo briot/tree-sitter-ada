@@ -50,6 +50,13 @@ module.exports = grammar({
       // specified in at_clause.
       [$.at_clause, $.name],
 
+      // name ':=' '(' _direct_name . '=>'
+      // Where the direct_name could be a name or selector_name
+      [$.name, $.selector_name],
+
+      // name ':=' '(' expression . ',' ...
+      [$.expression_list, $.record_component_association],
+
       // "procedure name is" could be either a procedure specification, or
       // a generic_instantiation.
       [$.generic_instantiation, $.procedure_specification],
@@ -76,7 +83,17 @@ module.exports = grammar({
       // ??? This results in a large slowdown of the parser
       [$.raise_expression],
 
+      // 'type' identifier known_discriminant_part . 'is' ...
+      [$.full_type_declaration, $.discriminant_part],
+
+      // 'type' identifier 'is' 'new' subtype_indication . 'with' .
+      [$.private_extension_declaration, $.derived_type_definition],
+
    ],
+
+//   inline: $ => [
+//      $._direct_name,
+//   ],
 
    rules: {
       compilation: $ => repeat(
@@ -120,7 +137,7 @@ module.exports = grammar({
 
       _direct_name: $ => $.identifier,
       name: $ => seq(
-         $.identifier,
+         $._direct_name,
          repeat(seq(
             '.',
             $.identifier,
@@ -134,6 +151,8 @@ module.exports = grammar({
          '.',
          reservedWord('all'),
       ),
+
+      // ??? Seems to allow  'name.others' as a component
       selected_component: $ => seq(
          $.name,
          '.',
@@ -142,7 +161,7 @@ module.exports = grammar({
       selector_name: $ => choice(
          $._direct_name,
          $.character_literal,
-         reservedWord('others'),
+//         reservedWord('others'),
       ),
       attribute_reference: $ => choice(
          seq(
@@ -475,6 +494,36 @@ module.exports = grammar({
          $.name,
 //         $.allocator,
       ),
+      access_type_definition: $ => seq(
+         optional($.null_exclusion),
+         choice(
+            $.access_to_object_definition,
+            seq(
+               reservedWord('access'),
+               optional(reservedWord('protected')),
+               $.access_to_subprogram_definition,
+            ),
+         ),
+      ),
+      access_to_object_definition: $ => seq(
+         reservedWord('access'),
+         optional($.general_access_modifier),
+         $.subtype_indication,
+      ),
+      general_access_modifier: $ => choice(
+         reservedWord('all'),
+         reservedWord('constant'),
+      ),
+      access_to_subprogram_definition: $ => choice(
+         seq(
+            reservedWord('procedure'),
+            optional($.formal_part),
+         ),
+         seq(
+            reservedWord('function'),
+            $.parameter_and_result_profile,
+         ),
+      ),
       access_definition: $ => seq(
          optional($.null_exclusion),
          reservedWord('access'),
@@ -500,7 +549,7 @@ module.exports = grammar({
          choice(
             comma_separated_list_of($.parameter_association),
             $.conditional_expression,
-//            $.quantified_expression,
+            $.quantified_expression,
 //            $.declare_expression,
          ),
          ')',
@@ -545,16 +594,14 @@ module.exports = grammar({
          reservedWord('when'),
          $.discrete_choice_list,
          $._non_default_assoc_expression,
-//         '=>',
-//         $.expression,
       ),
       component_choice_list: $ =>
          list_of('|', $.selector_name),
       aggregate: $ => choice(
          $.record_aggregate,
-//         $.extension_aggregate,
+         $.extension_aggregate,
          $.array_aggregate,
-//         $.delta_aggregate,
+         $.delta_aggregate,
          seq(
             '(',
             choice(
@@ -565,13 +612,63 @@ module.exports = grammar({
             ')',
          ),
       ),
+      delta_aggregate: $ => choice(
+         $.record_delta_aggregate,
+         $.array_delta_aggregate,
+      ),
+      extension_aggregate: $ => seq(
+         '(',
+         $.expression,
+         reservedWord('with'),
+         $.record_component_association_list,
+         ')',
+      ),
+      record_delta_aggregate: $ => seq(
+         '(',
+         $.expression,
+         reservedWord('with'),
+         reservedWord('delta'),
+         $.record_component_association_list,
+         ')',
+      ),
+      array_delta_aggregate: $ => choice(
+         seq(
+            '(',
+            $.expression,
+            reservedWord('with'),
+            reservedWord('delta'),
+            $.array_component_association_list,
+            ')',
+         ),
+         seq(
+            '[',
+            $.expression,
+            reservedWord('with'),
+            reservedWord('delta'),
+            $.array_component_association_list,
+            ']',
+         ),
+      ),
       record_aggregate: $ => seq(
          '(',
          $.record_component_association_list,
          ')',
       ),
+      array_component_association: $ => seq(
+         $.discrete_choice_list,
+         $.assoc_expression,
+      ),
+      array_component_association_list: $ =>
+         comma_separated_list_of($.array_component_association),
+      record_component_association: $ => choice(
+         seq(
+            $.component_choice_list,
+            $.assoc_expression,
+         ),
+         $.expression,
+      ),
       record_component_association_list: $ => choice(
-//         comma_separated_list_of($.record_component_association),
+         comma_separated_list_of($.record_component_association),
          seq(
             reservedWord('null'),
             reservedWord('record'),
@@ -605,9 +702,9 @@ module.exports = grammar({
       ),
       type_declaration: $ => choice(
          $.full_type_declaration,
-//         $.incomplete_type_declaration,
-//         $.private_type_declaration,
-//         $.private_extension_declaration,
+         $.incomplete_type_declaration,
+         $.private_type_declaration,
+         $.private_extension_declaration,
       ),
       full_type_declaration: $ => choice(
          seq(
@@ -622,13 +719,67 @@ module.exports = grammar({
 //         $.task_type_declaration,
 //         $.protected_type_declaration,
       ),
+      private_type_declaration: $ => seq(
+         reservedWord('type'),
+         $.identifier,
+         optional($.discriminant_part),
+         reservedWord('is'),
+         optional(seq(
+            optional(reservedWord('abstract')),
+            reservedWord('tagged'),
+         )),
+         optional(reservedWord('limited')),
+         reservedWord('private'),
+         optional($.aspect_specification),
+         ';',
+      ),
+      private_extension_declaration: $ => seq(
+         reservedWord('type'),
+         $.identifier,
+         optional($.discriminant_part),
+         reservedWord('is'),
+         optional(reservedWord('abstract')),
+         optional(choice(
+            reservedWord('limited'),
+            reservedWord('synchronized'),
+         )),
+         reservedWord('new'),
+         $.subtype_indication,
+         optional(seq(
+            reservedWord('and'),
+            $.interface_list,
+         )),
+         reservedWord('with'),
+         reservedWord('private'),
+         optional($.aspect_specification),
+         ';',
+      ),
+      discriminant_part: $ => choice(
+         $.known_discriminant_part,
+         $.unknown_discriminant_part,
+      ),
+      unknown_discriminant_part: $ => seq(
+         '(',
+         '<>',
+         ')',
+      ),
       known_discriminant_part: $ => seq(
          '(',
          $.discriminant_specification_list,
          ')',
       ),
+      incomplete_type_declaration: $ => seq(
+         reservedWord('type'),
+         $.identifier,
+         optional($.discriminant_part),
+         optional(seq(
+            reservedWord('is'),
+            reservedWord('tagged'),
+         )),
+         ';',
+      ),
       discriminant_specification_list: $ =>
-         list_of(';', $.discriminant_specification),
+         prec.right(list_of(';', $.discriminant_specification)),
       discriminant_specification: $ => seq(
          $.defining_identifier_list,
          ':',
@@ -647,7 +798,7 @@ module.exports = grammar({
          $.real_type_definition,
          $.array_type_definition,
          $.record_type_definition,
-//         $.access_type_definition,
+         $.access_type_definition,
          $.derived_type_definition,
          $.interface_type_definition,
       ),
@@ -917,7 +1068,7 @@ module.exports = grammar({
       ),
       at_clause: $ => seq(
          reservedWord('for'),
-         $.identifier,
+         $._direct_name,
          reservedWord('use'),
          reservedWord('at'),
          $.expression,
@@ -1240,7 +1391,7 @@ module.exports = grammar({
       )),
       simple_statement: $ => choice(
          $.null_statement,
-//         $.assignment_statement,
+         $.assignment_statement,
 //         $.exit_statement,
 //         $.goto_statement,
 //         $.procedure_call_statement,
@@ -1257,6 +1408,11 @@ module.exports = grammar({
             $.simple_statement,
 //            $.compound_statement,
          ),
+      ),
+      assignment_statement: $ => seq(
+         $.name,
+         $.assign_value,
+         ';',
       ),
       subprogram_declaration: $ => seq(
          optional($.overriding_indicator),
