@@ -92,14 +92,14 @@ end P;
                     (iterator_specification
                       (identifier)
                       (name
-                        (attribute_reference
-                          (name
-                            (identifier)
+                        (identifier)
+                        (name
+                          (attribute_reference
                             (name
-                              (identifier)))
-                          (tick)
-                          (attribute_designator
-                            (identifier))))))
+                              (identifier))
+                            (tick)
+                            (attribute_designator
+                              (identifier)))))))
                   (sequence_of_statements
                     (statement
                       (simple_statement

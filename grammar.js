@@ -105,6 +105,10 @@ module.exports = grammar({
       // 'type' identifier 'is' 'new' subtype_indication . 'with' .
       [$.private_extension_declaration, $.derived_type_definition],
 
+      // subprogram_specification
+      //     'with' aspect_mark '=>' 'do' name '(' name . ')'
+      [$.primary, $.dispatching_operation_specifier],
+
       [$.function_call, $.procedure_call_statement],
       [$.function_call, $.name],
       [$.selector_name, $.primary],
@@ -418,12 +422,24 @@ module.exports = grammar({
          $.delta_constraint,
       ),
       range_g: $ => choice(
-//         $.range_attribute_reference,
+         field('range_attribute_reference', seq(
+            $.name,
+            $.tick,
+            $.range_attribute_designator,
+         )),
          seq(
             $.simple_expression,
             '..',
             $.simple_expression,
          ),
+      ),
+      range_attribute_designator: $ => seq(
+         reservedWord('range'),
+         optional(seq(
+            '(',
+            $.expression,
+            ')',
+         )),
       ),
       range_constraint: $ => seq(
          reservedWord('range'),
@@ -1561,12 +1577,50 @@ module.exports = grammar({
          optional($.aspect_specification),
          ';',
       ),
+      formal_group_designator: $ => choice(
+         'null',
+         'all',
+      ),
+      extended_global_aspect_definition: $ => choice(
+         seq(
+            reservedWord('use'),
+            field('formal_parameter_designator', choice(
+               $.formal_group_designator,
+               $.name,
+            )),
+         ),
+         seq(
+            reservedWord('do'),
+            $.dispatching_operation_specifier,
+         ),
+      ),
+      disaptching_operation_set: $ =>
+         comma_separated_list_of($.dispatching_operation_specifier),
+      dispatching_operation_specifier: $ => seq(
+         $.name,
+         '(',
+         $.name,
+         ')',
+      ),
+      extended_global_aspect_element: $ => choice(
+         seq(
+            reservedWord('use'),
+            field('formal_parameter_set', choice(
+               $.formal_group_designator,
+               comma_separated_list_of($.name),
+            )),
+         ),
+         seq(
+            reservedWord('do'),
+            comma_separated_list_of($.dispatching_operation_specifier),
+         ),
+      ),
       global_aspect_definition: $ => choice(
          seq(
             $.global_mode,
 //            $.global_designator,
          ),
-//         $.extended_global_aspect_definition,
+         $.extended_global_aspect_definition,
          seq(
             '(',
             comma_separated_list_of($.global_aspect_element),
@@ -1578,7 +1632,7 @@ module.exports = grammar({
             $.global_mode,
             $.global_set,
          ),
-//         $.extended_global_aspect_definition,
+         $.extended_global_aspect_definition,
       ),
       global_mode: $ => choice(
          $.non_empty_mode,

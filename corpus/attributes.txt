@@ -1,0 +1,89 @@
+================================================================================
+Range attribute
+================================================================================
+
+procedure P is
+   A : MyArray (B'Range (1));
+begin
+   for E in Arr'Range loop
+      null;
+   end loop;
+   for E in Arr'Range (1) loop
+      null;
+   end loop;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (object_declaration
+              (defining_identifier_list
+                (identifier))
+              (subtype_indication
+                (name
+                  (identifier))
+                (constraint
+                  (index_constraint
+                    (discrete_range
+                      (range_g
+                        (name
+                          (identifier))
+                        (tick)
+                        (range_attribute_designator
+                          (expression
+                            (relation
+                              (simple_expression
+                                (term
+                                  (factor
+                                    (primary
+                                      (numeric_literal))))))))))))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (compound_statement
+                (loop_statement
+                  (iteration_scheme
+                    (loop_parameter_specification
+                      (identifier)
+                      (discrete_subtype_definition
+                        (range_g
+                          (name
+                            (identifier))
+                          (tick)
+                          (range_attribute_designator)))))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (null_statement)))))))
+            (statement
+              (compound_statement
+                (loop_statement
+                  (iteration_scheme
+                    (loop_parameter_specification
+                      (identifier)
+                      (discrete_subtype_definition
+                        (range_g
+                          (name
+                            (identifier))
+                          (tick)
+                          (range_attribute_designator
+                            (expression
+                              (relation
+                                (simple_expression
+                                  (term
+                                    (factor
+                                      (primary
+                                        (numeric_literal))))))))))))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (null_statement)))))))))))))
