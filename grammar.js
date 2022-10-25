@@ -50,9 +50,9 @@ module.exports = grammar({
       // specified in at_clause.
       [$.at_clause, $.name],
 
-      // name ':=' '(' _direct_name . '=>'
-      // Where the direct_name could be a name or selector_name
-      [$.name, $.selector_name],
+      // 'case' '(' _direct_name . '=>' ...
+      //  ??? Invalid Ada
+      [$.name, $.component_choice_list],
 
       // name ':=' '(' expression . ',' ...
       [$.expression_list, $.record_component_association],
@@ -111,7 +111,6 @@ module.exports = grammar({
 
       [$.function_call, $.procedure_call_statement],
       [$.function_call, $.name],
-      [$.selector_name, $.primary],
       [$.formal_derived_type_definition],
       [$._direct_name, $.aspect_mark],
       [$.name, $.attribute_reference, $.qualified_expression],
@@ -165,11 +164,6 @@ module.exports = grammar({
       name_list: $ => comma_separated_list_of($.name),
       defining_identifier_list: $ => comma_separated_list_of($.identifier),
 
-      selector_name: $ => choice(
-         $._direct_name,
-         // $.character_literal,  // was in ada-mode, moved to primary instead
-         // reservedWord('others'),
-      ),
       attribute_reference: $ => choice(
          seq(
             $.name,
@@ -641,7 +635,7 @@ module.exports = grammar({
          $._non_default_assoc_expression,
       ),
       component_choice_list: $ =>
-         list_of('|', $.selector_name),
+         list_of('|', $._direct_name),
       aggregate: $ => choice(
          $.record_aggregate,
          $.extension_aggregate,

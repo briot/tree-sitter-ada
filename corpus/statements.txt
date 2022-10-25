@@ -228,8 +228,7 @@ end F;
                                       (record_component_association_list
                                         (record_component_association
                                           (component_choice_list
-                                            (selector_name
-                                              (identifier)))
+                                            (identifier))
                                           (assoc_expression
                                             (expression
                                               (relation
@@ -390,8 +389,7 @@ end;
                                     (actual_parameter_part
                                       (parameter_association
                                         (component_choice_list
-                                          (selector_name
-                                            (identifier)))
+                                          (identifier))
                                         (assoc_expression
                                           (expression
                                             (relation
@@ -574,8 +572,7 @@ end;
                                   (actual_parameter_part
                                     (parameter_association
                                       (component_choice_list
-                                        (selector_name
-                                          (identifier)))
+                                        (identifier))
                                       (assoc_expression
                                         (expression
                                           (relation
@@ -702,8 +699,7 @@ end;
                                                                 (record_component_association_list
                                                                   (record_component_association
                                                                     (component_choice_list
-                                                                      (selector_name
-                                                                        (identifier)))
+                                                                      (identifier))
                                                                     (assoc_expression
                                                                       (expression
                                                                         (relation

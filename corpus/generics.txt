@@ -58,8 +58,7 @@ end;
                   (actual_parameter_part
                     (parameter_association
                       (component_choice_list
-                        (selector_name
-                          (identifier)))
+                        (identifier))
                       (assoc_expression
                         (expression
                           (relation
@@ -70,8 +69,7 @@ end;
                                     (numeric_literal)))))))))
                     (parameter_association
                       (component_choice_list
-                        (selector_name
-                          (identifier)))
+                        (identifier))
                       (assoc_expression)))))))
           (generic_formal_parameter_declaration
             (formal_subprogram_declaration

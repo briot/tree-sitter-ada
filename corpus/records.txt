@@ -357,178 +357,174 @@ end;
               (record_extension_part
                 (record_definition)))))))))
 
-========
+================================================================================
 record aggregates
-========
+================================================================================
 
 procedure P is
 begin
    A := (F1 => 1, F2 => 2);
 end;
 
--------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (proper_body
-          (subprogram_body
-            (subprogram_specification
-              (procedure_specification
-                (name
-                  (identifier))))
-            (handled_sequence_of_statements
-              (sequence_of_statements
-                (statement
-                  (simple_statement
-                    (assignment_statement
-                      (name
-                        (identifier))
-                      (assign_value
-                        (expression
-                          (relation
-                            (simple_expression
-                              (term
-                                (factor
-                                  (primary
-                                    (aggregate
-                                      (record_aggregate
-                                        (record_component_association_list
-                                          (record_component_association
-                                            (component_choice_list
-                                              (selector_name
-                                                (identifier)))
-                                            (assoc_expression
-                                              (expression
-                                                (relation
-                                                  (simple_expression
-                                                    (term
-                                                      (factor
-                                                        (primary
-                                                          (numeric_literal)))))))))
-                                          (record_component_association
-                                            (component_choice_list
-                                              (selector_name
-                                                (identifier)))
-                                            (assoc_expression
-                                              (expression
-                                                (relation
-                                                  (simple_expression
-                                                    (term
-                                                      (factor
-                                                        (primary
-                                                          (numeric_literal))))))))))))))))))))))))))))
-
-======
-record aggregate extension
-======
-
-procedure P is
-begin
-   A := (B with F3 => 2);
-end;
-
----------
-
-    (compilation
-      (compilation_unit
-        (proper_body
-          (subprogram_body
-            (subprogram_specification
-              (procedure_specification
-                (name
-                  (identifier))))
-            (handled_sequence_of_statements
-              (sequence_of_statements
-                (statement
-                  (simple_statement
-                    (assignment_statement
-                      (name
-                        (identifier))
-                      (assign_value
-                        (expression
-                          (relation
-                            (simple_expression
-                              (term
-                                (factor
-                                  (primary
-                                    (aggregate
-                                      (extension_aggregate
-                                        (expression
-                                          (relation
-                                            (simple_expression
-                                              (term
-                                                (factor
-                                                  (primary
-                                                    (name
-                                                      (identifier))))))))
-                                        (record_component_association_list
-                                          (record_component_association
-                                            (component_choice_list
-                                              (selector_name
-                                                (identifier)))
-                                            (assoc_expression
-                                              (expression
-                                                (relation
-                                                  (simple_expression
-                                                    (term
-                                                      (factor
-                                                        (primary
-                                                          (numeric_literal))))))))))))))))))))))))))))
-
-======
-record delta aggregate
-======
-
-procedure P is
-begin
-   A := (B with delta F3 => 2);
-end;
-
--------
-
-    (compilation
-      (compilation_unit
-        (proper_body
-          (subprogram_body
-            (subprogram_specification
-              (procedure_specification
-                (name
-                  (identifier))))
-            (handled_sequence_of_statements
-              (sequence_of_statements
-                (statement
-                  (simple_statement
-                    (assignment_statement
-                      (name
-                        (identifier))
-                      (assign_value
-                        (expression
-                          (relation
-                            (simple_expression
-                              (term
-                                (factor
-                                  (primary
-                                    (aggregate
-                                      (delta_aggregate
-                                        (record_delta_aggregate
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (name
+                    (identifier))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (aggregate
+                                  (record_aggregate
+                                    (record_component_association_list
+                                      (record_component_association
+                                        (component_choice_list
+                                          (identifier))
+                                        (assoc_expression
                                           (expression
                                             (relation
                                               (simple_expression
                                                 (term
                                                   (factor
                                                     (primary
-                                                      (name
-                                                        (identifier))))))))
-                                          (record_component_association_list
-                                            (record_component_association
-                                              (component_choice_list
-                                                (selector_name
-                                                  (identifier)))
-                                              (assoc_expression
-                                                (expression
-                                                  (relation
-                                                    (simple_expression
-                                                      (term
-                                                        (factor
-                                                          (primary
-                                                            (numeric_literal)))))))))))))))))))))))))))))
+                                                      (numeric_literal)))))))))
+                                      (record_component_association
+                                        (component_choice_list
+                                          (identifier))
+                                        (assoc_expression
+                                          (expression
+                                            (relation
+                                              (simple_expression
+                                                (term
+                                                  (factor
+                                                    (primary
+                                                      (numeric_literal))))))))))))))))))))))))))))
+
+================================================================================
+record aggregate extension
+================================================================================
+
+procedure P is
+begin
+   A := (B with F3 => 2);
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (name
+                    (identifier))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (aggregate
+                                  (extension_aggregate
+                                    (expression
+                                      (relation
+                                        (simple_expression
+                                          (term
+                                            (factor
+                                              (primary
+                                                (name
+                                                  (identifier))))))))
+                                    (record_component_association_list
+                                      (record_component_association
+                                        (component_choice_list
+                                          (identifier))
+                                        (assoc_expression
+                                          (expression
+                                            (relation
+                                              (simple_expression
+                                                (term
+                                                  (factor
+                                                    (primary
+                                                      (numeric_literal))))))))))))))))))))))))))))
+
+================================================================================
+record delta aggregate
+================================================================================
+
+procedure P is
+begin
+   A := (B with delta F3 => 2);
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (name
+                    (identifier))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (aggregate
+                                  (delta_aggregate
+                                    (record_delta_aggregate
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (name
+                                                    (identifier))))))))
+                                      (record_component_association_list
+                                        (record_component_association
+                                          (component_choice_list
+                                            (identifier))
+                                          (assoc_expression
+                                            (expression
+                                              (relation
+                                                (simple_expression
+                                                  (term
+                                                    (factor
+                                                      (primary
+                                                        (numeric_literal)))))))))))))))))))))))))))))
