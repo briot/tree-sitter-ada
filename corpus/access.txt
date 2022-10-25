@@ -1,6 +1,6 @@
-========
+================================================================================
 access types
-========
+================================================================================
 
 package P is
    type A is access Integer;
@@ -11,69 +11,126 @@ package P is
    type F is access protected function return Boolean;
 end;
 
--------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (package_specification
-          (name
-            (identifier))
-          (type_declaration
-            (full_type_declaration
-              (identifier)
-              (type_definition
-                (access_type_definition
-                  (access_to_object_definition
-                    (subtype_indication
+(compilation
+  (compilation_unit
+    (package_specification
+      (name
+        (identifier))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_object_definition
+                (subtype_indication
+                  (name
+                    (identifier))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_object_definition
+                (subtype_indication
+                  (null_exclusion)
+                  (name
+                    (identifier))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_object_definition
+                (general_access_modifier)
+                (subtype_indication
+                  (name
+                    (identifier))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_object_definition
+                (general_access_modifier)
+                (subtype_indication
+                  (name
+                    (identifier))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_subprogram_definition
+                (parameter_and_result_profile
+                  (result_profile
+                    (name
+                      (identifier)))))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_subprogram_definition
+                (parameter_and_result_profile
+                  (result_profile
+                    (name
+                      (identifier))))))))))))
+
+================================================================================
+Dereference
+================================================================================
+
+procedure P is
+begin
+   A := Acc.all;
+   Proc.all (1);
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (name
+                    (identifier))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (name
+                                  (identifier)
+                                  (name
+                                    (identifier)))))))))))))
+            (statement
+              (simple_statement
+                (procedure_call_statement
+                  (name
+                    (function_call
                       (name
-                        (identifier))))))))
-          (type_declaration
-            (full_type_declaration
-              (identifier)
-              (type_definition
-                (access_type_definition
-                  (access_to_object_definition
-                    (subtype_indication
-                      (null_exclusion)
-                      (name
-                        (identifier))))))))
-          (type_declaration
-            (full_type_declaration
-              (identifier)
-              (type_definition
-                (access_type_definition
-                  (access_to_object_definition
-                    (general_access_modifier)
-                    (subtype_indication
-                      (name
-                        (identifier))))))))
-          (type_declaration
-            (full_type_declaration
-              (identifier)
-              (type_definition
-                (access_type_definition
-                  (access_to_object_definition
-                    (general_access_modifier)
-                    (subtype_indication
-                      (name
-                        (identifier))))))))
-          (type_declaration
-            (full_type_declaration
-              (identifier)
-              (type_definition
-                (access_type_definition
-                  (access_to_subprogram_definition
-                    (parameter_and_result_profile
-                      (result_profile
+                        (identifier)
                         (name
-                          (identifier)))))))))
-          (type_declaration
-            (full_type_declaration
-              (identifier)
-              (type_definition
-                (access_type_definition
-                  (access_to_subprogram_definition
-                    (parameter_and_result_profile
-                      (result_profile
-                        (name
-                          (identifier))))))))))))
+                          (identifier)))
+                      (actual_parameter_part
+                        (parameter_association
+                          (expression
+                            (relation
+                              (simple_expression
+                                (term
+                                  (factor
+                                    (primary
+                                      (numeric_literal))))))))))))))))))))

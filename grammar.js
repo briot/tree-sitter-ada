@@ -143,19 +143,9 @@ module.exports = grammar({
          '\'',    // But is not the start of a character_literal
       ),
 
-      // Simpler definition for games than the standard grammer
-//      name: $ => choice(
-//         $.explicit_dereference,
-//         $.selected_component,
-//      ),
-//      _direct_name: $ => choice(
-//         $.identifier,
-//         $.string_literal,
-//      ),
-
       _direct_name: $ => $.identifier,
       name: $ => choice(
-         seq(
+         seq(    // inline  selected_component  from ada-mode
             $._direct_name,
             optional(seq(
                '.',
@@ -166,30 +156,19 @@ module.exports = grammar({
          $.function_call,
          $.qualified_expression,
          '@',
-         //$.character_literal, //  from adamode, seems wrong.
-         //$.string_literal,    // from ada-mode, but seems wrong.
-         //                     // Added to primary instead
+         //$.explicit_dereference, // covered by the first rule above
+         //$.character_literal,    // from adamode, seems wrong.
+         //$.string_literal,       // from ada-mode, but seems wrong.
+         //                        // Added to primary instead
       ),
 
       name_list: $ => comma_separated_list_of($.name),
       defining_identifier_list: $ => comma_separated_list_of($.identifier),
 
-      explicit_dereference: $ => seq(
-         $.name,
-         '.',
-         reservedWord('all'),
-      ),
-
-      // ??? Seems to allow  'name.others' as a component
-      selected_component: $ => seq(
-         $.name,
-         '.',
-         $.selector_name,
-      ),
       selector_name: $ => choice(
          $._direct_name,
-//         $.character_literal,  // was in ada-mode, moved to primary instead
-//         reservedWord('others'),
+         // $.character_literal,  // was in ada-mode, moved to primary instead
+         // reservedWord('others'),
       ),
       attribute_reference: $ => choice(
          seq(
