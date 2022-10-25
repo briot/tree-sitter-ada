@@ -1,0 +1,183 @@
+================================================================================
+protected objects
+================================================================================
+
+package body P is
+   protected Obj is
+      procedure Proc;
+      function Func return Boolean;
+      entry E;
+      entry E2 (Color)(A : Integer);
+   private
+      Field : Integer;
+   end Obj;
+
+   protected body Obj is
+      procedure Proc is begin abort T; end;
+      function Func return Boolean is begin return False; end;
+      entry E when Field > 0 is
+      begin
+         requeue E with abort;
+      end E;
+      entry E2 (for C in Color)(A : Integer) when True is
+      begin
+         null;
+      end E2;
+   end Obj;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (package_body
+        (name
+          (identifier))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (object_declaration
+              (single_protected_declaration
+                (identifier)
+                (protected_definition
+                  (protected_operation_declaration
+                    (subprogram_declaration
+                      (subprogram_specification
+                        (procedure_specification
+                          (name
+                            (identifier))))))
+                  (protected_operation_declaration
+                    (subprogram_declaration
+                      (subprogram_specification
+                        (function_specification
+                          (name
+                            (identifier))
+                          (parameter_and_result_profile
+                            (result_profile
+                              (name
+                                (identifier))))))))
+                  (protected_operation_declaration
+                    (entry_declaration
+                      (identifier)))
+                  (protected_operation_declaration
+                    (entry_declaration
+                      (identifier)
+                      (discrete_subtype_definition
+                        (subtype_indication
+                          (name
+                            (identifier))))
+                      (formal_part
+                        (parameter_specification_list
+                          (parameter_specification
+                            (defining_identifier_list
+                              (identifier))
+                            (name
+                              (identifier)))))))
+                  (protected_element_declaration
+                    (component_declaration
+                      (defining_identifier_list
+                        (identifier))
+                      (component_definition
+                        (subtype_indication
+                          (name
+                            (identifier))))))
+                  (identifier)))))
+          (declarative_item_pragma
+            (proper_body
+              (protected_body
+                (identifier)
+                (protected_operation_item
+                  (subprogram_body
+                    (subprogram_specification
+                      (procedure_specification
+                        (name
+                          (identifier))))
+                    (handled_sequence_of_statements
+                      (sequence_of_statements
+                        (statement
+                          (simple_statement
+                            (abort_statement
+                              (name
+                                (identifier)))))))))
+                (protected_operation_item
+                  (subprogram_body
+                    (subprogram_specification
+                      (function_specification
+                        (name
+                          (identifier))
+                        (parameter_and_result_profile
+                          (result_profile
+                            (name
+                              (identifier))))))
+                    (handled_sequence_of_statements
+                      (sequence_of_statements
+                        (statement
+                          (simple_statement
+                            (simple_return_statement
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier)))))))))))))))
+                (protected_operation_item
+                  (entry_body
+                    (identifier)
+                    (entry_barrier
+                      (expression
+                        (relation
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (name
+                                    (identifier))))))
+                          (relational_operator)
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (numeric_literal))))))))
+                    (handled_sequence_of_statements
+                      (sequence_of_statements
+                        (statement
+                          (simple_statement
+                            (requeue_statement
+                              (name
+                                (identifier)))))))
+                    (identifier)))
+                (protected_operation_item
+                  (entry_body
+                    (identifier)
+                    (non_empty_entry_body_formal_part
+                      (entry_index_specification
+                        (identifier)
+                        (discrete_subtype_definition
+                          (subtype_indication
+                            (name
+                              (identifier)))))
+                      (formal_part
+                        (parameter_specification_list
+                          (parameter_specification
+                            (defining_identifier_list
+                              (identifier))
+                            (name
+                              (identifier))))))
+                    (entry_barrier
+                      (expression
+                        (relation
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (name
+                                    (identifier)))))))))
+                    (handled_sequence_of_statements
+                      (sequence_of_statements
+                        (statement
+                          (simple_statement
+                            (null_statement)))))
+                    (identifier)))
+                (identifier)))))))))
