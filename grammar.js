@@ -46,11 +46,11 @@ module.exports = grammar({
       [$.null_procedure_declaration, $.subprogram_specification],
       [$.expression_function_declaration, $.subprogram_specification],
 
-      // "'for' _direct_name * 'use'"  could also be "'for' name * 'use'" as
+      // "'for' identifier * 'use'"  could also be "'for' name * 'use'" as
       // specified in at_clause.
       [$.at_clause, $.name],
 
-      // 'case' '(' _direct_name . '=>' ...
+      // 'case' '(' identifier . '=>' ...
       //  ??? Invalid Ada
       [$.name, $.component_choice_list],
 
@@ -66,18 +66,18 @@ module.exports = grammar({
 
       [$.attribute_definition_clause, $.attribute_reference],
 
-      // _direct_name '.' name . '''
-      // Could be either   _direct_name '.' (attribute_reference name . tick
-      //   or              (name _direct_name '.' name) . '''
+      // identifier '.' name . '''
+      // Could be either   identifier '.' (attribute_reference name . tick
+      //   or              (name identifier '.' name) . '''
       [$.name, $.attribute_reference],
 
       // identifier . ':' ...
       [$.defining_identifier_list, $.object_renaming_declaration,
          $.exception_renaming_declaration],
-      [$.defining_identifier_list, $.object_renaming_declaration,
-         $.exception_renaming_declaration, $._direct_name],
-      [$.defining_identifier_list, $._direct_name],
       [$.defining_identifier_list, $.object_renaming_declaration],
+      [$.defining_identifier_list, $.object_renaming_declaration,
+       $.loop_label, $.exception_renaming_declaration],
+      [$.defining_identifier_list, $.name],
 
       // 'generic' . 'package' ...
       [$.generic_formal_part, $.generic_renaming_declaration],
@@ -112,9 +112,9 @@ module.exports = grammar({
       [$.function_call, $.procedure_call_statement],
       [$.function_call, $.name],
       [$.formal_derived_type_definition],
-      [$._direct_name, $.aspect_mark],
+      [$.name, $.aspect_mark],
       [$.name, $.attribute_reference, $.qualified_expression],
-      [$._direct_name, $.package_body_stub],
+      [$.name, $.package_body_stub],
 
    ],
 
@@ -142,10 +142,9 @@ module.exports = grammar({
          '\'',    // But is not the start of a character_literal
       ),
 
-      _direct_name: $ => $.identifier,
       name: $ => choice(
          seq(    // inline  selected_component  from ada-mode
-            $._direct_name,
+            $.identifier,
             optional(seq(
                '.',
                $.name,
@@ -160,7 +159,6 @@ module.exports = grammar({
          //$.string_literal,       // from ada-mode, but seems wrong.
          //                        // Added to primary instead
       ),
-
       name_list: $ => comma_separated_list_of($.name),
       defining_identifier_list: $ => comma_separated_list_of($.identifier),
 
@@ -635,7 +633,7 @@ module.exports = grammar({
          $._non_default_assoc_expression,
       ),
       component_choice_list: $ =>
-         list_of('|', $._direct_name),
+         list_of('|', $.identifier),
       aggregate: $ => choice(
          $.record_aggregate,
          $.extension_aggregate,
@@ -1108,7 +1106,7 @@ module.exports = grammar({
       ),
       at_clause: $ => seq(
          reservedWord('for'),
-         $._direct_name,
+         $.identifier,
          reservedWord('use'),
          reservedWord('at'),
          $.expression,
@@ -1622,12 +1620,12 @@ module.exports = grammar({
          )),
       ),
       loop_label: $ => seq(    // matches label_opt in ada-mode grammar
-         field('statement_identifier', $._direct_name),
+         field('statement_identifier', $.identifier),
          ':',
       ),
       label: $ => seq(
          '<<',
-         field('statement_identifier', $._direct_name),
+         field('statement_identifier', $.identifier),
          '>>',
       ),
       mod_clause: $ => seq(
@@ -2044,7 +2042,7 @@ module.exports = grammar({
       ),
       accept_statement: $ => seq(
          reservedWord('accept'),
-         $._direct_name,
+         $.identifier,
          optional(seq(
             '(',
             field('entry_index', $.expression),
@@ -2257,7 +2255,7 @@ module.exports = grammar({
       ),
       variant_part: $ => seq(
          reservedWord('case'),
-         $._direct_name,
+         $.identifier,
          reservedWord('is'),
          $.variant_list,
          reservedWord('end'),
