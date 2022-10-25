@@ -140,3 +140,62 @@ end P;
                 (identifier)))))
         (name
           (identifier))))))
+
+================================================================================
+Task types
+================================================================================
+
+package body P is
+   task type T1;
+   task type T is
+      entry E (A : Integer);
+   end T;
+   task type T2 is new T with
+      entry E2;
+   end T2;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (package_body
+        (name
+          (identifier))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (type_declaration
+              (full_type_declaration
+                (task_type_declaration
+                  (identifier)))))
+          (declarative_item_pragma
+            (type_declaration
+              (full_type_declaration
+                (task_type_declaration
+                  (identifier)
+                  (task_definition
+                    (task_item
+                      (entry_declaration
+                        (identifier)
+                        (formal_part
+                          (parameter_specification_list
+                            (parameter_specification
+                              (defining_identifier_list
+                                (identifier))
+                              (name
+                                (identifier)))))))
+                    (identifier))))))
+          (declarative_item_pragma
+            (type_declaration
+              (full_type_declaration
+                (task_type_declaration
+                  (identifier)
+                  (interface_list
+                    (name
+                      (identifier)))
+                  (task_definition
+                    (task_item
+                      (entry_declaration
+                        (identifier)))
+                    (identifier)))))))))))

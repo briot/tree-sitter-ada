@@ -763,7 +763,7 @@ module.exports = grammar({
             optional($.aspect_specification),
             ';',
          ),
-//         $.task_type_declaration,
+         $.task_type_declaration,
 //         $.protected_type_declaration,
       ),
       private_type_declaration: $ => seq(
@@ -1177,6 +1177,23 @@ module.exports = grammar({
          reservedWord('is'),
          reservedWord('separate'),
          optional($.aspect_specification),
+         ';',
+      ),
+      task_type_declaration: $ => seq(
+         reservedWord('task'),
+         reservedWord('type'),
+         $.identifier,
+         optional($.known_discriminant_part),
+         optional($.aspect_specification),
+         optional(seq(
+            reservedWord('is'),
+            optional(seq(
+               reservedWord('new'),
+               $.interface_list,
+               reservedWord('with'),
+            )),
+            $.task_definition,
+         )),
          ';',
       ),
       protected_body_stub: $ => seq(
