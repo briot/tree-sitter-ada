@@ -1929,11 +1929,31 @@ module.exports = grammar({
          $.selective_accept,
          $.timed_entry_call,
          $.conditional_entry_call,
-//         $.asynchronous_select,
+         $.asynchronous_select,
       ),
       entry_call_alternative: $ => seq(
          $.procedure_call_statement,
          optional($.sequence_of_statements),
+      ),
+      asynchronous_select: $ => seq(
+         reservedWord('select'),
+         $.triggering_alternative,
+         reservedWord('then'),
+         reservedWord('abort'),
+         field('abortable_part', $.sequence_of_statements),
+         reservedWord('end'),
+         reservedWord('select'),
+         ';',
+      ),
+      triggering_alternative: $ => choice(
+         seq(
+            $.procedure_call_statement,
+            optional($.sequence_of_statements),
+         ),
+         seq(
+            $.delay_statement,
+            optional($.sequence_of_statements),
+         ),
       ),
       conditional_entry_call: $ => seq(
          reservedWord('select'),

@@ -199,3 +199,83 @@ end;
                       (entry_declaration
                         (identifier)))
                     (identifier)))))))))))
+
+================================================================================
+asynchronous select
+================================================================================
+
+package body P is
+   task body T is
+   begin
+      select
+         Proc (1);
+         null;
+      then abort
+         Proc2;
+      end select;
+   end;
+end;
+      null;
+   end;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (package_body
+        (name
+          (identifier))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (proper_body
+              (task_body
+                (identifier)
+                (handled_sequence_of_statements
+                  (sequence_of_statements
+                    (statement
+                      (compound_statement
+                        (select_statement
+                          (asynchronous_select
+                            (triggering_alternative
+                              (procedure_call_statement
+                                (name
+                                  (function_call
+                                    (name
+                                      (identifier))
+                                    (actual_parameter_part
+                                      (parameter_association
+                                        (expression
+                                          (relation
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (numeric_literal))))))))))))
+                              (sequence_of_statements
+                                (statement
+                                  (simple_statement
+                                    (null_statement)))))
+                            (sequence_of_statements
+                              (statement
+                                (simple_statement
+                                  (procedure_call_statement
+                                    (name
+                                      (identifier)))))))))))))))))))
+  (compilation_unit
+    (statement
+      (simple_statement
+        (null_statement))))
+  (compilation_unit
+    (statement
+      (simple_statement
+        (procedure_call_statement
+          (name
+            (identifier))))))
+  (compilation_unit
+    (statement
+      (simple_statement
+        (procedure_call_statement
+          (name
+            (identifier)))))))
