@@ -63,15 +63,14 @@ end P;
                                           (factor
                                             (primary
                                               (numeric_literal)))))))))
-                              (assoc_expression
-                                (expression
-                                  (relation
-                                    (simple_expression
-                                      (term
-                                        (factor
-                                          (primary
-                                            (name
-                                              (identifier))))))))))
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier)))))))))
                             (array_component_association
                               (discrete_choice_list
                                 (discrete_choice
@@ -82,15 +81,14 @@ end P;
                                           (factor
                                             (primary
                                               (numeric_literal)))))))))
-                              (assoc_expression
-                                (expression
-                                  (relation
-                                    (simple_expression
-                                      (term
-                                        (factor
-                                          (primary
-                                            (name
-                                              (identifier)))))))))))))))))))))
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier))))))))))))))))))))
       (object_declaration
         (defining_identifier_list
           (identifier))
@@ -117,29 +115,103 @@ end P;
                                           (factor
                                             (primary
                                               (numeric_literal)))))))))
-                              (assoc_expression
-                                (expression
-                                  (relation
-                                    (simple_expression
-                                      (term
-                                        (factor
-                                          (primary
-                                            (name
-                                              (identifier))))))))))
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier)))))))))
                             (array_component_association
                               (discrete_choice_list
                                 (discrete_choice))
-                              (assoc_expression
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier))))))))))))))))))))
+      (name
+        (identifier)))))
+
+================================================================================
+Definite-2
+================================================================================
+
+package P is
+   type A is array (1 .. 3) of Boolean;
+   V : constant A := (1, 2, 3);
+end;
+
+--------------------------------------------------------------------------------
+
+    (compilation
+      (compilation_unit
+        (package_specification
+          (name
+            (identifier))
+          (type_declaration
+            (full_type_declaration
+              (identifier)
+              (type_definition
+                (array_type_definition
+                  (constrained_array_definition
+                    (discrete_subtype_definition
+                      (range_g
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))))
+                    (component_definition
+                      (subtype_indication
+                        (name
+                          (identifier)))))))))
+          (object_declaration
+            (defining_identifier_list
+              (identifier))
+            (subtype_indication
+              (name
+                (identifier)))
+            (assign_value
+              (expression
+                (relation
+                  (simple_expression
+                    (term
+                      (factor
+                        (primary
+                          (aggregate
+                            (array_aggregate
+                              (positional_array_aggregate
                                 (expression
                                   (relation
                                     (simple_expression
                                       (term
                                         (factor
                                           (primary
-                                            (name
-                                              (identifier)))))))))))))))))))))
-      (name
-        (identifier)))))
+                                            (numeric_literal)))))))
+                                (expression
+                                  (relation
+                                    (simple_expression
+                                      (term
+                                        (factor
+                                          (primary
+                                            (numeric_literal)))))))
+                                (expression
+                                  (relation
+                                    (simple_expression
+                                      (term
+                                        (factor
+                                          (primary
+                                            (numeric_literal)))))))))))))))))))))
 
 ================================================================================
 Indefinite
@@ -200,15 +272,14 @@ end P;
                                         (factor
                                           (primary
                                             (numeric_literal))))))))
-                              (assoc_expression
-                                (expression
-                                  (relation
-                                    (simple_expression
-                                      (term
-                                        (factor
-                                          (primary
-                                            (name
-                                              (identifier)))))))))))))))))))))
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier))))))))))))))))))))
       (name
         (identifier)))))
 
@@ -274,38 +345,116 @@ end P;
                                         (factor
                                           (primary
                                             (numeric_literal))))))))
-                              (assoc_expression
-                                (expression
-                                  (relation
-                                    (simple_expression
-                                      (term
-                                        (factor
-                                          (primary
-                                            (aggregate
-                                              (array_aggregate
-                                                (named_array_aggregate
-                                                  (array_component_association
-                                                    (discrete_choice_list
-                                                      (discrete_choice
-                                                        (range_g
-                                                          (simple_expression
-                                                            (term
-                                                              (factor
-                                                                (primary
-                                                                  (numeric_literal)))))
-                                                          (simple_expression
-                                                            (term
-                                                              (factor
-                                                                (primary
-                                                                  (numeric_literal))))))))
-                                                    (assoc_expression
-                                                      (expression
-                                                        (relation
-                                                          (simple_expression
-                                                            (term
-                                                              (factor
-                                                                (primary
-                                                                  (name
-                                                                    (identifier))))))))))))))))))))))))))))))))
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (aggregate
+                                            (array_aggregate
+                                              (named_array_aggregate
+                                                (array_component_association
+                                                  (discrete_choice_list
+                                                    (discrete_choice
+                                                      (range_g
+                                                        (simple_expression
+                                                          (term
+                                                            (factor
+                                                              (primary
+                                                                (numeric_literal)))))
+                                                        (simple_expression
+                                                          (term
+                                                            (factor
+                                                              (primary
+                                                                (numeric_literal))))))))
+                                                  (expression
+                                                    (relation
+                                                      (simple_expression
+                                                        (term
+                                                          (factor
+                                                            (primary
+                                                              (name
+                                                                (identifier))))))))))))))))))))))))))))))
       (name
         (identifier)))))
+
+=========
+Index in array aggregates
+=========
+
+procedure P is
+begin
+   Arr := (for Index in 1 .. Count => Function_Returning_Limited (Index));
+end;
+
+-------
+
+    (compilation
+      (compilation_unit
+        (proper_body
+          (subprogram_body
+            (subprogram_specification
+              (procedure_specification
+                (name
+                  (identifier))))
+            (handled_sequence_of_statements
+              (sequence_of_statements
+                (statement
+                  (simple_statement
+                    (assignment_statement
+                      (name
+                        (identifier))
+                      (assign_value
+                        (expression
+                          (relation
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (aggregate
+                                      (array_aggregate
+                                        (named_array_aggregate
+                                          (array_component_association
+                                            (iterated_element_association
+                                              (loop_parameter_specification
+                                                (identifier)
+                                                (discrete_subtype_definition
+                                                  (range_g
+                                                    (simple_expression
+                                                      (term
+                                                        (factor
+                                                          (primary
+                                                            (numeric_literal)))))
+                                                    (simple_expression
+                                                      (term
+                                                        (factor
+                                                          (primary
+                                                            (name
+                                                              (identifier)))))))))
+                                                (expression
+                                                  (relation
+                                                    (simple_expression
+                                                      (term
+                                                        (factor
+                                                          (primary
+                                                            (name
+                                                              (function_call
+                                                                (name
+                                                                  (identifier))
+                                                                (actual_parameter_part
+                                                                  (parameter_association
+                                                                    (expression
+                                                                      (relation
+
+(simple_expression
+
+  (term
+
+    (factor
+
+      (primary
+
+        (name
+
+          (identifier)))))))))))))))))))))))))))))))))))))))

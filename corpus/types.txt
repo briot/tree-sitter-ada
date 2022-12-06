@@ -232,28 +232,32 @@ end P;
                                 (primary
                                   (name
                                     (identifier))))))))))
-                  (assoc_expression
-                    (expression
-                      (relation
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal)))))))))
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal))))))))
                 (array_component_association
                   (discrete_choice_list
                     (discrete_choice
-                      (subtype_indication
-                        (name
-                          (identifier)))))
-                  (assoc_expression
-                    (expression
-                      (relation
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal))))))))))))))
+                          (expression
+                            (relation
+                              (simple_expression
+                                (term
+                                  (factor
+                                    (primary
+                                      (name
+                                        (identifier))))))))))
+
+                  (expression
+                    (relation
+                      (simple_expression
+                        (term
+                          (factor
+                            (primary
+                              (numeric_literal)))))))))))))
       (name
         (identifier)))))
 

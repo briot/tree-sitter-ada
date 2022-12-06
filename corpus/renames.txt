@@ -3,7 +3,7 @@ Renames object
 ================================================================================
 
 procedure P is
-   Threshold renames Global_Threshold;
+   Threshold renames With_Type_Inference;
    A : Integer renames B;
    CE : exception renames Constraint_Error;
    package TIO renames Ada.Text_IO;

@@ -226,17 +226,15 @@ end F;
                                   (aggregate
                                     (record_aggregate
                                       (record_component_association_list
-                                        (record_component_association
                                           (component_choice_list
                                             (identifier))
-                                          (assoc_expression
-                                            (expression
-                                              (relation
-                                                (simple_expression
-                                                  (term
-                                                    (factor
-                                                      (primary
-                                                        (numeric_literal))))))))))))))))))))
+                                          (expression
+                                            (relation
+                                              (simple_expression
+                                                (term
+                                                  (factor
+                                                    (primary
+                                                      (numeric_literal))))))))))))))))))
                   (handled_sequence_of_statements
                     (sequence_of_statements
                       (statement
@@ -390,14 +388,13 @@ end;
                                       (parameter_association
                                         (component_choice_list
                                           (identifier))
-                                        (assoc_expression
-                                          (expression
-                                            (relation
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (numeric_literal))))))))))))))))))))))))))))
+                                        (expression
+                                          (relation
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (numeric_literal)))))))))))))))))))))))))))
 
 ================================================================================
 if statement
@@ -573,14 +570,13 @@ end;
                                     (parameter_association
                                       (component_choice_list
                                         (identifier))
-                                      (assoc_expression
-                                        (expression
-                                          (relation
-                                            (simple_expression
-                                              (term
-                                                (factor
-                                                  (primary
-                                                    (numeric_literal))))))))))))))))))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal)))))))))))))))))
                   (case_statement_alternative
                     (discrete_choice_list
                       (discrete_choice
@@ -589,12 +585,14 @@ end;
                             (term
                               (factor
                                 (primary
-                                  (character_literal)))))
+                                  (name
+                                     (character_literal))))))
                           (simple_expression
                             (term
                               (factor
                                 (primary
-                                  (character_literal))))))))
+                                  (name
+                                    (character_literal)))))))))
                     (sequence_of_statements
                       (statement
                         (simple_statement
@@ -608,7 +606,8 @@ end;
                               (term
                                 (factor
                                   (primary
-                                    (character_literal))))))))
+                                    (name
+                                      (character_literal)))))))))
                       (discrete_choice
                         (expression
                           (relation
@@ -616,7 +615,8 @@ end;
                               (term
                                 (factor
                                   (primary
-                                    (character_literal)))))))))
+                                    (name
+                                      (character_literal))))))))))
                     (sequence_of_statements
                       (statement
                         (simple_statement
@@ -684,27 +684,167 @@ end;
                                         (name
                                           (identifier))
                                         (tick)
-                                        (aggregate
-                                          (record_aggregate
-                                            (record_component_association_list
-                                              (record_component_association
-                                                (expression
-                                                  (relation
-                                                    (simple_expression
-                                                      (term
-                                                        (factor
-                                                          (primary
-                                                            (aggregate
-                                                              (record_aggregate
-                                                                (record_component_association_list
-                                                                  (record_component_association
-                                                                    (component_choice_list
-                                                                      (identifier))
-                                                                    (assoc_expression
-                                                                      (expression
-                                                                        (relation
-                                                                          (simple_expression
-                                                                            (term
-                                                                              (factor
-                                                                                (primary
-                                                                                  (numeric_literal))))))))))))))))))))))))))))))))))))))))))
+                                        (expression
+                                          (relation
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (aggregate
+                                                      (record_aggregate
+                                                        (record_component_association_list
+                                                          (component_choice_list
+                                                            (identifier))
+                                                          (expression
+                                                            (relation
+                                                              (simple_expression
+                                                                (term
+                                                                  (factor
+                                                                    (primary
+                                                                      (numeric_literal))))))))))))))))))))))))))))))))))))
+
+
+========
+Filtered for loops
+========
+
+procedure P is
+begin
+   for E of Some_Array when E /= 0 loop
+      null;
+   end loop;
+end;
+
+-------
+
+    (compilation
+      (compilation_unit
+        (proper_body
+          (subprogram_body
+            (subprogram_specification
+              (procedure_specification
+                (name
+                  (identifier))))
+            (handled_sequence_of_statements
+              (sequence_of_statements
+                (statement
+                  (compound_statement
+                    (loop_statement
+                      (iteration_scheme
+                        (iterator_specification
+                          (identifier)
+                          (name
+                            (identifier))
+                          (iterator_filter
+                            (expression
+                              (relation
+                                (simple_expression
+                                  (term
+                                    (factor
+                                      (primary
+                                        (name
+                                          (identifier))))))
+                                (relational_operator)
+                                (simple_expression
+                                  (term
+                                    (factor
+                                      (primary
+                                        (numeric_literal))))))))))
+                      (sequence_of_statements
+                        (statement
+                          (simple_statement
+                            (null_statement)))))))))))))
+
+=======
+Assignment target name
+=======
+
+procedure P is
+begin
+   Some_Very_Long.And_Complex (Expression) := @ + 1;
+   Another_Very_Long.And_Complex (Expression) := Function_Call (@);
+end;
+
+------
+
+    (compilation
+      (compilation_unit
+        (proper_body
+          (subprogram_body
+            (subprogram_specification
+              (procedure_specification
+                (name
+                  (identifier))))
+            (handled_sequence_of_statements
+              (sequence_of_statements
+                (statement
+                  (simple_statement
+                    (assignment_statement
+                      (name
+                        (function_call
+                          (name
+                            (identifier)
+                            (name
+                              (identifier)))
+                          (actual_parameter_part
+                            (parameter_association
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier))))))))))))
+                      (assign_value
+                        (expression
+                          (relation
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (name))))
+                              (binary_adding_operator)
+                              (term
+                                (factor
+                                  (primary
+                                    (numeric_literal)))))))))))
+                (statement
+                  (simple_statement
+                    (assignment_statement
+                      (name
+                        (function_call
+                          (name
+                            (identifier)
+                            (name
+                              (identifier)))
+                          (actual_parameter_part
+                            (parameter_association
+                              (expression
+                                (relation
+                                  (simple_expression
+                                    (term
+                                      (factor
+                                        (primary
+                                          (name
+                                            (identifier))))))))))))
+                      (assign_value
+                        (expression
+                          (relation
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (name
+                                      (function_call
+                                        (name
+                                          (identifier))
+                                        (actual_parameter_part
+                                          (parameter_association
+                                            (expression
+                                              (relation
+                                                (simple_expression
+                                                  (term
+                                                    (factor
+                                                      (primary
+                                                        (name)))))))))))))))))))))))))))

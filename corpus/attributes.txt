@@ -87,3 +87,110 @@ end;
                     (statement
                       (simple_statement
                         (null_statement)))))))))))))
+
+================================================================================
+Reduction
+================================================================================
+
+procedure P is
+   X : Integer := 
+      [parallel for Val of M when Val > 100.0 => (Val, 1)]
+      'Reduce("+", 0);
+begin
+  null;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (name
+              (identifier))))
+        (non_empty_declarative_part
+          (declarative_item_pragma
+            (object_declaration
+              (defining_identifier_list
+                (identifier))
+              (subtype_indication
+                (name
+                  (identifier)))
+              (assign_value
+                (expression
+                  (relation
+                    (simple_expression
+                      (term
+                        (factor
+                          (primary
+                            (name
+                              (attribute_reference
+                                (reduction_attribute_reference
+                                  (value_sequence
+                                    (iterated_element_association
+                                      (iterator_specification
+                                        (identifier)
+                                        (name
+                                          (identifier))
+                                        (iterator_filter
+                                          (expression
+                                            (relation
+                                              (simple_expression
+                                                (term
+                                                  (factor
+                                                    (primary
+                                                      (name
+                                                        (identifier))))))
+                                              (relational_operator)
+                                              (simple_expression
+                                                (term
+                                                  (factor
+                                                    (primary
+                                                      (numeric_literal)))))))))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (aggregate
+                                                    (array_aggregate
+                                                      (positional_array_aggregate
+                                                            (expression
+                                                              (relation
+                                                                (simple_expression
+                                                                  (term
+                                                                    (factor
+
+(primary
+  (name
+    (identifier))))))))
+                                                            (expression
+                                                              (relation
+                                                                (simple_expression
+                                                                  (term
+                                                                    (factor
+(primary
+
+  (numeric_literal))))))))))))))))))
+
+                                  (tick)
+                                  (reduction_attribute_designator
+                                    (identifier)
+                                    (reduction_specification
+                                      (name
+                                        (string_literal))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal))))))))))))))))))))))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (null_statement)))))))))

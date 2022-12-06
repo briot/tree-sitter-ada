@@ -393,28 +393,24 @@ end;
                                 (aggregate
                                   (record_aggregate
                                     (record_component_association_list
-                                      (record_component_association
-                                        (component_choice_list
-                                          (identifier))
-                                        (assoc_expression
-                                          (expression
-                                            (relation
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (numeric_literal)))))))))
-                                      (record_component_association
-                                        (component_choice_list
-                                          (identifier))
-                                        (assoc_expression
-                                          (expression
-                                            (relation
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (numeric_literal))))))))))))))))))))))))))))
+                                      (component_choice_list
+                                        (identifier))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal)))))))
+                                      (component_choice_list
+                                        (identifier))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal))))))))))))))))))))))))))
 
 ================================================================================
 record aggregate extension
@@ -460,17 +456,15 @@ end;
                                                 (name
                                                   (identifier))))))))
                                     (record_component_association_list
-                                      (record_component_association
-                                        (component_choice_list
-                                          (identifier))
-                                        (assoc_expression
-                                          (expression
-                                            (relation
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (numeric_literal))))))))))))))))))))))))))))
+                                      (component_choice_list
+                                        (identifier))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal))))))))))))))))))))))))))
 
 ================================================================================
 record delta aggregate
@@ -517,14 +511,12 @@ end;
                                                   (name
                                                     (identifier))))))))
                                       (record_component_association_list
-                                        (record_component_association
-                                          (component_choice_list
-                                            (identifier))
-                                          (assoc_expression
-                                            (expression
-                                              (relation
-                                                (simple_expression
-                                                  (term
-                                                    (factor
-                                                      (primary
-                                                        (numeric_literal)))))))))))))))))))))))))))))
+                                        (component_choice_list
+                                          (identifier))
+                                        (expression
+                                          (relation
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (numeric_literal)))))))))))))))))))))))))))

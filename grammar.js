@@ -2,7 +2,7 @@
  * A case-insensitive keyword (copied from VHDL grammar)
  */
 const reservedWord = word =>
-   //word ||  // when debugging conflict error msgs
+   // word ||  // when debugging conflict error msgs
    alias(reserved(caseInsensitive(word)), word)
    ;
 const reserved = regex => token(prec(2, new RegExp(regex)));
@@ -54,8 +54,11 @@ module.exports = grammar({
       //  ??? Invalid Ada
       [$.name, $.component_choice_list],
 
-      // name ':=' '(' expression . ',' ...
-      [$.expression_list, $.record_component_association],
+      // 'case' '(' expression . ',' ...
+      [$.record_component_association_list, $.positional_array_aggregate],
+
+      // 'case' '[' iterated_element_association . ']'
+      [$.value_sequence, $.array_component_association],
 
       // "procedure name is" could be either a procedure specification, or
       // a generic_instantiation.
@@ -65,11 +68,6 @@ module.exports = grammar({
       [$.generic_package_declaration, $._package_declaration],
 
       [$.attribute_definition_clause, $.attribute_reference],
-
-      // identifier '.' name . '''
-      // Could be either   identifier '.' (attribute_reference name . tick
-      //   or              (name identifier '.' name) . '''
-      [$.name, $.attribute_reference],
 
       // identifier . ':' ...
       [$.defining_identifier_list, $.object_renaming_declaration,
@@ -87,17 +85,8 @@ module.exports = grammar({
       // an aspect_specification.
       [$.derived_type_definition],
 
-      // 'for' name 'use' '(' name . '=>' ...
-      //    The name could either be from a primary or a subtype_indication.
-      [$.subtype_indication, $.primary],
-
       // 'for' name 'use' '(' 'for' identifier 'in' name . 'use'
       [$.iterator_specification, $.subtype_indication],
-
-      // 'type' identifier 'is' 'mod' 'raise' name . 'with' ...
-      // ??? This appears legal Ada per the grammar, but doesn't make sense.
-      // ??? This results in a large slowdown of the parser
-      [$.raise_expression],
 
       // 'type' identifier known_discriminant_part . 'is' ...
       [$.full_type_declaration, $.discriminant_part],
@@ -105,9 +94,9 @@ module.exports = grammar({
       // 'type' identifier 'is' 'new' subtype_indication . 'with' .
       [$.private_extension_declaration, $.derived_type_definition],
 
-      // subprogram_specification
-      //     'with' aspect_mark '=>' 'do' name '(' name . ')'
-      [$.primary, $.dispatching_operation_specifier],
+      // subprogram_specification 'is' 'begin'
+      //    handled_sequence_of_statements 'end' string_literal . ';'
+      [$.name, $.subprogram_body],
 
       [$.function_call, $.procedure_call_statement],
       [$.function_call, $.name],
@@ -155,9 +144,10 @@ module.exports = grammar({
          $.qualified_expression,
          '@',
          //$.explicit_dereference, // covered by the first rule above
-         //$.character_literal,    // from adamode, seems wrong.
-         //$.string_literal,       // from ada-mode, but seems wrong.
-         //                        // Added to primary instead
+         $.character_literal,
+         $.string_literal,         // name of an operator. However, in a
+                                   // number of places using a string doesn't
+                                   // make sense.
       ),
       name_list: $ => comma_separated_list_of($.name),
       defining_identifier_list: $ => comma_separated_list_of($.identifier),
@@ -168,13 +158,13 @@ module.exports = grammar({
             $.tick,
             $.attribute_designator,
          ),
-//         $.reduction_attribute_reference,
+         $.reduction_attribute_reference,
       ),
-//      reduction_attribute_reference: $ => seq(
-//         $.value_sequence,
-//         $.tick,
-//         $.reduction_attribute_designator,
-//      ),
+      reduction_attribute_reference: $ => seq(
+         $.value_sequence,
+         $.tick,
+         $.reduction_attribute_designator,
+      ),
       reduction_attribute_designator: $ => seq(
          $.identifier,
          '(',
@@ -186,19 +176,19 @@ module.exports = grammar({
          ',',
          $.expression,
       ),
-//    value_sequence: $ => seq(
-//       '[',
-//         optional(seq(
-//             field('is_parallel', reservedWord('parallel')),
-//             optional(seq(
-//                '(',
-//                $.chunk_specification,
-//                ')',
-//            )),
-//         )),
-//       $.iterated_element_association,
-//       ']',
-//    ),
+      value_sequence: $ => seq(
+         '[',
+          optional(seq(
+               field('is_parallel', reservedWord('parallel')),
+               optional(seq(
+                  '(',
+                  $.chunk_specification,
+                  ')',
+              )),
+          )),
+          $.iterated_element_association,
+          ']',
+      ),
       chunk_specification: $ => choice(
          $.simple_expression,
          seq(
@@ -207,7 +197,7 @@ module.exports = grammar({
             $.discrete_subtype_definition,
          ),
       ),
-      iterated_element_association: $ => seq(
+      iterated_element_association: $ => seq(         // RM 4.3.5
          reservedWord('for'),
          choice(
             $.loop_parameter_specification,
@@ -217,7 +207,8 @@ module.exports = grammar({
             reservedWord('use'),
             $.expression,
          )),
-         $.assoc_expression,
+         '=>',
+         $.expression,
       ),
       discrete_subtype_definition: $ => choice(
          $.subtype_indication,
@@ -238,7 +229,7 @@ module.exports = grammar({
          reservedWord('when'),
          field('condition', $.expression),
       ),
-      iterator_specification: $ => seq(
+      iterator_specification: $ => seq(       // ARM 5.5.2
          $.identifier,
          optional(seq(
             ':',
@@ -263,10 +254,13 @@ module.exports = grammar({
          $.name,
          $.actual_parameter_part,
       ),
-      qualified_expression: $ => seq(
+      qualified_expression: $ => seq(      // ARM 4.7
          $.name,
          $.tick,
-         $.aggregate,
+         choice(
+            seq('(', $.expression, ')'),
+            $.aggregate,
+         ),
       ),
       compilation_unit: $ => choice(
          $.with_clause,
@@ -378,9 +372,9 @@ module.exports = grammar({
          optional($.name),
          ';',
       ),
-      subtype_indication: $ => seq(
+      subtype_indication: $ => seq(        // ARM 3.2.2
          optional($.null_exclusion),
-         $.name,
+         field('subtype_mark', $.name),
          optional($.constraint),
       ),
       constraint: $ => choice(
@@ -416,25 +410,14 @@ module.exports = grammar({
          reservedWord('range'),
          $.range_g,
       ),
-      expression_list: $ => prec.left(
-         comma_separated_list_of($.expression),
-      ),
       expression: $ => choice(
-         list_of(reservedWord('and'), $.relation),
-         list_of(seq(reservedWord('and'), reservedWord('then')), $.relation),
-         list_of(reservedWord('or'), $.relation),
-         list_of(seq(reservedWord('or'), reservedWord('else')), $.relation),
+         list_of(seq(reservedWord('and'), optional(reservedWord('then'))),
+                 $.relation),
+         list_of(seq(reservedWord('or'), optional(reservedWord('else'))),
+                 $.relation),
          list_of(reservedWord('xor'), $.relation),
       ),
-      assoc_expression: $ => choice(
-         seq('=>', '<>'),
-         $._non_default_assoc_expression,
-      ),
-      _non_default_assoc_expression: $ => seq(
-         '=>',
-         $.expression,
-      ),
-      relation: $ => choice(
+      relation: $ => choice(                            // RM 4.4
          seq(
             $.simple_expression,
             optional(seq(
@@ -448,16 +431,16 @@ module.exports = grammar({
             reservedWord('in'),
             $.membership_choice_list,
          ),
-         $.raise_expression,
+         $.raise_expression,                           // Added Ada 20x
       ),
-      raise_expression: $ => seq(
+      raise_expression: $ => prec.right(1, seq(
          reservedWord('raise'),
          $.name,
          optional(seq(
             reservedWord('with'),
             $.simple_expression,
          )),
-      ),
+      )),
       membership_choice_list: $ => prec.right(
          list_of('|', $.membership_choice),
       ),
@@ -497,15 +480,31 @@ module.exports = grammar({
             $.primary,
          ),
       ),
-      primary: $ => choice(
+
+      _parenthesized_expression: $ => seq(
+         '(',
+         choice(
+            $.expression,
+            $.conditional_expression,
+            $.quantified_expression,
+            $.declare_expression,
+         ),
+         ')',
+      ),
+
+      // primary might resolve as an 'aggregate', which might resolve as
+      // a 'position_array_aggregate', so an expression like
+      //     case ( .. )
+      // is ambiguous. So we raise the priority here.
+      primary: $ => prec(2, choice(                        // RM 4.4
          $.numeric_literal,
          reservedWord('null'),
+         $.string_literal,  // ada-mode puts this in name instead
          $.aggregate,
          $.name,
-         $.string_literal,  // ada-mode puts this in name instead
-         $.character_literal,
          $.allocator,
-      ),
+         $._parenthesized_expression,
+      )),
       allocator: $ => seq(
          reservedWord('new'),
          optional($.subpool_specification),
@@ -575,20 +574,32 @@ module.exports = grammar({
          '(',
          choice(
             comma_separated_list_of($.parameter_association),
+
+            // Those are not in the ARM, but added here for generic
+            // instantiations, which get the actual parameter part via $.name
+            // and its $.function_call
+            // ????
             $.conditional_expression,
             $.quantified_expression,
             $.declare_expression,
          ),
          ')',
       ),
+
+      // RM 6.4, but this one also handles parameters for generic
+      // instantiations.
       parameter_association: $ => choice(
          seq(
             $.component_choice_list,
-            $.assoc_expression,
+            '=>',
+            choice(
+               $.expression,
+               '<>',
+            ),
          ),
          $.expression,
          '<>',
-      ),
+       ),
       conditional_expression: $ => choice(
          $.if_expression,
          $.case_expression,
@@ -598,14 +609,15 @@ module.exports = grammar({
          $.case_expression,
          $.quantified_expression,
       ),
-      quantified_expression: $ => seq(
+      quantified_expression: $ => seq(          // ARM 4.5.8
          reservedWord('for'),
          $.quantifier,
          choice(
             $.loop_parameter_specification,
             $.iterator_specification,
          ),
-         $.assoc_expression,
+         '=>',
+         field('predicate', $.expression),
       ),
       declare_expression: $ => seq(
          reservedWord('declare'),
@@ -621,33 +633,25 @@ module.exports = grammar({
          reservedWord('all'),
          reservedWord('some'),
       ),
-      case_expression: $ => seq(
+      case_expression: $ => seq(                         // RM 4.5.7
          reservedWord('case'),
          $.expression,
          reservedWord('is'),
          comma_separated_list_of($.case_expression_alternative),
       ),
-      case_expression_alternative: $ => seq(
+      case_expression_alternative: $ => seq(             // RM 4.5.7
          reservedWord('when'),
          $.discrete_choice_list,
-         $._non_default_assoc_expression,
+         '=>',
+         $.expression,
       ),
       component_choice_list: $ =>
          list_of('|', $.identifier),
-      aggregate: $ => choice(
+      aggregate: $ => choice(                            // RM 4.3
          $.record_aggregate,
          $.extension_aggregate,
          $.array_aggregate,
-         $.delta_aggregate,
-         seq(
-            '(',
-            choice(
-               $.conditional_expression,
-               $.quantified_expression,
-               $.declare_expression,
-            ),
-            ')',
-         ),
+         $.delta_aggregate,                              // Ada 20x
       ),
       delta_aggregate: $ => choice(
          $.record_delta_aggregate,
@@ -674,7 +678,7 @@ module.exports = grammar({
             $.expression,
             reservedWord('with'),
             reservedWord('delta'),
-            $.array_component_association_list,
+            $._array_component_association_list,
             ')',
          ),
          seq(
@@ -682,7 +686,7 @@ module.exports = grammar({
             $.expression,
             reservedWord('with'),
             reservedWord('delta'),
-            $.array_component_association_list,
+            $._array_component_association_list,
             ']',
          ),
       ),
@@ -691,24 +695,33 @@ module.exports = grammar({
          $.record_component_association_list,
          ')',
       ),
-      array_component_association: $ => seq(
-         $.discrete_choice_list,
-         $.assoc_expression,
-      ),
-      array_component_association_list: $ =>
-         comma_separated_list_of($.array_component_association),
-      record_component_association: $ => choice(
-         seq(
-            $.component_choice_list,
-            $.assoc_expression,
-         ),
-         $.expression,
-      ),
+
+      // Either:
+      // *  'null record'
+      // *  expression, {expression_or_named}
+      //    expression_or_named:: expression | choice => expression
+      // *  named {, named}
       record_component_association_list: $ => choice(
-         comma_separated_list_of($.record_component_association),
          seq(
             reservedWord('null'),
             reservedWord('record'),
+         ),
+         seq(
+            $.expression,
+            ',',   //  Need at least two components with positional
+            comma_separated_list_of(choice(
+               $.expression,
+               $._named_record_component_association,
+            )),
+         ),
+         comma_separated_list_of($._named_record_component_association),
+      ),
+      _named_record_component_association: $ => seq(  // adapted from ARM 4.3.1
+         $.component_choice_list,
+         '=>',
+         choice(
+            $.expression,
+            '<>',
          ),
       ),
       null_exclusion: $ => seq(
@@ -1017,24 +1030,37 @@ module.exports = grammar({
          $.null_array_aggregate,
          $.named_array_aggregate,
       ),
-      positional_array_aggregate: $ => choice(
+      positional_array_aggregate: $ => choice(   //  4.3.3
          seq(
             '(',
-            $.expression_list,
-            optional(seq(
-               ',',
-               reservedWord('others'),
-               $.assoc_expression,
-            )),
+            $.expression,
+            ',',
+            prec.left(1, comma_separated_list_of($.expression)),
+            ')',
+         ),
+         seq(
+            '(',
+            comma_separated_list_of($.expression),
+            ',',
+            reservedWord('others'),
+            '=>',
+            choice(
+               $.expression,
+               '<>',
+            ),
             ')',
          ),
          seq(
             '[',
-            $.expression_list,
+            comma_separated_list_of($.expression),
             optional(seq(
                ',',
                reservedWord('others'),
-               $.assoc_expression,
+               '=>',
+               choice(
+                  $.expression,
+                  '<>',
+               ),
             )),
             ']',
          ),
@@ -1044,28 +1070,24 @@ module.exports = grammar({
          ']',
       ),
       named_array_aggregate: $ => choice(
-         seq(
-            '(',
-            $._array_component_association_list,
-            ')',
-         ),
-         seq(
-            '[',
-            $._array_component_association_list,
-            ']',
-         ),
+         seq('(', $._array_component_association_list, ')'),
+         seq('[', $._array_component_association_list, ']'),
       ),
       _array_component_association_list: $ =>
          comma_separated_list_of($.array_component_association),
-      array_component_association: $ => choice(
+      array_component_association: $ => choice(    // ARM 4.3.3
          seq(
             $.discrete_choice_list,
-            $.assoc_expression,
+            '=>',
+            choice(
+               $.expression,
+               '<>',
+            ),
          ),
          $.iterated_element_association,
       ),
       discrete_choice_list: $ => list_of('|', $.discrete_choice),
-      discrete_choice: $ => choice(
+      discrete_choice: $ => choice(    // ARM 3.8.1
          $.expression,
          $.subtype_indication,
          $.range_g,
@@ -1296,7 +1318,7 @@ module.exports = grammar({
          reservedWord('in'),
          $.discrete_subtype_definition,
       ),
-      enumeration_aggregate: $ => $.array_aggregate,   //  ??? inline
+      enumeration_aggregate: $ => $.array_aggregate,  //  ??? inline  ARM 13.4
       enumeration_representation_clause: $ => seq(
          reservedWord('for'),
          $.name,
@@ -1337,10 +1359,7 @@ module.exports = grammar({
       ),
       function_specification: $ => seq(
          reservedWord('function'),
-         choice(
-            $.name,
-            $.string_literal,  // for operators
-         ),
+         $.name,
          $.parameter_and_result_profile,
       ),
       generic_declaration: $ => choice(
@@ -1372,19 +1391,27 @@ module.exports = grammar({
       ),
       generic_instantiation: $ => seq(
          choice(
-            reservedWord('package'),
+            seq(
+               reservedWord('package'),
+               $.name,
+            ),
             seq(
                optional($.overriding_indicator),
                choice(
-                  reservedWord('procedure'),
-                  reservedWord('function'),
+                  seq(
+                     reservedWord('procedure'),
+                     $.name,
+                  ),
+                  seq(
+                     reservedWord('function'),
+                     $.name,
+                  ),
                ),
             ),
          ),
-         $.name,
          reservedWord('is'),
          reservedWord('new'),
-         $.name,   //  includes the generic_actual_part
+         $.name,   //  includes the generic_actual_part (via the function call)
          optional($.aspect_specification),
          ';',
       ),
@@ -2162,7 +2189,7 @@ module.exports = grammar({
          $.access_definition,
       ),
       procedure_call_statement: $ => seq(
-         $.name,
+         $.name,  // not an operator
          optional($.actual_parameter_part),
          ';',
       ),
@@ -2233,11 +2260,19 @@ module.exports = grammar({
          optional($.aspect_specification),
          ';',
       ),
-      expression_function_declaration: $ => seq(
+      expression_function_declaration: $ => seq(           // RM 6.8
          optional($.overriding_indicator),
          $.function_specification,
          reservedWord('is'),
-         $.aggregate,
+         choice(
+            $.aggregate,                                   // Ada 20x
+
+            // In the RM grammar, this is a simple '(expression)', but
+            // conditional expression would require a second nested pair of
+            // parenthesis, whereas this is not mandatory anymore in the
+            // text of the RM.
+            $._parenthesized_expression,
+         ),
          optional($.aspect_specification),
          ';',
       ),

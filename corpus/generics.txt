@@ -59,18 +59,16 @@ end;
                     (parameter_association
                       (component_choice_list
                         (identifier))
-                      (assoc_expression
-                        (expression
-                          (relation
-                            (simple_expression
-                              (term
-                                (factor
-                                  (primary
-                                    (numeric_literal)))))))))
+                      (expression
+                        (relation
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (numeric_literal))))))))
                     (parameter_association
                       (component_choice_list
-                        (identifier))
-                      (assoc_expression)))))))
+                        (identifier))))))))
           (generic_formal_parameter_declaration
             (formal_subprogram_declaration
               (formal_concrete_subprogram_declaration
