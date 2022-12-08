@@ -360,7 +360,7 @@ module.exports = grammar({
       package_body: $ => seq(
          reservedWord('package'),
          reservedWord('body'),
-         $.name,
+         field('name', $.name),
          optional($.aspect_specification),
          reservedWord('is'),
          optional($.non_empty_declarative_part),

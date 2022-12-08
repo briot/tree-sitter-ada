@@ -12,5 +12,16 @@
      "testquick": "time tree-sitter test",
      "update-test": "tree-sitter test --update"
   },
-  "main": "bindings/node"
+  "main": "bindings/node",
+  "tree-sitter": [
+     {
+       "scope": "source.ada",
+       "file-types": [
+         "ada"
+       ],
+       "highlights": [
+         "queries/highlights.scm"
+       ]
+     }
+   ]
 }
