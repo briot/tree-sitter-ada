@@ -27,8 +27,7 @@ end;
         (aspect_specification
           (aspect_mark_list
             (aspect_association
-              (aspect_mark
-                (identifier)))))))))
+              (identifier))))))))
 
 ================================================================================
 procedures
@@ -46,26 +45,21 @@ end;
     (package_specification
       (identifier)
       (subprogram_declaration
-        (subprogram_specification
-          (procedure_specification
-            (identifier)
-            (non_empty_parameter_profile
-              (formal_part
-                (parameter_specification_list
-                  (parameter_specification
-                    (defining_identifier_list
-                      (identifier)
-                      (identifier))
-                    (identifier))
-                  (parameter_specification
-                    (defining_identifier_list
-                      (identifier))
-                    (identifier)))))))
+        (procedure_specification
+          (identifier)
+          (formal_part
+            (parameter_specification_list
+              (parameter_specification
+                (identifier)
+                (identifier)
+                (identifier))
+              (parameter_specification
+                (identifier)
+                (identifier)))))
         (aspect_specification
           (aspect_mark_list
             (aspect_association
-              (aspect_mark
-                (identifier)))))))))
+              (identifier))))))))
 
 ================================================================================
 abstract procedures
@@ -83,19 +77,16 @@ end;
     (package_specification
       (identifier)
       (subprogram_declaration
-        (subprogram_specification
-          (procedure_specification
-            (identifier))))
+        (procedure_specification
+          (identifier)))
       (subprogram_declaration
         (overriding_indicator)
-        (subprogram_specification
-          (procedure_specification
-            (identifier)))
+        (procedure_specification
+          (identifier))
         (aspect_specification
           (aspect_mark_list
             (aspect_association
-              (aspect_mark
-                (identifier)))))))))
+              (identifier))))))))
 
 ================================================================================
 functions
@@ -113,37 +104,27 @@ end;
     (package_specification
       (identifier)
       (subprogram_declaration
-        (subprogram_specification
-          (function_specification
-            (identifier)
-            (parameter_and_result_profile
-              (formal_part
-                (parameter_specification_list
-                  (parameter_specification
-                    (defining_identifier_list
-                      (identifier)
-                      (identifier))
-                    (identifier))))
-              (result_profile
-                (access_definition
-                  (null_exclusion)
-                  (identifier))))))
+        (function_specification
+          (identifier)
+          (formal_part
+            (parameter_specification_list
+              (parameter_specification
+                (identifier)
+                (identifier)
+                (identifier))))
+          (result_profile
+            (access_definition
+              (null_exclusion)
+              (identifier))))
         (aspect_specification
           (aspect_mark_list
             (aspect_association
-              (aspect_mark
-                (identifier)))
+              (identifier))
             (aspect_association
-              (aspect_mark
-                (identifier))
-              (aspect_definition
-                (expression
-                  (relation
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (identifier)))))))))))))))
+              (identifier)
+              (expression
+                (term
+                  (identifier))))))))))
 
 ================================================================================
 subprogram body
@@ -161,36 +142,25 @@ end;
 
 (compilation
   (compilation_unit
-    (proper_body
-      (package_body
-        (identifier)
-        (non_empty_declarative_part
-          (declarative_item_pragma
-            (proper_body
-              (subprogram_body
-                (subprogram_specification
-                  (procedure_specification
-                    (identifier)
-                    (non_empty_parameter_profile
-                      (formal_part
-                        (parameter_specification_list
-                          (parameter_specification
-                            (defining_identifier_list
-                              (identifier))
-                            (identifier)))))))
-                (non_empty_declarative_part
-                  (declarative_item_pragma
-                    (object_declaration
-                      (defining_identifier_list
-                        (identifier))
-                      (subtype_indication
-                        (identifier)))))
-                (handled_sequence_of_statements
-                  (sequence_of_statements
-                    (statement
-                      (simple_statement
-                        (null_statement)))))
-                (identifier)))))))))
+    (package_body
+      (identifier)
+      (non_empty_declarative_part
+        (subprogram_body
+          (procedure_specification
+            (identifier)
+            (formal_part
+              (parameter_specification_list
+                (parameter_specification
+                  (identifier)
+                  (identifier)))))
+          (non_empty_declarative_part
+            (object_declaration
+              (identifier)
+              (identifier)))
+          (handled_sequence_of_statements
+            (statement
+              (null_statement)))
+          (identifier))))))
 
 ================================================================================
 Expression function membership
@@ -206,29 +176,20 @@ function F2 (A : Integer) return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (defining_identifier_list
-                  (identifier))
-                (identifier))))
-          (result_profile
-            (identifier))))
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
       (expression
-        (relation
-          (simple_expression
-            (term
-              (factor
-                (primary
-                  (identifier)))))
+        (relation_membership
+          (term
+            (identifier))
           (membership_choice_list
-            (membership_choice
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (identifier))))))))))))
+            (term
+              (identifier))))))))
 
 ================================================================================
 Expression function declare
@@ -244,42 +205,26 @@ function F2 (A : Integer) return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (defining_identifier_list
-                  (identifier))
-                (identifier))))
-          (result_profile
-            (identifier))))
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
       (declare_expression
-        (declare_item
-          (object_declaration
-            (defining_identifier_list
+        (object_declaration
+          (identifier)
+          (identifier)
+          (expression
+            (term
               (identifier))
-            (subtype_indication
-              (identifier))
-            (assign_value
-              (expression
-                (relation
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (identifier))))
-                    (binary_adding_operator)
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal))))))))))
+            (binary_adding_operator)
+            (term
+              (numeric_literal))))
         (expression
-          (relation
-            (simple_expression
-              (term
-                (factor
-                  (primary
-                    (identifier)))))))))))
+          (term
+            (identifier)))))))
 
 ================================================================================
 Expression function raise
@@ -295,13 +240,11 @@ function F3 return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (result_profile
-            (identifier))))
+        (result_profile
+          (identifier)))
       (expression
-        (relation
-          (raise_expression
-            (identifier)))))))
+        (raise_expression
+          (identifier))))))
 
 ================================================================================
 Expression function simple
@@ -316,16 +259,11 @@ function F4 return Boolean is (True);
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (result_profile
-            (identifier))))
+        (result_profile
+          (identifier)))
       (expression
-        (relation
-          (simple_expression
-            (term
-              (factor
-                (primary
-                  (identifier))))))))))
+        (term
+          (identifier))))))
 
 ================================================================================
 Expression function if
@@ -341,56 +279,31 @@ function F (A : Integer) return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (defining_identifier_list
-                  (identifier))
-                (identifier))))
-          (result_profile
-            (identifier))))
-      (conditional_expression
-        (if_expression
-          (expression
-            (relation
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (identifier)))))
-              (relational_operator)
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (numeric_literal))))))
-            (relation
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (identifier)))))
-              (relational_operator)
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (numeric_literal)))))))
-          (expression
-            (relation
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (identifier)))))))
-          (expression
-            (relation
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (identifier))))))))))))
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
+      (if_expression
+        (expression
+          (term
+            (identifier))
+          (relational_operator)
+          (term
+            (numeric_literal))
+          (term
+            (identifier))
+          (relational_operator)
+          (term
+            (numeric_literal)))
+        (expression
+          (term
+            (identifier)))
+        (expression
+          (term
+            (identifier)))))))
 
 ================================================================================
 Expression function if extra parenthesis
@@ -406,50 +319,28 @@ function F5 (A : Integer) return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (defining_identifier_list
-                  (identifier))
-                (identifier))))
-          (result_profile
-            (identifier))))
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
       (expression
-        (relation
-          (simple_expression
-            (term
-              (factor
-                (primary
-                  (conditional_expression
-                    (if_expression
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (identifier)))))
-                          (relational_operator)
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (numeric_literal)))))))
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (identifier)))))))
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (identifier))))))))))))))))))
+        (term
+          (if_expression
+            (expression
+              (term
+                (identifier))
+              (relational_operator)
+              (term
+                (numeric_literal)))
+            (expression
+              (term
+                (identifier)))
+            (expression
+              (term
+                (identifier)))))))))
 
 ================================================================================
 Expression function case
@@ -467,72 +358,43 @@ function F (A : Integer) return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (defining_identifier_list
-                  (identifier))
-                (identifier))))
-          (result_profile
-            (identifier))))
-      (conditional_expression
-        (case_expression
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
+      (case_expression
+        (expression
+          (term
+            (identifier))
+          (binary_adding_operator)
+          (term
+            (numeric_literal)))
+        (case_expression_alternative
+          (discrete_choice_list
+            (discrete_choice
+              (range_g
+                (term
+                  (numeric_literal))
+                (term
+                  (numeric_literal))))
+            (discrete_choice
+              (range_g
+                (term
+                  (numeric_literal))
+                (term
+                  (numeric_literal)))))
           (expression
-            (relation
-              (simple_expression
-                (term
-                  (factor
-                    (primary
-                      (identifier))))
-                (binary_adding_operator)
-                (term
-                  (factor
-                    (primary
-                      (numeric_literal)))))))
-          (case_expression_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (range_g
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))))
-              (discrete_choice
-                (range_g
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal))))))))
-            (expression
-              (relation
-                (simple_expression
-                  (term
-                    (factor
-                      (primary
-                        (identifier))))))))
-          (case_expression_alternative
-            (discrete_choice_list
-              (discrete_choice))
-            (expression
-              (relation
-                (simple_expression
-                  (term
-                    (factor
-                      (primary
-                        (identifier)))))))))))))
+            (term
+              (identifier))))
+        (case_expression_alternative
+          (discrete_choice_list
+            (discrete_choice))
+          (expression
+            (term
+              (identifier))))))))
 
 ================================================================================
 Expression function array
@@ -547,33 +409,20 @@ function F return My_Array is (1 .. 2 => True);
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (result_profile
-            (identifier))))
-      (aggregate
-        (array_aggregate
-          (named_array_aggregate
-            (array_component_association
-              (discrete_choice_list
-                (discrete_choice
-                  (range_g
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (numeric_literal)))))
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (numeric_literal))))))))
-              (expression
-                (relation
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (identifier))))))))))))))
+        (result_profile
+          (identifier)))
+      (named_array_aggregate
+        (array_component_association
+          (discrete_choice_list
+            (discrete_choice
+              (range_g
+                (term
+                  (numeric_literal))
+                (term
+                  (numeric_literal)))))
+          (expression
+            (term
+              (identifier))))))))
 
 ================================================================================
 Expression function quantified
@@ -590,33 +439,24 @@ function F (A : My_Array) return Boolean
     (expression_function_declaration
       (function_specification
         (identifier)
-        (parameter_and_result_profile
-          (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (defining_identifier_list
-                  (identifier))
-                (identifier))))
-          (result_profile
-            (identifier))))
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
       (quantified_expression
         (quantifier)
         (iterator_specification
           (identifier)
           (identifier))
         (expression
-          (relation
-            (simple_expression
-              (term
-                (factor
-                  (primary
-                    (identifier)))))
-            (relational_operator)
-            (simple_expression
-              (term
-                (factor
-                  (primary
-                    (numeric_literal)))))))))))
+          (term
+            (identifier))
+          (relational_operator)
+          (term
+            (numeric_literal)))))))
 
 ================================================================================
 Operators
@@ -631,32 +471,22 @@ end "<";
 
 (compilation
   (compilation_unit
-    (proper_body
-      (subprogram_body
-        (overriding_indicator)
-        (subprogram_specification
-          (function_specification
-            (string_literal)
-            (parameter_and_result_profile
-              (formal_part
-                (parameter_specification_list
-                  (parameter_specification
-                    (defining_identifier_list
-                      (identifier)
-                      (identifier))
-                    (identifier))))
-              (result_profile
-                (identifier)))))
-        (handled_sequence_of_statements
-          (sequence_of_statements
-            (statement
-              (simple_statement
-                (simple_return_statement
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (identifier))))))))))))
-        (string_literal)))))
+    (subprogram_body
+      (overriding_indicator)
+      (function_specification
+        (string_literal)
+        (formal_part
+          (parameter_specification_list
+            (parameter_specification
+              (identifier)
+              (identifier)
+              (identifier))))
+        (result_profile
+          (identifier)))
+      (handled_sequence_of_statements
+        (statement
+          (simple_return_statement
+            (expression
+              (term
+                (identifier))))))
+      (string_literal))))

@@ -10,10 +10,13 @@
 (subprogram_body) @function.outer
 (subprogram_body (non_empty_declarative_part) @function.inner)
 (subprogram_body (handled_sequence_of_statements) @function.inner)
-(subprogram_specification) @function.outer
+(function_specification) @function.outer
+(procedure_specification) @function.outer
 (package_specification) @function.outer
 (package_body) @function.outer
 (if_statement) @block.outer
-(if_statement (sequence_of_statements) @block.inner)
+(if_statement statements: (_) @block.inner)
+(if_statement else_statements: (_) @block.inner)
+(elsif_statement_item statements: (_) @block.inner)
 (loop_statement) @block.outer
-(loop_statement (sequence_of_statements) @block.inner)
+(loop_statement statements: (_) @block.inner)

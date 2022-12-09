@@ -12,22 +12,13 @@ end P;
   (compilation_unit
     (package_specification
       (identifier)
-      (type_declaration
-        (full_type_declaration
-          (identifier)
-          (type_definition
-            (integer_type_definition
-              (signed_integer_type_definition
-                (simple_expression
-                  (term
-                    (factor
-                      (primary
-                        (numeric_literal)))))
-                (simple_expression
-                  (term
-                    (factor
-                      (primary
-                        (numeric_literal))))))))))
+      (full_type_declaration
+        (identifier)
+        (signed_integer_type_definition
+          (term
+            (numeric_literal))
+          (term
+            (numeric_literal))))
       (identifier))))
 
 ================================================================================
@@ -45,26 +36,17 @@ end P;
   (compilation_unit
     (package_specification
       (identifier)
-      (type_declaration
-        (full_type_declaration
-          (identifier)
-          (type_definition
-            (derived_type_definition
-              (subtype_indication
-                (identifier))))
-          (aspect_specification
-            (aspect_mark_list
-              (aspect_association
-                (aspect_mark
-                  (identifier))
-                (aspect_definition
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (numeric_literal)))))))))))))
+      (full_type_declaration
+        (identifier)
+        (derived_type_definition
+          (identifier))
+        (aspect_specification
+          (aspect_mark_list
+            (aspect_association
+              (identifier)
+              (expression
+                (term
+                  (numeric_literal)))))))
       (identifier))))
 
 ================================================================================
@@ -81,19 +63,12 @@ end P;
   (compilation_unit
     (package_specification
       (identifier)
-      (type_declaration
-        (full_type_declaration
-          (identifier)
-          (type_definition
-            (integer_type_definition
-              (modular_type_definition
-                (expression
-                  (relation
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (numeric_literal))))))))))))
+      (full_type_declaration
+        (identifier)
+        (modular_type_definition
+          (expression
+            (term
+              (numeric_literal)))))
       (identifier))))
 
 ================================================================================
@@ -112,73 +87,36 @@ end P;
   (compilation_unit
     (package_specification
       (identifier)
-      (type_declaration
-        (full_type_declaration
+      (full_type_declaration
+        (identifier)
+        (derived_type_definition
           (identifier)
-          (type_definition
-            (derived_type_definition
-              (subtype_indication
-                (identifier)
-                (constraint
-                  (scalar_constraint
-                    (range_constraint
-                      (range_g
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal)))))
-                        (simple_expression
-                          (term
-                            (factor
-                              (primary
-                                (numeric_literal))))))))))))))
-      (type_declaration
-        (full_type_declaration
-          (identifier)
-          (type_definition
-            (real_type_definition
-              (fixed_point_definition
-                (decimal_fixed_point_definition
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (numeric_literal)))))))
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (numeric_literal)))))))))))))
-      (type_declaration
-        (full_type_declaration
-          (identifier)
-          (type_definition
-            (real_type_definition
-              (fixed_point_definition
-                (ordinary_fixed_point_definition
-                  (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (numeric_literal)))))))
-                  (real_range_specification
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (numeric_literal)))))
-                    (simple_expression
-                      (term
-                        (factor
-                          (primary
-                            (numeric_literal))))))))))))
+          (range_constraint
+            (range_g
+              (term
+                (numeric_literal))
+              (term
+                (numeric_literal))))))
+      (full_type_declaration
+        (identifier)
+        (decimal_fixed_point_definition
+          (expression
+            (term
+              (numeric_literal)))
+          (expression
+            (term
+              (numeric_literal)))))
+      (full_type_declaration
+        (identifier)
+        (ordinary_fixed_point_definition
+          (expression
+            (term
+              (numeric_literal)))
+          (real_range_specification
+            (term
+              (numeric_literal))
+            (term
+              (numeric_literal)))))
       (identifier))))
 
 ================================================================================
@@ -196,53 +134,33 @@ end P;
   (compilation_unit
     (package_specification
       (identifier)
-      (type_declaration
-        (full_type_declaration
+      (full_type_declaration
+        (identifier)
+        (enumeration_type_definition
           (identifier)
-          (type_definition
-            (enumeration_type_definition
-              (identifier)
-              (identifier)))))
-      (aspect_clause
-        (enumeration_representation_clause
-          (identifier)
-          (enumeration_aggregate
-            (array_aggregate
-              (named_array_aggregate
-                (array_component_association
-                  (discrete_choice_list
-                    (discrete_choice
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (identifier)))))))))
+          (identifier)))
+      (enumeration_representation_clause
+        (identifier)
+        (enumeration_aggregate
+          (named_array_aggregate
+            (array_component_association
+              (discrete_choice_list
+                (discrete_choice
                   (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (numeric_literal))))))))
-                (array_component_association
-                  (discrete_choice_list
-                    (discrete_choice
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (identifier)))))))))
+                    (term
+                      (identifier)))))
+              (expression
+                (term
+                  (numeric_literal))))
+            (array_component_association
+              (discrete_choice_list
+                (discrete_choice
                   (expression
-                    (relation
-                      (simple_expression
-                        (term
-                          (factor
-                            (primary
-                              (numeric_literal)))))))))))))
+                    (term
+                      (identifier)))))
+              (expression
+                (term
+                  (numeric_literal)))))))
       (identifier))))
 
 ================================================================================
@@ -262,50 +180,25 @@ end P;
       (identifier)
       (subtype_declaration
         (identifier)
-        (subtype_indication
-          (identifier)
-          (constraint
-            (scalar_constraint
-              (range_constraint
-                (range_g
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))))))))
+        (identifier)
+        (range_constraint
+          (range_g
+            (term
+              (numeric_literal))
+            (term
+              (numeric_literal)))))
       (subtype_declaration
         (identifier)
-        (subtype_indication
-          (identifier)
-          (constraint
-            (index_constraint
-              (discrete_range
-                (range_g
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))))
-              (discrete_range
-                (range_g
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))
-                  (simple_expression
-                    (term
-                      (factor
-                        (primary
-                          (numeric_literal)))))))))))
+        (identifier)
+        (index_constraint
+          (range_g
+            (term
+              (numeric_literal))
+            (term
+              (numeric_literal)))
+          (range_g
+            (term
+              (numeric_literal))
+            (term
+              (numeric_literal)))))
       (identifier))))

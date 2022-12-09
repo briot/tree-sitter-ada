@@ -11,37 +11,29 @@ end;
 
 (compilation
   (compilation_unit
-    (proper_body
-      (package_body
-        (identifier)
-        (non_empty_declarative_part
-          (declarative_item_pragma
-            (body_stub
-              (subprogram_body_stub
-                (overriding_indicator)
-                (subprogram_specification
-                  (procedure_specification
-                    (identifier)))
-                (aspect_specification
-                  (aspect_mark_list
-                    (aspect_association
-                      (aspect_mark
-                        (identifier))))))))
-          (declarative_item_pragma
-            (body_stub
-              (subprogram_body_stub
-                (overriding_indicator)
-                (subprogram_specification
-                  (function_specification
-                    (identifier)
-                    (parameter_and_result_profile
-                      (result_profile
-                        (identifier)))))
-                (aspect_specification
-                  (aspect_mark_list
-                    (aspect_association
-                      (aspect_mark
-                        (identifier)))))))))))))
+    (package_body
+      (identifier)
+      (non_empty_declarative_part
+        (body_stub
+          (subprogram_body_stub
+            (overriding_indicator)
+            (procedure_specification
+              (identifier))
+            (aspect_specification
+              (aspect_mark_list
+                (aspect_association
+                  (identifier))))))
+        (body_stub
+          (subprogram_body_stub
+            (overriding_indicator)
+            (function_specification
+              (identifier)
+              (result_profile
+                (identifier)))
+            (aspect_specification
+              (aspect_mark_list
+                (aspect_association
+                  (identifier))))))))))
 
 ================================================================================
 Separate packages
@@ -55,14 +47,12 @@ end;
 
 (compilation
   (compilation_unit
-    (proper_body
-      (package_body
-        (identifier)
-        (non_empty_declarative_part
-          (declarative_item_pragma
-            (body_stub
-              (package_body_stub
-                (identifier)))))))))
+    (package_body
+      (identifier)
+      (non_empty_declarative_part
+        (body_stub
+          (package_body_stub
+            (identifier)))))))
 
 ================================================================================
 Separate protected
@@ -76,15 +66,13 @@ end P;
 
 (compilation
   (compilation_unit
-    (proper_body
-      (package_body
-        (identifier)
-        (non_empty_declarative_part
-          (declarative_item_pragma
-            (body_stub
-              (protected_body_stub
-                (identifier)))))
-        (identifier)))))
+    (package_body
+      (identifier)
+      (non_empty_declarative_part
+        (body_stub
+          (protected_body_stub
+            (identifier))))
+      (identifier))))
 
 ================================================================================
 Separate task
@@ -98,12 +86,10 @@ end P;
 
 (compilation
   (compilation_unit
-    (proper_body
-      (package_body
-        (identifier)
-        (non_empty_declarative_part
-          (declarative_item_pragma
-            (body_stub
-              (task_body_stub
-                (identifier)))))
-        (identifier)))))
+    (package_body
+      (identifier)
+      (non_empty_declarative_part
+        (body_stub
+          (task_body_stub
+            (identifier))))
+      (identifier))))

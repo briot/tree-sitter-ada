@@ -142,14 +142,16 @@
     ;    "limited"
     ;    "synchronized"
     ; ]* @keyword.type
-(full_type_declaration
-;    (identifier) @type
-    "is"  @type.definition
-    ; (access_type_definition "access" @keyword.type)
-)
+(full_type_declaration "is"  @type.definition)
+(full_type_declaration (_ "access") @type.definition)
 
 ;; Highlight full subprogram specifications
-(subprogram_body (subprogram_specification) @function.spec)
+(subprogram_body
+    [
+       (procedure_specification)
+       (function_specification)
+    ] @function.spec
+)
 
 ;; Highlight errors in red. This is not very useful in practice, as text will
 ;; be highlighted as user types, and the error could be elsewhere in the code.
