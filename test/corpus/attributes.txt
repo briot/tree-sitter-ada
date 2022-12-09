@@ -21,22 +21,19 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (non_empty_declarative_part
           (declarative_item_pragma
             (object_declaration
               (defining_identifier_list
                 (identifier))
               (subtype_indication
-                (name
-                  (identifier))
+                (identifier)
                 (constraint
                   (index_constraint
                     (discrete_range
                       (range_g
-                        (name
-                          (identifier))
+                        (identifier)
                         (tick)
                         (range_attribute_designator
                           (expression
@@ -56,8 +53,7 @@ end;
                       (identifier)
                       (discrete_subtype_definition
                         (range_g
-                          (name
-                            (identifier))
+                          (identifier)
                           (tick)
                           (range_attribute_designator)))))
                   (sequence_of_statements
@@ -72,8 +68,7 @@ end;
                       (identifier)
                       (discrete_subtype_definition
                         (range_g
-                          (name
-                            (identifier))
+                          (identifier)
                           (tick)
                           (range_attribute_designator
                             (expression
@@ -108,16 +103,14 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (non_empty_declarative_part
           (declarative_item_pragma
             (object_declaration
               (defining_identifier_list
                 (identifier))
               (subtype_indication
-                (name
-                  (identifier)))
+                (identifier))
               (assign_value
                 (expression
                   (relation
@@ -125,70 +118,62 @@ end;
                       (term
                         (factor
                           (primary
-                            (name
-                              (attribute_reference
-                                (reduction_attribute_reference
-                                  (value_sequence
-                                    (iterated_element_association
-                                      (iterator_specification
-                                        (identifier)
-                                        (name
-                                          (identifier))
-                                        (iterator_filter
-                                          (expression
-                                            (relation
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (name
-                                                        (identifier))))))
-                                              (relational_operator)
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (numeric_literal)))))))))
-                                      (expression
-                                        (relation
-                                          (simple_expression
-                                            (term
-                                              (factor
-                                                (primary
-                                                  (aggregate
-                                                    (array_aggregate
-                                                      (positional_array_aggregate
-                                                            (expression
-                                                              (relation
-                                                                (simple_expression
-                                                                  (term
-                                                                    (factor
-
-(primary
-  (name
-    (identifier))))))))
-                                                            (expression
-                                                              (relation
-                                                                (simple_expression
-                                                                  (term
-                                                                    (factor
-(primary
-
-  (numeric_literal))))))))))))))))))
-
-                                  (tick)
-                                  (reduction_attribute_designator
-                                    (identifier)
-                                    (reduction_specification
-                                      (name
-                                        (string_literal))
-                                      (expression
-                                        (relation
-                                          (simple_expression
-                                            (term
-                                              (factor
-                                                (primary
-                                                  (numeric_literal))))))))))))))))))))))
+                            (attribute_reference
+                              (reduction_attribute_reference
+                                (value_sequence
+                                  (iterated_element_association
+                                    (iterator_specification
+                                      (identifier)
+                                      (identifier)
+                                      (iterator_filter
+                                        (expression
+                                          (relation
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (identifier)))))
+                                            (relational_operator)
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (numeric_literal)))))))))
+                                    (expression
+                                      (relation
+                                        (simple_expression
+                                          (term
+                                            (factor
+                                              (primary
+                                                (aggregate
+                                                  (array_aggregate
+                                                    (positional_array_aggregate
+                                                      (expression
+                                                        (relation
+                                                          (simple_expression
+                                                            (term
+                                                              (factor
+                                                                (primary
+                                                                  (identifier)))))))
+                                                      (expression
+                                                        (relation
+                                                          (simple_expression
+                                                            (term
+                                                              (factor
+                                                                (primary
+                                                                  (numeric_literal))))))))))))))))))
+                                (tick)
+                                (reduction_attribute_designator
+                                  (identifier)
+                                  (reduction_specification
+                                    (string_literal)
+                                    (expression
+                                      (relation
+                                        (simple_expression
+                                          (term
+                                            (factor
+                                              (primary
+                                                (numeric_literal)))))))))))))))))))))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement

@@ -48,11 +48,11 @@ module.exports = grammar({
 
       // "'for' identifier * 'use'"  could also be "'for' name * 'use'" as
       // specified in at_clause.
-      [$.at_clause, $.name],
+      [$.at_clause, $._name],
 
       // 'case' '(' identifier . '=>' ...
       //  ??? Invalid Ada
-      [$.name, $.component_choice_list],
+      [$._name, $.component_choice_list],
 
       // 'case' '(' expression . ',' ...
       [$.record_component_association_list, $.positional_array_aggregate],
@@ -75,7 +75,7 @@ module.exports = grammar({
       [$.defining_identifier_list, $.object_renaming_declaration],
       [$.defining_identifier_list, $.object_renaming_declaration,
        $.loop_label, $.exception_renaming_declaration],
-      [$.defining_identifier_list, $.name],
+      [$.defining_identifier_list, $._name],
 
       // 'generic' . 'package' ...
       [$.generic_formal_part, $.generic_renaming_declaration],
@@ -96,15 +96,19 @@ module.exports = grammar({
 
       // subprogram_specification 'is' 'begin'
       //    handled_sequence_of_statements 'end' string_literal . ';'
-      [$.name, $.subprogram_body],
+      [$._name, $.subprogram_body],
 
       [$.function_call, $.procedure_call_statement],
-      [$.function_call, $.name],
+      [$.function_call, $._name],
       [$.formal_derived_type_definition],
-      [$.name, $.aspect_mark],
-      [$.name, $.attribute_reference, $.qualified_expression],
-      [$.name, $.package_body_stub],
+      [$._name, $.aspect_mark],
+      [$._name, $.attribute_reference, $.qualified_expression],
+      [$._name, $.package_body_stub],
 
+   ],
+   inline: $ => [
+      // To avoid conflicts
+      $.selected_component,
    ],
 
    rules: {
@@ -127,34 +131,34 @@ module.exports = grammar({
       binary_adding_operator: $ => choice('+', '-', '&'),
       unary_adding_operator: $ => choice('+', '-'),
       multiplying_operator: $ => choice('*', '/', 'mod', 'rem'),
-      tick: $ => choice(
-         '\'',    // But is not the start of a character_literal
-      ),
+      tick: $ => '\'',   // But is not the start of a character_literal
 
-      name: $ => choice(
-         seq(    // inline  selected_component  from ada-mode
-            $.identifier,
-            optional(seq(
-               '.',
-               $.name,
-            )),
-         ),
+      _name: $ => choice(           // RM 4.1
+         $.identifier,
+         $.selected_component,      // rule is inlined above
          $.attribute_reference,
          $.function_call,
          $.qualified_expression,
-         '@',
-         //$.explicit_dereference, // covered by the first rule above
+         $.target_name,
+         // $.explicit_dereference, // covered by $.selected_component
          $.character_literal,
-         $.string_literal,         // name of an operator. However, in a
-                                   // number of places using a string doesn't
-                                   // make sense.
+         $.string_literal, // name of an operator. However, in a number of
+                           // places using a string doesn't make sense.
       ),
-      name_list: $ => comma_separated_list_of($.name),
+      selected_component: $ => seq(   // RM 4.1.3
+         $.identifier,
+         seq(
+            '.',
+            $._name,
+         ),
+      ),
+      target_name: $ => '@',       // RM 5.2.1
+      _name_list: $ => prec.left(comma_separated_list_of($._name)),
       defining_identifier_list: $ => comma_separated_list_of($.identifier),
 
       attribute_reference: $ => choice(
          seq(
-            $.name,
+            $._name,
             $.tick,
             $.attribute_designator,
          ),
@@ -172,7 +176,7 @@ module.exports = grammar({
          ')',
       ),
       reduction_specification: $ => seq(
-         $.name,
+         $._name,
          ',',
          $.expression,
       ),
@@ -240,7 +244,7 @@ module.exports = grammar({
             reservedWord('of'),
          ),
          optional(reservedWord('reverse')),
-         $.name,
+         field('iterator_name', $._name),
          optional($.iterator_filter),
       ),
       attribute_designator: $ => choice(
@@ -250,12 +254,12 @@ module.exports = grammar({
          reservedWord('digits'),
          reservedWord('mod'),
       ),
-      function_call: $ => seq(
-         $.name,
+      function_call: $ => seq(             // ARM 6.4
+         field('function_name', $._name),
          $.actual_parameter_part,
       ),
       qualified_expression: $ => seq(      // ARM 4.7
-         $.name,
+         field('subtype_name', $._name),
          $.tick,
          choice(
             seq('(', $.expression, ')'),
@@ -302,7 +306,7 @@ module.exports = grammar({
       ),
       package_specification: $ => seq(
          reservedWord('package'),
-         field('name', $.name),
+         field('name', $._name),
          optional($.aspect_specification),
          reservedWord('is'),
          repeat($._basic_declarative_item_pragma),
@@ -311,28 +315,28 @@ module.exports = grammar({
              repeat($._basic_declarative_item_pragma),
          )),
          reservedWord('end'),
-         field('endname', optional($.name)),
+         field('endname', optional($._name)),
       ),
-      with_clause: $ => seq(
+      with_clause: $ => seq(                 // ARM 10.1.2
          field('is_limited', optional(reservedWord('limited'))),
          field('is_private', optional(reservedWord('private'))),
          reservedWord('with'),
-         field('names', $.name_list),
+         $._name_list,
          ';',
       ),
-      use_clause: $ => seq(
+      use_clause: $ => seq(                 // ARM 8.4
          reservedWord('use'),
          optional(seq(
             field('is_all', optional(reservedWord('all'))),
             field('is_type', reservedWord('type')),
          )),
-         $.name_list,
+         $._name_list,
          ';',
       ),
       subunit: $ => seq(   //  10.1.3
          reservedWord('separate'),
          '(',
-         field('parent_unit_name', $.name),
+         field('parent_unit_name', $._name),
          ')',
          $.proper_body,
       ),
@@ -342,7 +346,7 @@ module.exports = grammar({
          $.task_body,
          $.protected_body,
       ),
-      subprogram_body: $ => seq(
+      subprogram_body: $ => seq(      // ARM 6.3
          optional($.overriding_indicator),
          $.subprogram_specification,
          optional($.aspect_specification),
@@ -351,16 +355,13 @@ module.exports = grammar({
          reservedWord('begin'),
          $.handled_sequence_of_statements,
          reservedWord('end'),
-         optional(choice(
-            $.name,
-            $.string_literal,  //  for operators
-         )),
+         optional(field('endname', $._name)),
          ';'
       ),
       package_body: $ => seq(
          reservedWord('package'),
          reservedWord('body'),
-         field('name', $.name),
+         field('name', $._name),
          optional($.aspect_specification),
          reservedWord('is'),
          optional($.non_empty_declarative_part),
@@ -369,12 +370,12 @@ module.exports = grammar({
             $.handled_sequence_of_statements,
          )),
          reservedWord('end'),
-         optional($.name),
+         optional(field('endname', $._name)),
          ';',
       ),
       subtype_indication: $ => seq(        // ARM 3.2.2
          optional($.null_exclusion),
-         field('subtype_mark', $.name),
+         field('subtype_mark', $._name),
          optional($.constraint),
       ),
       constraint: $ => choice(
@@ -386,9 +387,9 @@ module.exports = grammar({
          $.digits_constraint,
          $.delta_constraint,
       ),
-      range_g: $ => choice(
-         field('range_attribute_reference', seq(
-            $.name,
+      range_g: $ => choice(                         //  ARM 3.5
+         field('range_attribute_reference', seq(    //  ARM 4.1.4
+            field('prefix', $._name),
             $.tick,
             $.range_attribute_designator,
          )),
@@ -433,9 +434,9 @@ module.exports = grammar({
          ),
          $.raise_expression,                           // Added Ada 20x
       ),
-      raise_expression: $ => prec.right(1, seq(
+      raise_expression: $ => prec.right(1, seq(        // ARM 11.3
          reservedWord('raise'),
-         $.name,
+         field('exception_name', $._name),
          optional(seq(
             reservedWord('with'),
             $.simple_expression,
@@ -501,7 +502,7 @@ module.exports = grammar({
          reservedWord('null'),
          $.string_literal,  // ada-mode puts this in name instead
          $.aggregate,
-         $.name,
+         field('name', $._name),
          $.allocator,
          $._parenthesized_expression,
       )),
@@ -512,12 +513,12 @@ module.exports = grammar({
       ),
       subtype_indication_paren_constraint: $ => seq(
          optional($.null_exclusion),
-         $.name,
+         $._name,
          optional($.index_constraint),
       ),
       subpool_specification: $ => seq(
          '(',
-         $.name,
+         field('subpool_handle_name', $._name),
          ')',
       ),
       access_type_definition: $ => seq(
@@ -550,13 +551,13 @@ module.exports = grammar({
             $.parameter_and_result_profile,
          ),
       ),
-      access_definition: $ => seq(
+      access_definition: $ => seq(          // ARM 3.10
          optional($.null_exclusion),
          reservedWord('access'),
          choice(
             seq(
                optional(reservedWord('constant')),
-               $.name,
+               field('subtype_mark', $._name),
             ),
             seq(
                optional(reservedWord('protected')),
@@ -576,7 +577,7 @@ module.exports = grammar({
             comma_separated_list_of($.parameter_association),
 
             // Those are not in the ARM, but added here for generic
-            // instantiations, which get the actual parameter part via $.name
+            // instantiations, which get the actual parameter part via $._name
             // and its $.function_call
             // ????
             $.conditional_expression,
@@ -794,7 +795,7 @@ module.exports = grammar({
          $.subtype_indication,
          optional(seq(
             reservedWord('and'),
-            $.interface_list,
+            $._interface_list,
          )),
          reservedWord('with'),
          reservedWord('private'),
@@ -827,13 +828,13 @@ module.exports = grammar({
       ),
       discriminant_specification_list: $ =>
          prec.right(list_of(';', $.discriminant_specification)),
-      discriminant_specification: $ => seq(
+      discriminant_specification: $ => seq(     // ARM 3.7
          $.defining_identifier_list,
          ':',
          choice(
             seq(
                optional($.null_exclusion),
-               $.name,
+               field('subtype_mark', $._name),
             ),
             $.access_definition,
          ),
@@ -881,8 +882,8 @@ module.exports = grammar({
       ),
       _index_subtype_definition_list: $ =>
          comma_separated_list_of($.index_subtype_definition),
-      index_subtype_definition: $ => seq(
-         $.name,
+      index_subtype_definition: $ => seq(             // ARM 3.6
+         field('subtype_mark', $._name),
          reservedWord('range'),
          '<>',
       ),
@@ -950,7 +951,7 @@ module.exports = grammar({
          optional(seq(
             optional(seq(
                reservedWord('and'),
-               $.interface_list,
+               $._interface_list,
             )),
             $.record_extension_part,
          )),
@@ -965,11 +966,11 @@ module.exports = grammar({
          reservedWord('interface'),
          optional(seq(
             reservedWord('and'),
-            $.interface_list,
+            $._interface_list,
          )),
       ),
-      interface_list: $ =>
-         list_of(reservedWord('and'), $.name),
+      _interface_list: $ =>
+         list_of(reservedWord('and'), $._name),
       record_extension_part: $ => seq(
          reservedWord('with'),   // record_extension_part in Ada grammar
          $.record_definition,
@@ -1134,9 +1135,9 @@ module.exports = grammar({
          $.expression,
          ';',
       ),
-      attribute_definition_clause: $ => seq(
+      attribute_definition_clause: $ => seq(      // ARM 13.3
          reservedWord('for'),
-         $.name,
+         field('local_name', $._name),
          $.tick,
          $.attribute_designator,
          reservedWord('use'),
@@ -1224,7 +1225,7 @@ module.exports = grammar({
          reservedWord('is'),
          optional(seq(
             reservedWord('new'),
-            $.interface_list,
+            $._interface_list,
             reservedWord('with'),
          )),
          $.protected_definition,
@@ -1237,7 +1238,7 @@ module.exports = grammar({
          reservedWord('is'),
          optional(seq(
             reservedWord('new'),
-            $.interface_list,
+            $._interface_list,
             reservedWord('with'),
          )),
          $.protected_definition,
@@ -1264,8 +1265,8 @@ module.exports = grammar({
          ';',
       ),
       choice_parameter_specification: $ => $.identifier,  // ??? inline
-      component_clause: $ => seq(
-         $.name,
+      component_clause: $ => seq(             // ARM 13.5.1
+         field('local_name', $._name),
          reservedWord('at'),
          field('position', $.expression),
          reservedWord('range'),
@@ -1319,16 +1320,16 @@ module.exports = grammar({
          $.discrete_subtype_definition,
       ),
       enumeration_aggregate: $ => $.array_aggregate,  //  ??? inline  ARM 13.4
-      enumeration_representation_clause: $ => seq(
+      enumeration_representation_clause: $ => seq(    // ARM 13.4
          reservedWord('for'),
-         $.name,
+         field('local_name', $._name),
          reservedWord('use'),
          $.enumeration_aggregate,
          ';',
       ),
       exception_choice_list: $ => list_of('|', $.exception_choice),
-      exception_choice: $ => choice(
-         $.name,
+      exception_choice: $ => choice(    // ARM 11.2
+         field('exception_name', $._name),
          reservedWord('others'),
       ),
       exception_declaration: $ => seq(
@@ -1359,7 +1360,7 @@ module.exports = grammar({
       ),
       function_specification: $ => seq(
          reservedWord('function'),
-         $.name,
+         field('name', $._name),
          $.parameter_and_result_profile,
       ),
       generic_declaration: $ => choice(
@@ -1389,39 +1390,39 @@ module.exports = grammar({
          $.package_specification,
          ';',
       ),
-      generic_instantiation: $ => seq(
+      generic_instantiation: $ => seq(     // ARM 12.3
          choice(
             seq(
                reservedWord('package'),
-               $.name,
+               field('name', $._name),
             ),
             seq(
                optional($.overriding_indicator),
                choice(
                   seq(
                      reservedWord('procedure'),
-                     $.name,
+                     field('name', $._name),
                   ),
                   seq(
                      reservedWord('function'),
-                     $.name,
+                     field('name', $._name),
                   ),
                ),
             ),
          ),
          reservedWord('is'),
          reservedWord('new'),
-         $.name,   //  includes the generic_actual_part (via the function call)
+         field('generic_name', $._name),   //  includes the generic_actual_part (via the function call)
          optional($.aspect_specification),
          ';',
       ),
-      formal_object_declaration: $ => choice(
+      formal_object_declaration: $ => choice(   // ARM 12.4
          seq(
             $.defining_identifier_list,
             ':',
             optional($.non_empty_mode),
             optional($.null_exclusion),
-            $.name,
+            field('subtype_mark', $._name),
             optional($.assign_value),
             optional($.aspect_specification),
             ';',
@@ -1440,7 +1441,7 @@ module.exports = grammar({
          $.formal_complete_type_declaration,
          $.formal_incomplete_type_declaration,
       ),
-      formal_complete_type_declaration: $ => seq(
+      formal_complete_type_declaration: $ => seq(    // ARM 12.5
          reservedWord('type'),
          $.identifier,
          optional($.discriminant_part),
@@ -1449,7 +1450,7 @@ module.exports = grammar({
          optional(seq(
             reservedWord('or'),
             reservedWord('use'),
-            $.name,
+            field('default_subtype_mark', $._name),
          )),
          optional($.aspect_specification),
          ';',
@@ -1465,7 +1466,7 @@ module.exports = grammar({
          optional(seq(
             reservedWord('or'),
             reservedWord('use'),
-            $.name,
+            field('default_subtype_mark', $._name),
          )),
          ';',
       ),
@@ -1490,18 +1491,18 @@ module.exports = grammar({
          optional(reservedWord('limited')),
          reservedWord('private'),
       ),
-      formal_derived_type_definition: $ => seq(
+      formal_derived_type_definition: $ => seq(     // ARM 12.5.1
          optional(reservedWord('abstract')),
          optional(choice(
             reservedWord('limited'),
             reservedWord('synchronized'),
          )),
          reservedWord('new'),
-         $.name,
+         field('subtype_mark', $._name),
          optional(seq(
             optional(seq(
                reservedWord('and'),
-               $.interface_list,
+               $._interface_list,
             )),
             reservedWord('with'),
             reservedWord('private'),
@@ -1561,17 +1562,17 @@ module.exports = grammar({
          ';',
       ),
       subprogram_default: $ => choice(
-         field('default_name', $.name),
+         field('default_name', $._name),
          '<>',
          reservedWord('null'),
       ),
-      formal_package_declaration: $ => seq(
+      formal_package_declaration: $ => seq(     // ARM 12.7
          reservedWord('with'),
          reservedWord('package'),
          $.identifier,
          reservedWord('is'),
          reservedWord('new'),
-         $.name,
+         field('generic_package_name', $._name),
          optional($.aspect_specification),
          ';',
       ),
@@ -1579,46 +1580,44 @@ module.exports = grammar({
          'null',
          'all',
       ),
-      extended_global_aspect_definition: $ => choice(
-         seq(
-            reservedWord('use'),
-            field('formal_parameter_designator', choice(
-               $.formal_group_designator,
-               $.name,
-            )),
-         ),
-         seq(
-            reservedWord('do'),
-            $.dispatching_operation_specifier,
-         ),
-      ),
-      disaptching_operation_set: $ =>
-         comma_separated_list_of($.dispatching_operation_specifier),
-      dispatching_operation_specifier: $ => seq(
-         $.name,
-         '(',
-         $.name,
-         ')',
-      ),
+      //      extended_global_aspect_definition: $ => choice(
+      //         seq(
+      //            reservedWord('use'),
+      //            field('formal_parameter_designator', choice(
+      //               $.formal_group_designator,
+      //               field('name', $._name),
+      //            )),
+      //         ),
+      //         seq(
+      //            reservedWord('do'),
+      //            $.dispatching_operation_specifier,
+      //         ),
+      //      ),
+//      dispatching_operation_specifier: $ => seq(
+//         $._name,
+//         '(',
+//         $._name,
+//         ')',
+//      ),
       extended_global_aspect_element: $ => choice(
          seq(
             reservedWord('use'),
             field('formal_parameter_set', choice(
                $.formal_group_designator,
-               comma_separated_list_of($.name),
+               comma_separated_list_of($._name),
             )),
          ),
-         seq(
-            reservedWord('do'),
-            comma_separated_list_of($.dispatching_operation_specifier),
-         ),
+//         seq(
+//            reservedWord('do'),
+//            comma_separated_list_of($.dispatching_operation_specifier),
+//         ),
       ),
-      global_aspect_definition: $ => choice(
+      global_aspect_definition: $ => choice(     // ARM 6.1.2
          seq(
             $.global_mode,
 //            $.global_designator,
          ),
-         $.extended_global_aspect_definition,
+//         $.extended_global_aspect_definition,
          seq(
             '(',
             comma_separated_list_of($.global_aspect_element),
@@ -1628,16 +1627,13 @@ module.exports = grammar({
       global_aspect_element: $ => choice(
          seq(
             $.global_mode,
-            $.global_set,
+            field('global_set', $._name_list),
          ),
-         $.extended_global_aspect_definition,
+//         $.extended_global_aspect_definition,
       ),
       global_mode: $ => choice(
          $.non_empty_mode,
          reservedWord('overriding'),
-      ),
-      global_set: $ => prec.left(
-         comma_separated_list_of($.name),   // ??? name_list
       ),
       handled_sequence_of_statements: $ => seq(
          $.sequence_of_statements,
@@ -1714,7 +1710,7 @@ module.exports = grammar({
             reservedWord('is'),
             optional(seq(
                reservedWord('new'),
-               $.interface_list,
+               $._interface_list,
                reservedWord('with'),
             )),
             $.task_definition,
@@ -1731,7 +1727,7 @@ module.exports = grammar({
             reservedWord('is'),
             optional(seq(
                reservedWord('new'),
-               $.interface_list,
+               $._interface_list,
                reservedWord('with'),
             )),
             $.task_definition,
@@ -1782,13 +1778,13 @@ module.exports = grammar({
          optional($.formal_part),
          $.result_profile,
       ),
-      parameter_specification: $ => seq(
+      parameter_specification: $ => seq(     // ARM 6.1
          $.defining_identifier_list,
          ':',
          optional(reservedWord('aliased')),
          optional($.non_empty_mode),
          optional($.null_exclusion),
-         $.name,
+         field('subtype_mark', $._name),
          optional($.assign_value),
       ),
       parameter_specification_list: $ => list_of(
@@ -1834,19 +1830,19 @@ module.exports = grammar({
       ),
       procedure_specification: $ => seq(
          reservedWord('procedure'),
-         $.name,
+         field('name', $._name),
          optional($.non_empty_parameter_profile),
       ),
-      record_representation_clause: $ => prec.left(seq(
+      record_representation_clause: $ => prec.left(seq(    // ARM 13.5.1
          reservedWord('for'),
-         $.name,
+         field('local_name', $._name),
          reservedWord('use'),
          reservedWord('record'),
          optional($.mod_clause),
          repeat($.component_clause),
          reservedWord('end'),
          reservedWord('record'),
-         optional($.name),
+         optional(field('end_local_name', $._name)),
          ';',
       )),
       renaming_declaration: $ => choice(
@@ -1856,16 +1852,16 @@ module.exports = grammar({
          $.subprogram_renaming_declaration,
          $.generic_renaming_declaration,
       ),
-      object_renaming_declaration: $ => choice(
+      object_renaming_declaration: $ => choice(    // ARM 8.5.1
          seq(
             $.identifier,
             optional(seq(
                ':',
                optional($.null_exclusion),
-               $.name,
+               field('subtype_mark', $._name),
             )),
             reservedWord('renames'),
-            $.name,
+            field('object_name', $._name),
             optional($.aspect_specification),
             ';',
          ),
@@ -1874,25 +1870,25 @@ module.exports = grammar({
             ':',
             $.access_definition,
             reservedWord('renames'),
-            $.name,
+            field('object_name', $._name),
             optional($.aspect_specification),
             ';',
          ),
       ),
-      exception_renaming_declaration: $ => seq(
+      exception_renaming_declaration: $ => seq(    // ARM 8.5.2
          $.identifier,
          ':',
          reservedWord('exception'),
          reservedWord('renames'),
-         $.name,
+         field('exception_name', $._name),
          optional($.aspect_specification),
          ';',
       ),
       package_renaming_declaration: $ => seq(
          reservedWord('package'),
-         $.name,
+         field('name', $._name),
          reservedWord('renames'),
-         $.name,
+         field('package_name', $._name),
          optional($.aspect_specification),
          ';',
       ),
@@ -1900,7 +1896,7 @@ module.exports = grammar({
          optional($.overriding_indicator),
          $.subprogram_specification,
          reservedWord('renames'),
-         $.name,
+         field('callable_entity_name', $._name),
          optional($.aspect_specification),
          ';',
       ),
@@ -1908,27 +1904,27 @@ module.exports = grammar({
          seq(
             reservedWord('generic'),
             reservedWord('package'),
-            $.name,
+            field('defining_program_unit_name', $._name),
             reservedWord('renames'),
-            $.name,
+            field('generic_package_name', $._name),
             optional($.aspect_specification),
             ';',
          ),
          seq(
             reservedWord('generic'),
             reservedWord('procedure'),
-            $.name,
+            field('defining_program_unit_name', $._name),
             reservedWord('renames'),
-            $.name,
+            field('generic_procedure_name', $._name),
             optional($.aspect_specification),
             ';',
          ),
          seq(
             reservedWord('generic'),
             reservedWord('function'),
-            $.name,
+            field('defining_program_unit_name', $._name),
             reservedWord('renames'),
-            $.name,
+            field('generic_function_name', $._name),
             optional($.aspect_specification),
             ';',
          ),
@@ -1938,7 +1934,7 @@ module.exports = grammar({
          choice(
             seq(
                optional($.null_exclusion),
-               $.name,
+               field('subtype_mark', $._name),
             ),
             $.access_definition,
          ),
@@ -2055,12 +2051,12 @@ module.exports = grammar({
       ),
       abort_statement: $ => seq(
          reservedWord('abort'),
-         comma_separated_list_of($.name),
+         comma_separated_list_of($._name),
          ';',
       ),
-      requeue_statement: $ => seq(
+      requeue_statement: $ => seq(   // ARM 9.5.4
          reservedWord('requeue'),
-         $.name,
+         field('name', $._name),
          optional(seq(
             reservedWord('with'),
             reservedWord('abort'),
@@ -2131,9 +2127,9 @@ module.exports = grammar({
          reservedWord('then'),
          $.sequence_of_statements,
       ),
-      exit_statement: $ => seq(
+      exit_statement: $ => seq(     // ARM 5.7
          reservedWord('exit'),
-         optional($.name),
+         field('loop_name', optional($._name)),
          optional(seq(
             reservedWord('when'),
             field('condition', $.expression),
@@ -2142,7 +2138,7 @@ module.exports = grammar({
       ),
       goto_statement: $ => seq(
          reservedWord('goto'),
-         $.name,
+         field('label_name', $._name),
          ';',
       ),
       delay_statement: $ => choice(
@@ -2188,15 +2184,15 @@ module.exports = grammar({
          $.subtype_indication,
          $.access_definition,
       ),
-      procedure_call_statement: $ => seq(
-         $.name,  // not an operator
+      procedure_call_statement: $ => seq(    // ARM 6.4
+         field('name', $._name),  // not an operator
          optional($.actual_parameter_part),
          ';',
       ),
       raise_statement: $ => seq(
          reservedWord('raise'),
          optional(seq(
-            $.name,
+            field('name', $._name),
             optional(seq(
                reservedWord('with'),
                $.expression,  // ada-mode allows "raise CE with raise with ..."
@@ -2245,8 +2241,8 @@ module.exports = grammar({
 //            ),
 //         ),
       ),
-      assignment_statement: $ => seq(
-         $.name,
+      assignment_statement: $ => seq(    // ARM 5.2
+         field('variable_name', $._name),
          $.assign_value,
          ';',
       ),

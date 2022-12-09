@@ -11,8 +11,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -41,8 +40,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -56,16 +54,14 @@ end;
                         (identifier))
                       (component_definition
                         (subtype_indication
-                          (name
-                            (identifier))))))
+                          (identifier)))))
                   (component_item
                     (component_declaration
                       (defining_identifier_list
                         (identifier))
                       (component_definition
                         (subtype_indication
-                          (name
-                            (identifier))
+                          (identifier)
                           (constraint
                             (scalar_constraint
                               (range_constraint
@@ -88,15 +84,12 @@ end;
                       (component_definition
                         (access_definition
                           (null_exclusion)
-                          (name
-                            (identifier))))))))))))
+                          (identifier)))))))))))
       (aspect_clause
         (record_representation_clause
-          (name
-            (identifier))
+          (identifier)
           (component_clause
-            (name
-              (identifier))
+            (identifier)
             (expression
               (relation
                 (simple_expression
@@ -130,8 +123,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -146,8 +138,7 @@ end;
                         (identifier))
                       (component_definition
                         (subtype_indication
-                          (name
-                            (identifier)))))))))))))))
+                          (identifier))))))))))))))
 
 ================================================================================
 Discriminated
@@ -164,8 +155,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -174,13 +164,11 @@ end;
               (discriminant_specification
                 (defining_identifier_list
                   (identifier))
-                (name
-                  (identifier)))
+                (identifier))
               (discriminant_specification
                 (defining_identifier_list
                   (identifier))
-                (name
-                  (identifier)))))
+                (identifier))))
           (type_definition
             (record_type_definition
               (record_definition
@@ -191,8 +179,7 @@ end;
                         (identifier))
                       (component_definition
                         (subtype_indication
-                          (name
-                            (identifier)))))))))))))))
+                          (identifier))))))))))))))
 
 ================================================================================
 tagged
@@ -210,8 +197,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -224,8 +210,7 @@ end;
           (type_definition
             (derived_type_definition
               (subtype_indication
-                (name
-                  (identifier)))
+                (identifier))
               (record_extension_part
                 (record_definition
                   (component_list
@@ -235,8 +220,7 @@ end;
                           (identifier))
                         (component_definition
                           (subtype_indication
-                            (name
-                              (identifier))))))))))))))))
+                            (identifier)))))))))))))))
 
 ================================================================================
 Variant
@@ -258,8 +242,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -268,8 +251,7 @@ end;
               (discriminant_specification
                 (defining_identifier_list
                   (identifier))
-                (name
-                  (identifier)))))
+                (identifier))))
           (type_definition
             (record_type_definition
               (record_definition
@@ -306,8 +288,7 @@ end;
                                 (identifier))
                               (component_definition
                                 (subtype_indication
-                                  (name
-                                    (identifier))))))))
+                                  (identifier)))))))
                       (variant
                         (discrete_choice_list
                           (discrete_choice))
@@ -328,8 +309,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -340,20 +320,15 @@ end;
           (identifier)
           (type_definition
             (interface_type_definition
-              (interface_list
-                (name
-                  (identifier)))))))
+              (identifier)))))
       (type_declaration
         (full_type_declaration
           (identifier)
           (type_definition
             (derived_type_definition
               (subtype_indication
-                (name
-                  (identifier)))
-              (interface_list
-                (name
-                  (identifier)))
+                (identifier))
+              (identifier)
               (record_extension_part
                 (record_definition)))))))))
 
@@ -374,15 +349,13 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -429,15 +402,13 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -453,8 +424,7 @@ end;
                                           (term
                                             (factor
                                               (primary
-                                                (name
-                                                  (identifier))))))))
+                                                (identifier)))))))
                                     (record_component_association_list
                                       (component_choice_list
                                         (identifier))
@@ -483,15 +453,13 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -508,8 +476,7 @@ end;
                                             (term
                                               (factor
                                                 (primary
-                                                  (name
-                                                    (identifier))))))))
+                                                  (identifier)))))))
                                       (record_component_association_list
                                         (component_choice_list
                                           (identifier))

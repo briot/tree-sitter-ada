@@ -16,8 +16,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -25,8 +24,7 @@ end;
             (access_type_definition
               (access_to_object_definition
                 (subtype_indication
-                  (name
-                    (identifier))))))))
+                  (identifier)))))))
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -35,8 +33,7 @@ end;
               (access_to_object_definition
                 (subtype_indication
                   (null_exclusion)
-                  (name
-                    (identifier))))))))
+                  (identifier)))))))
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -45,8 +42,7 @@ end;
               (access_to_object_definition
                 (general_access_modifier)
                 (subtype_indication
-                  (name
-                    (identifier))))))))
+                  (identifier)))))))
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -55,7 +51,15 @@ end;
               (access_to_object_definition
                 (general_access_modifier)
                 (subtype_indication
-                  (name
+                  (identifier)))))))
+      (type_declaration
+        (full_type_declaration
+          (identifier)
+          (type_definition
+            (access_type_definition
+              (access_to_subprogram_definition
+                (parameter_and_result_profile
+                  (result_profile
                     (identifier))))))))
       (type_declaration
         (full_type_declaration
@@ -65,18 +69,7 @@ end;
               (access_to_subprogram_definition
                 (parameter_and_result_profile
                   (result_profile
-                    (name
-                      (identifier)))))))))
-      (type_declaration
-        (full_type_declaration
-          (identifier)
-          (type_definition
-            (access_type_definition
-              (access_to_subprogram_definition
-                (parameter_and_result_profile
-                  (result_profile
-                    (name
-                      (identifier))))))))))))
+                    (identifier)))))))))))
 
 ================================================================================
 Dereference
@@ -96,15 +89,13 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -112,25 +103,20 @@ end;
                           (term
                             (factor
                               (primary
-                                (name
-                                  (identifier)
-                                  (name
-                                    (identifier)))))))))))))
+                                (identifier)
+                                (identifier)))))))))))
             (statement
               (simple_statement
                 (procedure_call_statement
-                  (name
-                    (function_call
-                      (name
-                        (identifier)
-                        (name
-                          (identifier)))
-                      (actual_parameter_part
-                        (parameter_association
-                          (expression
-                            (relation
-                              (simple_expression
-                                (term
-                                  (factor
-                                    (primary
-                                      (numeric_literal))))))))))))))))))))
+                  (identifier)
+                  (function_call
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
+                        (expression
+                          (relation
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (numeric_literal)))))))))))))))))))

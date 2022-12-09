@@ -103,20 +103,28 @@
 
 ;; Highlight the name of subprograms
 (procedure_specification
-    (name) @function
+    name: (identifier) @function
 )
 (function_specification
-    (name) @function
+    name: (identifier) @function
 )
 (package_specification
-    name: (name) @function     ;;  Should use @module, but no default highlight
+    name: (identifier) @function  ;;  Should use @module
 )
 (package_body
-    (name) @function     ;;  Should use @module, but no default highlight
+    name: (identifier) @function  ;;  Should use @module
 )
 (generic_instantiation
-    . (name) @function
+    name: (identifier) @function
 )
+
+;; Some keywords should take different categories depending on the context
+;; ??? Doesn't quite work because treesitter choses the longest name for the
+;; final highlight
+(use_clause "use"  @include "type" @include)
+(with_clause "private" @include)
+(with_clause "limited" @include)
+
 
 ;; Change keyword categories inside type definitions.
 ;; WIP: waiting for simplified tree.
@@ -135,10 +143,13 @@
     ;    "synchronized"
     ; ]* @keyword.type
 (full_type_declaration
-    (identifier) @type
+;    (identifier) @type
     "is"  @type.definition
     ; (access_type_definition "access" @keyword.type)
 )
+
+;; Highlight full subprogram specifications
+(subprogram_body (subprogram_specification) @function.spec)
 
 ;; Highlight errors in red. This is not very useful in practice, as text will
 ;; be highlighted as user types, and the error could be elsewhere in the code.

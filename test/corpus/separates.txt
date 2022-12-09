@@ -13,8 +13,7 @@ end;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (body_stub
@@ -22,8 +21,7 @@ end;
                 (overriding_indicator)
                 (subprogram_specification
                   (procedure_specification
-                    (name
-                      (identifier))))
+                    (identifier)))
                 (aspect_specification
                   (aspect_mark_list
                     (aspect_association
@@ -35,12 +33,10 @@ end;
                 (overriding_indicator)
                 (subprogram_specification
                   (function_specification
-                    (name
-                      (identifier))
+                    (identifier)
                     (parameter_and_result_profile
                       (result_profile
-                        (name
-                          (identifier))))))
+                        (identifier)))))
                 (aspect_specification
                   (aspect_mark_list
                     (aspect_association
@@ -61,8 +57,7 @@ end;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (body_stub
@@ -83,15 +78,13 @@ end P;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (body_stub
               (protected_body_stub
                 (identifier)))))
-        (name
-          (identifier))))))
+        (identifier)))))
 
 ================================================================================
 Separate task
@@ -107,12 +100,10 @@ end P;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (body_stub
               (task_body_stub
                 (identifier)))))
-        (name
-          (identifier))))))
+        (identifier)))))

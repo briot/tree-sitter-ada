@@ -18,8 +18,7 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
@@ -32,8 +31,7 @@ end;
                           (term
                             (factor
                               (primary
-                                (name
-                                  (identifier)))))))))
+                                (identifier))))))))
                   (sequence_of_statements
                     (statement
                       (simple_statement
@@ -47,8 +45,7 @@ end;
                                 (term
                                   (factor
                                     (primary
-                                      (name
-                                        (identifier))))))
+                                      (identifier)))))
                               (relational_operator)
                               (simple_expression
                                 (term
@@ -81,8 +78,7 @@ end P;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
@@ -91,21 +87,17 @@ end P;
                   (iteration_scheme
                     (iterator_specification
                       (identifier)
-                      (name
+                      (identifier)
+                      (attribute_reference
                         (identifier)
-                        (name
-                          (attribute_reference
-                            (name
-                              (identifier))
-                            (tick)
-                            (attribute_designator
-                              (identifier)))))))
+                        (tick)
+                        (attribute_designator
+                          (identifier)))))
                   (sequence_of_statements
                     (statement
                       (simple_statement
                         (goto_statement
-                          (name
-                            (identifier)))))
+                          (identifier))))
                     (label
                       (identifier))))))
             (statement
@@ -114,8 +106,7 @@ end P;
                   (iteration_scheme
                     (iterator_specification
                       (identifier)
-                      (name
-                        (identifier))))
+                      (identifier)))
                   (sequence_of_statements
                     (statement
                       (simple_statement
@@ -128,8 +119,7 @@ end P;
                                     (factor
                                       (primary
                                         (numeric_literal)))))))))))))))))
-        (name
-          (identifier))))))
+        (identifier)))))
 
 ================================================================================
 Named loop
@@ -151,8 +141,7 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
@@ -164,8 +153,7 @@ end;
                     (statement
                       (simple_statement
                         (exit_statement
-                          (name
-                            (identifier))))))
+                          (identifier)))))
                   (identifier))))))))))
 
 ================================================================================
@@ -188,12 +176,10 @@ end F;
       (subprogram_body
         (subprogram_specification
           (function_specification
-            (name
-              (identifier))
+            (identifier)
             (parameter_and_result_profile
               (result_profile
-                (name
-                  (identifier))))))
+                (identifier)))))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
@@ -205,8 +191,7 @@ end F;
                         (term
                           (factor
                             (primary
-                              (name
-                                (identifier)))))))))))
+                              (identifier))))))))))
             (statement
               (compound_statement
                 (extended_return_statement
@@ -214,8 +199,7 @@ end F;
                     (identifier)
                     (return_subtype_indication
                       (subtype_indication
-                        (name
-                          (identifier))))
+                        (identifier)))
                     (assign_value
                       (expression
                         (relation
@@ -226,22 +210,21 @@ end F;
                                   (aggregate
                                     (record_aggregate
                                       (record_component_association_list
-                                          (component_choice_list
-                                            (identifier))
-                                          (expression
-                                            (relation
-                                              (simple_expression
-                                                (term
-                                                  (factor
-                                                    (primary
-                                                      (numeric_literal))))))))))))))))))
+                                        (component_choice_list
+                                          (identifier))
+                                        (expression
+                                          (relation
+                                            (simple_expression
+                                              (term
+                                                (factor
+                                                  (primary
+                                                    (numeric_literal))))))))))))))))))
                   (handled_sequence_of_statements
                     (sequence_of_statements
                       (statement
                         (simple_statement
                           (null_statement))))))))))
-        (name
-          (identifier))))))
+        (identifier)))))
 
 ================================================================================
 Procedure call
@@ -260,23 +243,20 @@ end P;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))
+            (identifier)
             (non_empty_parameter_profile
               (formal_part
                 (parameter_specification_list
                   (parameter_specification
                     (defining_identifier_list
                       (identifier))
-                    (name
-                      (identifier))))))))
+                    (identifier)))))))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (procedure_call_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (actual_parameter_part
                     (parameter_association
                       (expression
@@ -293,10 +273,8 @@ end P;
                             (term
                               (factor
                                 (primary
-                                  (name
-                                    (identifier)))))))))))))))
-        (name
-          (identifier))))))
+                                  (identifier))))))))))))))
+        (identifier)))))
 
 ================================================================================
 Raise exception
@@ -316,20 +294,17 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (raise_statement
-                  (name
-                    (identifier)))))
+                  (identifier))))
             (statement
               (simple_statement
                 (raise_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (expression
                     (relation
                       (simple_expression
@@ -356,23 +331,20 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (non_empty_declarative_part
           (declarative_item_pragma
             (object_declaration
               (defining_identifier_list
                 (identifier))
               (subtype_indication
-                (name
-                  (identifier))))))
+                (identifier)))))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -380,21 +352,19 @@ end;
                           (term
                             (factor
                               (primary
-                                (name
-                                  (function_call
-                                    (name
-                                      (identifier))
-                                    (actual_parameter_part
-                                      (parameter_association
-                                        (component_choice_list
-                                          (identifier))
-                                        (expression
-                                          (relation
-                                            (simple_expression
-                                              (term
-                                                (factor
-                                                  (primary
-                                                    (numeric_literal)))))))))))))))))))))))))))
+                                (function_call
+                                  (identifier)
+                                  (actual_parameter_part
+                                    (parameter_association
+                                      (component_choice_list
+                                        (identifier))
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal))))))))))))))))))))))))))
 
 ================================================================================
 if statement
@@ -430,8 +400,7 @@ end P;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
@@ -443,8 +412,7 @@ end P;
                         (term
                           (factor
                             (primary
-                              (name
-                                (identifier))))))
+                              (identifier)))))
                       (relational_operator)
                       (simple_expression
                         (term
@@ -456,8 +424,7 @@ end P;
                         (term
                           (factor
                             (primary
-                              (name
-                                (identifier))))))
+                              (identifier)))))
                       (relational_operator)
                       (simple_expression
                         (term
@@ -480,8 +447,7 @@ end P;
                           (term
                             (factor
                               (primary
-                                (name
-                                  (identifier))))))
+                                (identifier)))))
                         (relational_operator)
                         (simple_expression
                           (term
@@ -498,8 +464,7 @@ end P;
                                   (defining_identifier_list
                                     (identifier))
                                   (subtype_indication
-                                    (name
-                                      (identifier))))))
+                                    (identifier)))))
                             (handled_sequence_of_statements
                               (sequence_of_statements
                                 (statement
@@ -509,8 +474,7 @@ end P;
                                 (exception_handler
                                   (exception_choice_list
                                     (exception_choice
-                                      (name
-                                        (identifier))))
+                                      (identifier)))
                                   (sequence_of_statements
                                     (statement
                                       (simple_statement
@@ -524,8 +488,7 @@ end P;
                               (statement
                                 (simple_statement
                                   (null_statement))))))))))))))
-        (name
-          (identifier))))))
+        (identifier)))))
 
 ================================================================================
 Case statement
@@ -549,8 +512,7 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
@@ -562,21 +524,19 @@ end;
                         (term
                           (factor
                             (primary
-                              (name
-                                (function_call
-                                  (name
-                                    (identifier))
-                                  (actual_parameter_part
-                                    (parameter_association
-                                      (component_choice_list
-                                        (identifier))
-                                      (expression
-                                        (relation
-                                          (simple_expression
-                                            (term
-                                              (factor
-                                                (primary
-                                                  (numeric_literal)))))))))))))))))
+                              (function_call
+                                (identifier)
+                                (actual_parameter_part
+                                  (parameter_association
+                                    (component_choice_list
+                                      (identifier))
+                                    (expression
+                                      (relation
+                                        (simple_expression
+                                          (term
+                                            (factor
+                                              (primary
+                                                (numeric_literal))))))))))))))))
                   (case_statement_alternative
                     (discrete_choice_list
                       (discrete_choice
@@ -585,14 +545,12 @@ end;
                             (term
                               (factor
                                 (primary
-                                  (name
-                                     (character_literal))))))
+                                  (character_literal)))))
                           (simple_expression
                             (term
                               (factor
                                 (primary
-                                  (name
-                                    (character_literal)))))))))
+                                  (character_literal))))))))
                     (sequence_of_statements
                       (statement
                         (simple_statement
@@ -606,8 +564,7 @@ end;
                               (term
                                 (factor
                                   (primary
-                                    (name
-                                      (character_literal)))))))))
+                                    (character_literal))))))))
                       (discrete_choice
                         (expression
                           (relation
@@ -615,8 +572,7 @@ end;
                               (term
                                 (factor
                                   (primary
-                                    (name
-                                      (character_literal))))))))))
+                                    (character_literal)))))))))
                     (sequence_of_statements
                       (statement
                         (simple_statement
@@ -640,15 +596,13 @@ end;
       (subprogram_body
         (subprogram_specification
           (procedure_specification
-            (name
-              (identifier))))
+            (identifier)))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -658,13 +612,11 @@ end;
                               (primary
                                 (allocator
                                   (subtype_indication_paren_constraint
-                                    (name
-                                      (identifier))))))))))))))
+                                    (identifier)))))))))))))
             (statement
               (simple_statement
                 (assignment_statement
-                  (name
-                    (identifier))
+                  (identifier)
                   (assign_value
                     (expression
                       (relation
@@ -674,39 +626,34 @@ end;
                               (primary
                                 (allocator
                                   (subpool_specification
-                                    (name
-                                      (identifier)
-                                      (name
-                                        (identifier))))
+                                    (identifier)
+                                    (identifier))
                                   (subtype_indication_paren_constraint
-                                    (name
-                                      (qualified_expression
-                                        (name
-                                          (identifier))
-                                        (tick)
-                                        (expression
-                                          (relation
-                                            (simple_expression
-                                              (term
-                                                (factor
-                                                  (primary
-                                                    (aggregate
-                                                      (record_aggregate
-                                                        (record_component_association_list
-                                                          (component_choice_list
-                                                            (identifier))
-                                                          (expression
-                                                            (relation
-                                                              (simple_expression
-                                                                (term
-                                                                  (factor
-                                                                    (primary
-                                                                      (numeric_literal))))))))))))))))))))))))))))))))))))
+                                    (qualified_expression
+                                      (identifier)
+                                      (tick)
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (aggregate
+                                                    (record_aggregate
+                                                      (record_component_association_list
+                                                        (component_choice_list
+                                                          (identifier))
+                                                        (expression
+                                                          (relation
+                                                            (simple_expression
+                                                              (term
+                                                                (factor
+                                                                  (primary
+                                                                    (numeric_literal)))))))))))))))))))))))))))))))))))
 
-
-========
+================================================================================
 Filtered for loops
-========
+================================================================================
 
 procedure P is
 begin
@@ -715,49 +662,46 @@ begin
    end loop;
 end;
 
--------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (proper_body
-          (subprogram_body
-            (subprogram_specification
-              (procedure_specification
-                (name
-                  (identifier))))
-            (handled_sequence_of_statements
-              (sequence_of_statements
-                (statement
-                  (compound_statement
-                    (loop_statement
-                      (iteration_scheme
-                        (iterator_specification
-                          (identifier)
-                          (name
-                            (identifier))
-                          (iterator_filter
-                            (expression
-                              (relation
-                                (simple_expression
-                                  (term
-                                    (factor
-                                      (primary
-                                        (name
-                                          (identifier))))))
-                                (relational_operator)
-                                (simple_expression
-                                  (term
-                                    (factor
-                                      (primary
-                                        (numeric_literal))))))))))
-                      (sequence_of_statements
-                        (statement
-                          (simple_statement
-                            (null_statement)))))))))))))
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (identifier)))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (compound_statement
+                (loop_statement
+                  (iteration_scheme
+                    (iterator_specification
+                      (identifier)
+                      (identifier)
+                      (iterator_filter
+                        (expression
+                          (relation
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (identifier)))))
+                            (relational_operator)
+                            (simple_expression
+                              (term
+                                (factor
+                                  (primary
+                                    (numeric_literal))))))))))
+                  (sequence_of_statements
+                    (statement
+                      (simple_statement
+                        (null_statement)))))))))))))
 
-=======
+================================================================================
 Assignment target name
-=======
+================================================================================
 
 procedure P is
 begin
@@ -765,86 +709,75 @@ begin
    Another_Very_Long.And_Complex (Expression) := Function_Call (@);
 end;
 
-------
+--------------------------------------------------------------------------------
 
-    (compilation
-      (compilation_unit
-        (proper_body
-          (subprogram_body
-            (subprogram_specification
-              (procedure_specification
-                (name
-                  (identifier))))
-            (handled_sequence_of_statements
-              (sequence_of_statements
-                (statement
-                  (simple_statement
-                    (assignment_statement
-                      (name
-                        (function_call
-                          (name
-                            (identifier)
-                            (name
-                              (identifier)))
-                          (actual_parameter_part
-                            (parameter_association
-                              (expression
-                                (relation
-                                  (simple_expression
-                                    (term
-                                      (factor
-                                        (primary
-                                          (name
-                                            (identifier))))))))))))
-                      (assign_value
+(compilation
+  (compilation_unit
+    (proper_body
+      (subprogram_body
+        (subprogram_specification
+          (procedure_specification
+            (identifier)))
+        (handled_sequence_of_statements
+          (sequence_of_statements
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (identifier)
+                  (function_call
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
                         (expression
                           (relation
                             (simple_expression
                               (term
                                 (factor
                                   (primary
-                                    (name))))
-                              (binary_adding_operator)
-                              (term
-                                (factor
-                                  (primary
-                                    (numeric_literal)))))))))))
-                (statement
-                  (simple_statement
-                    (assignment_statement
-                      (name
-                        (function_call
-                          (name
-                            (identifier)
-                            (name
-                              (identifier)))
-                          (actual_parameter_part
-                            (parameter_association
-                              (expression
-                                (relation
-                                  (simple_expression
-                                    (term
-                                      (factor
-                                        (primary
-                                          (name
-                                            (identifier))))))))))))
-                      (assign_value
+                                    (identifier))))))))))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (target_name))))
+                          (binary_adding_operator)
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal)))))))))))
+            (statement
+              (simple_statement
+                (assignment_statement
+                  (identifier)
+                  (function_call
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
                         (expression
                           (relation
                             (simple_expression
                               (term
                                 (factor
                                   (primary
-                                    (name
-                                      (function_call
-                                        (name
-                                          (identifier))
-                                        (actual_parameter_part
-                                          (parameter_association
-                                            (expression
-                                              (relation
-                                                (simple_expression
-                                                  (term
-                                                    (factor
-                                                      (primary
-                                                        (name)))))))))))))))))))))))))))
+                                    (identifier))))))))))
+                  (assign_value
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (function_call
+                                  (identifier)
+                                  (actual_parameter_part
+                                    (parameter_association
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (target_name))))))))))))))))))))))))))

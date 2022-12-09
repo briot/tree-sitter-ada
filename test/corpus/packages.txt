@@ -13,39 +13,25 @@ use Ada.Text_IO, System;
 (compilation
   (compilation_unit
     (with_clause
-      (name_list
-        (name
-          (identifier)
-          (name
-            (identifier)))
-        (name
-          (identifier)))))
+      (identifier)
+      (identifier)
+      (identifier)))
   (comment)
   (compilation_unit
     (with_clause
-      (name_list
-        (name
-          (identifier)))))
+      (identifier)))
   (comment)
   (compilation_unit
     (with_clause
-      (name_list
-        (name
-          (identifier)))))
+      (identifier)))
   (compilation_unit
     (with_clause
-      (name_list
-        (name
-          (identifier)))))
+      (identifier)))
   (compilation_unit
     (use_clause
-      (name_list
-        (name
-          (identifier)
-          (name
-            (identifier)))
-        (name
-          (identifier))))))
+      (identifier)
+      (identifier)
+      (identifier))))
 
 ================================================================================
 Case insensitive
@@ -59,8 +45,7 @@ enD;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier)))))
+      (identifier))))
 
 ================================================================================
 multiple compilation units
@@ -80,21 +65,15 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (package_specification
-        (name
-          (identifier))
-        (name
-          (identifier)))
-      (name
-        (identifier))))
+        (identifier)
+        (identifier))
+      (identifier)))
   (compilation_unit
     (package_specification
-      (name
-        (identifier)
-        (name
-          (identifier)))
+      (identifier)
+      (identifier)
       (comment))))
 
 ================================================================================
@@ -116,32 +95,26 @@ end Child.P2;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier)
-          (name
-            (identifier)))
+        (identifier)
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (proper_body
               (package_body
-                (name
-                  (identifier))
+                (identifier)
                 (handled_sequence_of_statements
                   (sequence_of_statements
                     (statement
                       (simple_statement
                         (null_statement)))))
-                (name
-                  (identifier))))))
+                (identifier)))))
         (handled_sequence_of_statements
           (sequence_of_statements
             (statement
               (simple_statement
                 (null_statement)))))
-        (name
-          (identifier)
-          (name
-            (identifier)))))))
+        (identifier)
+        (identifier)))))
 
 ================================================================================
 separate
@@ -155,12 +128,10 @@ end;
 (compilation
   (compilation_unit
     (subunit
-      (name
-        (identifier))
+      (identifier)
       (proper_body
         (package_body
-          (name
-            (identifier)))))))
+          (identifier))))))
 
 ================================================================================
 private types
@@ -177,8 +148,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (private_type_declaration
           (identifier)))
@@ -186,8 +156,7 @@ end;
         (private_extension_declaration
           (identifier)
           (subtype_indication
-            (name
-              (identifier)))))
+            (identifier))))
       (type_declaration
         (private_type_declaration
           (identifier)
@@ -222,8 +191,7 @@ end;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (incomplete_type_declaration
           (identifier)))
@@ -236,8 +204,7 @@ end;
                 (discriminant_specification
                   (defining_identifier_list
                     (identifier))
-                  (name
-                    (identifier))))))))
+                  (identifier)))))))
       (type_declaration
         (incomplete_type_declaration
           (identifier)

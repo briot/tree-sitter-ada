@@ -32,8 +32,7 @@ end;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (object_declaration
@@ -44,18 +43,15 @@ end;
                     (subprogram_declaration
                       (subprogram_specification
                         (procedure_specification
-                          (name
-                            (identifier))))))
+                          (identifier)))))
                   (protected_operation_declaration
                     (subprogram_declaration
                       (subprogram_specification
                         (function_specification
-                          (name
-                            (identifier))
+                          (identifier)
                           (parameter_and_result_profile
                             (result_profile
-                              (name
-                                (identifier))))))))
+                              (identifier)))))))
                   (protected_operation_declaration
                     (entry_declaration
                       (identifier)))
@@ -64,23 +60,20 @@ end;
                       (identifier)
                       (discrete_subtype_definition
                         (subtype_indication
-                          (name
-                            (identifier))))
+                          (identifier)))
                       (formal_part
                         (parameter_specification_list
                           (parameter_specification
                             (defining_identifier_list
                               (identifier))
-                            (name
-                              (identifier)))))))
+                            (identifier))))))
                   (protected_element_declaration
                     (component_declaration
                       (defining_identifier_list
                         (identifier))
                       (component_definition
                         (subtype_indication
-                          (name
-                            (identifier))))))
+                          (identifier)))))
                   (identifier)))))
           (declarative_item_pragma
             (proper_body
@@ -90,25 +83,21 @@ end;
                   (subprogram_body
                     (subprogram_specification
                       (procedure_specification
-                        (name
-                          (identifier))))
+                        (identifier)))
                     (handled_sequence_of_statements
                       (sequence_of_statements
                         (statement
                           (simple_statement
                             (abort_statement
-                              (name
-                                (identifier)))))))))
+                              (identifier))))))))
                 (protected_operation_item
                   (subprogram_body
                     (subprogram_specification
                       (function_specification
-                        (name
-                          (identifier))
+                        (identifier)
                         (parameter_and_result_profile
                           (result_profile
-                            (name
-                              (identifier))))))
+                            (identifier)))))
                     (handled_sequence_of_statements
                       (sequence_of_statements
                         (statement
@@ -120,8 +109,7 @@ end;
                                     (term
                                       (factor
                                         (primary
-                                          (name
-                                            (identifier)))))))))))))))
+                                          (identifier))))))))))))))
                 (protected_operation_item
                   (entry_body
                     (identifier)
@@ -132,8 +120,7 @@ end;
                             (term
                               (factor
                                 (primary
-                                  (name
-                                    (identifier))))))
+                                  (identifier)))))
                           (relational_operator)
                           (simple_expression
                             (term
@@ -145,8 +132,7 @@ end;
                         (statement
                           (simple_statement
                             (requeue_statement
-                              (name
-                                (identifier)))))))
+                              (identifier))))))
                     (identifier)))
                 (protected_operation_item
                   (entry_body
@@ -156,15 +142,13 @@ end;
                         (identifier)
                         (discrete_subtype_definition
                           (subtype_indication
-                            (name
-                              (identifier)))))
+                            (identifier))))
                       (formal_part
                         (parameter_specification_list
                           (parameter_specification
                             (defining_identifier_list
                               (identifier))
-                            (name
-                              (identifier))))))
+                            (identifier)))))
                     (entry_barrier
                       (expression
                         (relation
@@ -172,8 +156,7 @@ end;
                             (term
                               (factor
                                 (primary
-                                  (name
-                                    (identifier)))))))))
+                                  (identifier))))))))
                     (handled_sequence_of_statements
                       (sequence_of_statements
                         (statement

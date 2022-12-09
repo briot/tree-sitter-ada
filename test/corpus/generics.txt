@@ -24,8 +24,7 @@ end;
             (formal_object_declaration
               (defining_identifier_list
                 (identifier))
-              (name
-                (identifier))
+              (identifier)
               (assign_value
                 (expression
                   (relation
@@ -42,8 +41,7 @@ end;
                   (unknown_discriminant_part))
                 (formal_type_definition
                   (formal_private_type_definition))
-                (name
-                  (identifier)))))
+                (identifier))))
           (generic_formal_parameter_declaration
             (formal_type_declaration
               (formal_incomplete_type_declaration
@@ -51,47 +49,41 @@ end;
           (generic_formal_parameter_declaration
             (formal_package_declaration
               (identifier)
-              (name
-                (function_call
-                  (name
-                    (identifier))
-                  (actual_parameter_part
-                    (parameter_association
-                      (component_choice_list
-                        (identifier))
-                      (expression
-                        (relation
-                          (simple_expression
-                            (term
-                              (factor
-                                (primary
-                                  (numeric_literal))))))))
-                    (parameter_association
-                      (component_choice_list
-                        (identifier))))))))
+              (function_call
+                (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (component_choice_list
+                      (identifier))
+                    (expression
+                      (relation
+                        (simple_expression
+                          (term
+                            (factor
+                              (primary
+                                (numeric_literal))))))))
+                  (parameter_association
+                    (component_choice_list
+                      (identifier)))))))
           (generic_formal_parameter_declaration
             (formal_subprogram_declaration
               (formal_concrete_subprogram_declaration
                 (subprogram_specification
                   (procedure_specification
-                    (name
-                      (identifier))))
+                    (identifier)))
                 (subprogram_default))))
           (generic_formal_parameter_declaration
             (formal_subprogram_declaration
               (formal_concrete_subprogram_declaration
                 (subprogram_specification
                   (function_specification
-                    (name
-                      (identifier))
+                    (identifier)
                     (parameter_and_result_profile
                       (result_profile
-                        (name
-                          (identifier))))))
+                        (identifier)))))
                 (subprogram_default)))))
         (package_specification
-          (name
-            (identifier))
+          (identifier)
           (pragma_g
             (identifier)
             (pragma_argument_association
@@ -101,8 +93,7 @@ end;
                     (term
                       (factor
                         (primary
-                          (name
-                            (identifier)))))))))
+                          (identifier))))))))
             (pragma_argument_association
               (expression
                 (relation

@@ -6,12 +6,11 @@
 (subprogram_specification) @scope
 (block_statement) @scope
 
-(procedure_specification (name) @definition.var)
-(function_specification (name) @definition.var)
-(package_specification name: (name) @definition.var)
-(package_body (name) @definition.var)
-(generic_instantiation . (name) @definition.var)
+(procedure_specification name: (identifier) @definition.var)
+(function_specification name: (identifier) @definition.var)
+(package_specification name: (identifier) @definition.var)
+(package_body name: (identifier) @definition.var)
+(generic_instantiation . name: (identifier) @definition.var)
 (defining_identifier_list (identifier) @definition.var)
 
 (identifier) @reference
-(name) @reference

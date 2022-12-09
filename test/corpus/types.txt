@@ -11,8 +11,7 @@ end P;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -29,8 +28,7 @@ end P;
                     (factor
                       (primary
                         (numeric_literal))))))))))
-      (name
-        (identifier)))))
+      (identifier))))
 
 ================================================================================
 Derived type
@@ -46,16 +44,14 @@ end P;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
           (type_definition
             (derived_type_definition
               (subtype_indication
-                (name
-                  (identifier)))))
+                (identifier))))
           (aspect_specification
             (aspect_mark_list
               (aspect_association
@@ -69,8 +65,7 @@ end P;
                           (factor
                             (primary
                               (numeric_literal)))))))))))))
-      (name
-        (identifier)))))
+      (identifier))))
 
 ================================================================================
 Modular types
@@ -85,8 +80,7 @@ end P;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -100,8 +94,7 @@ end P;
                         (factor
                           (primary
                             (numeric_literal))))))))))))
-      (name
-        (identifier)))))
+      (identifier))))
 
 ================================================================================
 Floats
@@ -118,16 +111,14 @@ end P;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
           (type_definition
             (derived_type_definition
               (subtype_indication
-                (name
-                  (identifier))
+                (identifier)
                 (constraint
                   (scalar_constraint
                     (range_constraint
@@ -188,8 +179,7 @@ end P;
                         (factor
                           (primary
                             (numeric_literal))))))))))))
-      (name
-        (identifier)))))
+      (identifier))))
 
 ================================================================================
 Enumerations
@@ -205,8 +195,7 @@ end P;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (type_declaration
         (full_type_declaration
           (identifier)
@@ -216,8 +205,7 @@ end P;
               (identifier)))))
       (aspect_clause
         (enumeration_representation_clause
-          (name
-            (identifier))
+          (identifier)
           (enumeration_aggregate
             (array_aggregate
               (named_array_aggregate
@@ -230,8 +218,7 @@ end P;
                             (term
                               (factor
                                 (primary
-                                  (name
-                                    (identifier))))))))))
+                                  (identifier)))))))))
                   (expression
                     (relation
                       (simple_expression
@@ -242,15 +229,13 @@ end P;
                 (array_component_association
                   (discrete_choice_list
                     (discrete_choice
-                          (expression
-                            (relation
-                              (simple_expression
-                                (term
-                                  (factor
-                                    (primary
-                                      (name
-                                        (identifier))))))))))
-
+                      (expression
+                        (relation
+                          (simple_expression
+                            (term
+                              (factor
+                                (primary
+                                  (identifier)))))))))
                   (expression
                     (relation
                       (simple_expression
@@ -258,8 +243,7 @@ end P;
                           (factor
                             (primary
                               (numeric_literal)))))))))))))
-      (name
-        (identifier)))))
+      (identifier))))
 
 ================================================================================
 Subtypes
@@ -275,13 +259,11 @@ end P;
 (compilation
   (compilation_unit
     (package_specification
-      (name
-        (identifier))
+      (identifier)
       (subtype_declaration
         (identifier)
         (subtype_indication
-          (name
-            (identifier))
+          (identifier)
           (constraint
             (scalar_constraint
               (range_constraint
@@ -299,8 +281,7 @@ end P;
       (subtype_declaration
         (identifier)
         (subtype_indication
-          (name
-            (identifier))
+          (identifier)
           (constraint
             (index_constraint
               (discrete_range
@@ -327,5 +308,4 @@ end P;
                       (factor
                         (primary
                           (numeric_literal)))))))))))
-      (name
-        (identifier)))))
+      (identifier))))

@@ -36,8 +36,7 @@ end P;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (object_declaration
@@ -52,8 +51,7 @@ end P;
                           (parameter_specification
                             (defining_identifier_list
                               (identifier))
-                            (name
-                              (identifier)))))))
+                            (identifier))))))
                   (task_item
                     (entry_declaration
                       (identifier)))
@@ -68,8 +66,7 @@ end P;
                       (defining_identifier_list
                         (identifier))
                       (subtype_indication
-                        (name
-                          (identifier))))))
+                        (identifier)))))
                 (handled_sequence_of_statements
                   (sequence_of_statements
                     (statement
@@ -81,8 +78,7 @@ end P;
                               (parameter_specification
                                 (defining_identifier_list
                                   (identifier))
-                                (name
-                                  (identifier)))))
+                                (identifier))))
                           (handled_sequence_of_statements
                             (sequence_of_statements
                               (statement
@@ -95,8 +91,7 @@ end P;
                           (timed_entry_call
                             (entry_call_alternative
                               (procedure_call_statement
-                                (name
-                                  (identifier))
+                                (identifier)
                                 (actual_parameter_part
                                   (parameter_association
                                     (expression
@@ -122,8 +117,7 @@ end P;
                           (conditional_entry_call
                             (entry_call_alternative
                               (procedure_call_statement
-                                (name
-                                  (identifier))
+                                (identifier)
                                 (actual_parameter_part
                                   (parameter_association
                                     (expression
@@ -138,8 +132,7 @@ end P;
                                 (simple_statement
                                   (null_statement))))))))))
                 (identifier)))))
-        (name
-          (identifier))))))
+        (identifier)))))
 
 ================================================================================
 Task types
@@ -161,8 +154,7 @@ end;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (type_declaration
@@ -183,17 +175,14 @@ end;
                             (parameter_specification
                               (defining_identifier_list
                                 (identifier))
-                              (name
-                                (identifier)))))))
+                              (identifier))))))
                     (identifier))))))
           (declarative_item_pragma
             (type_declaration
               (full_type_declaration
                 (task_type_declaration
                   (identifier)
-                  (interface_list
-                    (name
-                      (identifier)))
+                  (identifier)
                   (task_definition
                     (task_item
                       (entry_declaration
@@ -225,8 +214,7 @@ end;
   (compilation_unit
     (proper_body
       (package_body
-        (name
-          (identifier))
+        (identifier)
         (non_empty_declarative_part
           (declarative_item_pragma
             (proper_body
@@ -240,19 +228,17 @@ end;
                           (asynchronous_select
                             (triggering_alternative
                               (procedure_call_statement
-                                (name
-                                  (function_call
-                                    (name
-                                      (identifier))
-                                    (actual_parameter_part
-                                      (parameter_association
-                                        (expression
-                                          (relation
-                                            (simple_expression
-                                              (term
-                                                (factor
-                                                  (primary
-                                                    (numeric_literal))))))))))))
+                                (function_call
+                                  (identifier)
+                                  (actual_parameter_part
+                                    (parameter_association
+                                      (expression
+                                        (relation
+                                          (simple_expression
+                                            (term
+                                              (factor
+                                                (primary
+                                                  (numeric_literal)))))))))))
                               (sequence_of_statements
                                 (statement
                                   (simple_statement
@@ -261,8 +247,7 @@ end;
                               (statement
                                 (simple_statement
                                   (procedure_call_statement
-                                    (name
-                                      (identifier)))))))))))))))))))
+                                    (identifier))))))))))))))))))
   (compilation_unit
     (statement
       (simple_statement
@@ -271,11 +256,9 @@ end;
     (statement
       (simple_statement
         (procedure_call_statement
-          (name
-            (identifier))))))
+          (identifier)))))
   (compilation_unit
     (statement
       (simple_statement
         (procedure_call_statement
-          (name
-            (identifier)))))))
+          (identifier))))))
