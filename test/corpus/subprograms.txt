@@ -48,14 +48,13 @@ end;
         (procedure_specification
           (identifier)
           (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (identifier)
-                (identifier)
-                (identifier))
-              (parameter_specification
-                (identifier)
-                (identifier)))))
+            (parameter_specification
+              (identifier)
+              (identifier)
+              (identifier))
+            (parameter_specification
+              (identifier)
+              (identifier))))
         (aspect_specification
           (aspect_mark_list
             (aspect_association
@@ -107,11 +106,10 @@ end;
         (function_specification
           (identifier)
           (formal_part
-            (parameter_specification_list
-              (parameter_specification
-                (identifier)
-                (identifier)
-                (identifier))))
+            (parameter_specification
+              (identifier)
+              (identifier)
+              (identifier)))
           (result_profile
             (access_definition
               (null_exclusion)
@@ -149,10 +147,9 @@ end;
           (procedure_specification
             (identifier)
             (formal_part
-              (parameter_specification_list
-                (parameter_specification
-                  (identifier)
-                  (identifier)))))
+              (parameter_specification
+                (identifier)
+                (identifier))))
           (non_empty_declarative_part
             (object_declaration
               (identifier)
@@ -177,10 +174,9 @@ function F2 (A : Integer) return Boolean
       (function_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (expression
@@ -206,10 +202,9 @@ function F2 (A : Integer) return Boolean
       (function_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (declare_expression
@@ -280,10 +275,9 @@ function F (A : Integer) return Boolean
       (function_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (if_expression
@@ -320,10 +314,9 @@ function F5 (A : Integer) return Boolean
       (function_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (expression
@@ -359,10 +352,9 @@ function F (A : Integer) return Boolean
       (function_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (case_expression
@@ -440,10 +432,9 @@ function F (A : My_Array) return Boolean
       (function_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (quantified_expression
@@ -476,11 +467,10 @@ end "<";
       (function_specification
         (string_literal)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier)
-              (identifier))))
+          (parameter_specification
+            (identifier)
+            (identifier)
+            (identifier)))
         (result_profile
           (identifier)))
       (handled_sequence_of_statements
@@ -490,3 +480,22 @@ end "<";
               (term
                 (identifier))))))
       (string_literal))))
+
+================================================================================
+Access Parameters
+================================================================================
+
+procedure Proc (A : access Integer);
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (subprogram_declaration
+      (procedure_specification
+        (identifier)
+        (formal_part
+          (parameter_specification
+            (identifier)
+            (access_definition
+              (identifier))))))))

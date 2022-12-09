@@ -16,7 +16,7 @@ end P;
       (identifier)
       (full_type_declaration
         (identifier)
-        (constrained_array_definition
+        (array_type_definition
           (range_g
             (term
               (numeric_literal))
@@ -88,7 +88,7 @@ end;
       (identifier)
       (full_type_declaration
         (identifier)
-        (constrained_array_definition
+        (array_type_definition
           (range_g
             (term
               (numeric_literal))
@@ -129,7 +129,7 @@ end P;
       (identifier)
       (full_type_declaration
         (identifier)
-        (unconstrained_array_definition
+        (array_type_definition
           (index_subtype_definition
             (identifier))
           (component_definition
@@ -170,7 +170,7 @@ end P;
       (identifier)
       (full_type_declaration
         (identifier)
-        (unconstrained_array_definition
+        (array_type_definition
           (index_subtype_definition
             (identifier))
           (index_subtype_definition

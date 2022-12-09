@@ -7,15 +7,25 @@
 (function_specification) @scope
 (block_statement) @scope
 
-(procedure_specification name: (_) @definition.var)
-(function_specification name: (_) @definition.var)
+(with_clause (identifier) @definition.import)
+(procedure_specification name: (_) @definition.function)
+(function_specification name: (_) @definition.function)
 (package_specification name: (_) @definition.var)
 (package_body name: (_) @definition.var)
 (generic_instantiation . name: (_) @definition.var)
-(component_declaration (identifier) @definition.var)
-(exception_declaration (identifier) @definition.var)
-(formal_object_declaration (identifier) @definition.var)
-(object_declaration (identifier) @definition.var)
-(parameter_specification (identifier) @definition.var)
+(component_declaration . (identifier) @definition.var)
+(exception_declaration . (identifier) @definition.var)
+(formal_object_declaration . (identifier) @definition.var)
+(object_declaration . (identifier) @definition.var)
+(parameter_specification . (identifier) @definition.var)
+(full_type_declaration . (identifier) @definition.type)
+(private_type_declaration . (identifier) @definition.type)
+(private_extension_declaration . (identifier) @definition.type)
+(incomplete_type_declaration . (identifier) @definition.type)
+(protected_type_declaration . (identifier) @definition.type)
+(formal_complete_type_declaration . (identifier) @definition.type)
+(formal_incomplete_type_declaration . (identifier) @definition.type)
+(task_type_declaration . (identifier) @definition.type)
+(subtype_declaration . (identifier) @definition.type)
 
 (identifier) @reference

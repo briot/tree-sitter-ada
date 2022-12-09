@@ -1,4 +1,20 @@
 ================================================================================
+Untyped Constant
+================================================================================
+
+A : constant := 111;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (number_declaration
+      (identifier)
+      (expression
+        (term
+          (numeric_literal))))))
+
+================================================================================
 Factors
 ================================================================================
 
@@ -202,10 +218,9 @@ end P;
       (procedure_specification
         (identifier)
         (formal_part
-          (parameter_specification_list
-            (parameter_specification
-              (identifier)
-              (identifier)))))
+          (parameter_specification
+            (identifier)
+            (identifier))))
       (handled_sequence_of_statements
         (statement
           (procedure_call_statement

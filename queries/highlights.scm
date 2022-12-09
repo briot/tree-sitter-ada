@@ -102,56 +102,61 @@
 (numeric_literal) @number
 
 ;; Highlight the name of subprograms
-(procedure_specification
-    name: (identifier) @function
-)
-(function_specification
-    name: (identifier) @function
-)
-(package_specification
-    name: (identifier) @function  ;;  Should use @module
-)
-(package_body
-    name: (identifier) @function  ;;  Should use @module
-)
-(generic_instantiation
-    name: (identifier) @function
-)
+(procedure_specification name: (_) @function)
+(function_specification name: (_) @function)
+(package_specification name: (_) @function)
+(package_body name: (_) @function)
+(generic_instantiation name: (_) @function)
 
 ;; Some keywords should take different categories depending on the context
-;; ??? Doesn't quite work because treesitter choses the longest name for the
-;; final highlight
 (use_clause "use"  @include "type" @include)
 (with_clause "private" @include)
 (with_clause "limited" @include)
+(use_clause (identifier) @namespace)
+(with_clause (identifier) @namespace)
 
+(loop_statement "end" @keyword.repeat)
+(if_statement "end" @conditional)
+(loop_parameter_specification "in" @keyword.repeat)
+(loop_parameter_specification "in" @keyword.repeat)
+(iterator_specification ["in" "of"] @keyword.repeat)
+(range_attribute_designator "range" @keyword.repeat)
+(raise_statement "with" @exception)
 
-;; Change keyword categories inside type definitions.
-;; WIP: waiting for simplified tree.
-    ; [
-    ;    "is"
-    ;    "abstract"
-    ;    "access"
-    ;    "array"
-    ;    "tagged"
-    ;    "constant"
-    ;    "range"
-    ;    "mod"
-    ;    "digits"
-    ;    "delta"
-    ;    "limited"
-    ;    "synchronized"
-    ; ]* @keyword.type
-(full_type_declaration "is"  @type.definition)
-(full_type_declaration (_ "access") @type.definition)
+(subprogram_declaration "is" @keyword.function "abstract"  @keyword.function)
+(aspect_specification "with" @keyword.function)
+
+(full_type_declaration "is" @type.definition)
+(subtype_declaration "is" @type.definition)
+(record_definition "end" @type.definition)
+(full_type_declaration (_ "access" @type.definition))
+(array_type_definition "array" @type.definition "of" @type.definition)
+(access_to_object_definition "access" @type.definition)
+(access_to_object_definition "access" @type.definition
+   [
+      (general_access_modifier "constant" @type.definition)
+      (general_access_modifier "all" @type.definition)
+   ]
+)
+(range_constraint "range" @type.definition)
+(signed_integer_type_definition "range" @type.definition)
+(index_subtype_definition "range" @type.definition)
+
+;; Gray the body of expression functions
+(expression_function_declaration
+   (function_specification)
+   "is"
+   (_) @function.expression
+)
+(subprogram_declaration (aspect_specification) @function.expression)
 
 ;; Highlight full subprogram specifications
-(subprogram_body
-    [
-       (procedure_specification)
-       (function_specification)
-    ] @function.spec
-)
+;(subprogram_body
+;    [
+;       (procedure_specification)
+;       (function_specification)
+;    ] @function.spec
+;)
 
 ;; Highlight errors in red. This is not very useful in practice, as text will
 ;; be highlighted as user types, and the error could be elsewhere in the code.

@@ -570,7 +570,7 @@ module.exports = grammar({
             seq(
                optional(reservedWord('protected')),
                reservedWord('procedure'),
-               optional($._non_empty_parameter_profile),
+               optional($.formal_part),
             ),
             seq(
                optional(reservedWord('protected')),
@@ -852,28 +852,19 @@ module.exports = grammar({
          $.enumeration_type_definition,
          $._integer_type_definition,
          $._real_type_definition,
-         $._array_type_definition,
+         $.array_type_definition,
          $.record_type_definition,
          $._access_type_definition,
          $.derived_type_definition,
          $.interface_type_definition,
       ),
-      _array_type_definition: $ => choice(
-         $.unconstrained_array_definition,
-         $.constrained_array_definition,
-      ),
-      unconstrained_array_definition: $ => seq(
+      array_type_definition: $ => seq(  // merges constrained and unconstrained
          reservedWord('array'),
          '(',
-         $._index_subtype_definition_list,
-         ')',
-         reservedWord('of'),
-         $.component_definition,
-      ),
-      constrained_array_definition: $ => seq(
-         reservedWord('array'),
-         '(',
-         $._discrete_subtype_definition_list,
+         choice(
+            $._discrete_subtype_definition_list,
+            $._index_subtype_definition_list,
+         ),
          ')',
          reservedWord('of'),
          $.component_definition,
@@ -1302,7 +1293,7 @@ module.exports = grammar({
             $._discrete_subtype_definition,
             ')',
          )),
-         optional($._non_empty_parameter_profile),
+         optional($.formal_part),
          optional($.aspect_specification),
          ';',
       ),
@@ -1366,7 +1357,7 @@ module.exports = grammar({
       )),
       formal_part: $ => seq(
          '(',
-         $.parameter_specification_list,
+         $._parameter_specification_list,
          ')',
       ),
       function_specification: $ => seq(
@@ -1546,7 +1537,7 @@ module.exports = grammar({
          reservedWord('digits'),
          '<>',
       ),
-      formal_array_type_definition: $ => $._array_type_definition,
+      formal_array_type_definition: $ => $.array_type_definition,
       formal_access_type_definition: $ => $._access_type_definition,
       formal_interface_type_definition: $ => $.interface_type_definition,
       formal_subprogram_declaration: $ => choice(
@@ -1668,7 +1659,7 @@ module.exports = grammar({
          $.expression,
          ';',
       ),
-      non_empty_mode: $ => choice(
+      non_empty_mode: $ => choice(   // ARM 6.1
          reservedWord('in'),
          seq(
             reservedWord('in'),
@@ -1690,7 +1681,7 @@ module.exports = grammar({
       ),
       number_declaration: $ => seq(
          $._defining_identifier_list,
-         ';',
+         ':',
          reservedWord('constant'),
          $._assign_value,
          ';',
@@ -1704,7 +1695,7 @@ module.exports = grammar({
             choice(
                $._subtype_indication,
                $.access_definition,
-               $._array_type_definition,
+               $.array_type_definition,
             ),
             optional($._assign_value),
             optional($.aspect_specification),
@@ -1777,14 +1768,12 @@ module.exports = grammar({
             repeat1($._task_item),
          )),
          reservedWord('end'),
-         optional($.identifier),
+         field('endname', optional($.identifier)),
       ),
       overriding_indicator: $ => seq(
          optional(reservedWord('not')),
          reservedWord('overriding'),
       ),
-      _non_empty_parameter_profile: $ =>  // ??? inline
-         $.formal_part,
       _parameter_and_result_profile: $ => seq(
          optional($.formal_part),
          $.result_profile,
@@ -1792,13 +1781,19 @@ module.exports = grammar({
       parameter_specification: $ => seq(     // ARM 6.1
          $._defining_identifier_list,
          ':',
-         optional(reservedWord('aliased')),
-         optional($.non_empty_mode),
-         optional($.null_exclusion),
-         field('subtype_mark', $._name),
+         choice(
+            seq(
+               optional(reservedWord('aliased')),
+               optional($.non_empty_mode),
+               optional($.null_exclusion),
+               field('subtype_mark', $._name),
+            ),
+            $.access_definition,
+         ),
          optional($._assign_value),
+         optional($.aspect_specification),
       ),
-      parameter_specification_list: $ => list_of(
+      _parameter_specification_list: $ => list_of(
          ';',
          $.parameter_specification,
       ),
@@ -1842,7 +1837,7 @@ module.exports = grammar({
       procedure_specification: $ => seq(
          reservedWord('procedure'),
          field('name', $._name),
-         optional($._non_empty_parameter_profile),
+         optional($.formal_part),
       ),
       record_representation_clause: $ => prec.left(seq(    // ARM 13.5.1
          reservedWord('for'),

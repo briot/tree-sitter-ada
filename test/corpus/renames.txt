@@ -39,10 +39,9 @@ end P;
           (procedure_specification
             (identifier)
             (formal_part
-              (parameter_specification_list
-                (parameter_specification
-                  (identifier)
-                  (identifier)))))
+              (parameter_specification
+                (identifier)
+                (identifier))))
           (identifier))
         (generic_renaming_declaration
           (identifier)

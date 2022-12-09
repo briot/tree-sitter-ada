@@ -44,10 +44,9 @@ end P;
               (entry_declaration
                 (identifier)
                 (formal_part
-                  (parameter_specification_list
-                    (parameter_specification
-                      (identifier)
-                      (identifier)))))
+                  (parameter_specification
+                    (identifier)
+                    (identifier))))
               (entry_declaration
                 (identifier))
               (identifier))))
@@ -62,10 +61,9 @@ end P;
               (accept_statement
                 (identifier)
                 (formal_part
-                  (parameter_specification_list
-                    (parameter_specification
-                      (identifier)
-                      (identifier))))
+                  (parameter_specification
+                    (identifier)
+                    (identifier)))
                 (handled_sequence_of_statements
                   (statement
                     (null_statement)))
@@ -131,10 +129,9 @@ end;
               (entry_declaration
                 (identifier)
                 (formal_part
-                  (parameter_specification_list
-                    (parameter_specification
-                      (identifier)
-                      (identifier)))))
+                  (parameter_specification
+                    (identifier)
+                    (identifier))))
               (identifier))))
         (full_type_declaration
           (task_type_declaration

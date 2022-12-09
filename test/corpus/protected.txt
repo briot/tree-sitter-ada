@@ -51,10 +51,9 @@ end;
                 (identifier)
                 (identifier)
                 (formal_part
-                  (parameter_specification_list
-                    (parameter_specification
-                      (identifier)
-                      (identifier)))))
+                  (parameter_specification
+                    (identifier)
+                    (identifier))))
               (component_declaration
                 (identifier)
                 (component_definition
@@ -101,10 +100,9 @@ end;
                 (identifier)
                 (identifier))
               (formal_part
-                (parameter_specification_list
-                  (parameter_specification
-                    (identifier)
-                    (identifier)))))
+                (parameter_specification
+                  (identifier)
+                  (identifier))))
             (entry_barrier
               (expression
                 (term
