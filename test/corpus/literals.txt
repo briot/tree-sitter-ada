@@ -1,0 +1,34 @@
+================================================================================
+String literals
+================================================================================
+
+A : String := "12'34";
+
+--------
+
+(compilation
+  (compilation_unit
+    (object_declaration
+      (identifier)
+      (identifier)
+      (expression
+        (term
+          (string_literal))))))
+
+================================================================================
+String literals with quotes
+================================================================================
+
+A : String := "12""23";
+
+--------
+
+(compilation
+  (compilation_unit
+    (object_declaration
+      (identifier)
+      (identifier)
+      (expression
+        (term
+          (string_literal))))))
+

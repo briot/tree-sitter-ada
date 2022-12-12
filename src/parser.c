@@ -5854,6 +5854,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 37:
       ACCEPT_TOKEN(sym_string_literal);
+      if (lookahead == '"') ADVANCE(8);
       END_STATE();
     case 38:
       ACCEPT_TOKEN(sym_character_literal);

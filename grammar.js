@@ -115,7 +115,7 @@ module.exports = grammar({
       identifier: $ =>
          /[a-zA-Z\u{80}-\u{10FFFF}][0-9a-zA-Z_\u{80}-\u{10FFFF}]*/u,
       comment: $ => token(seq('--', /.*/)),
-      string_literal: $ => token(/"[^"]*"/),
+      string_literal: $ => token(/"(""|[^"])*"/),
       character_literal: $ => token(/'.'/),
       numeric_literal: $ => token(
          choice(

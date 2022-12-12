@@ -113,8 +113,8 @@
 (use_clause "use"  @include "type" @include)
 (with_clause "private" @include)
 (with_clause "limited" @include)
-(use_clause (identifier) @namespace)
-(with_clause (identifier) @namespace)
+(use_clause (_) @namespace)
+(with_clause (_) @namespace)
 
 (loop_statement "end" @keyword.repeat)
 (if_statement "end" @conditional)
