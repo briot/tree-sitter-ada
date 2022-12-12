@@ -65,20 +65,18 @@ end;
             (procedure_specification
               (identifier))
             (handled_sequence_of_statements
-              (statement
-                (abort_statement
-                  (identifier)))))
+              (abort_statement
+                (identifier))))
           (subprogram_body
             (function_specification
               (identifier)
               (result_profile
                 (identifier)))
             (handled_sequence_of_statements
-              (statement
-                (simple_return_statement
-                  (expression
-                    (term
-                      (identifier)))))))
+              (simple_return_statement
+                (expression
+                  (term
+                    (identifier))))))
           (entry_body
             (identifier)
             (entry_barrier
@@ -89,9 +87,8 @@ end;
                 (term
                   (numeric_literal))))
             (handled_sequence_of_statements
-              (statement
-                (requeue_statement
-                  (identifier))))
+              (requeue_statement
+                (identifier)))
             (identifier))
           (entry_body
             (identifier)
@@ -108,7 +105,6 @@ end;
                 (term
                   (identifier))))
             (handled_sequence_of_statements
-              (statement
-                (null_statement)))
+              (null_statement))
             (identifier))
           (identifier))))))

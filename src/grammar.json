@@ -960,7 +960,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "statement"
+          "name": "_statement"
         },
         {
           "type": "SYMBOL",
@@ -12078,7 +12078,7 @@
             "type": "REPEAT1",
             "content": {
               "type": "SYMBOL",
-              "name": "statement"
+              "name": "_statement"
             }
           },
           {
@@ -12140,7 +12140,7 @@
         }
       ]
     },
-    "statement": {
+    "_statement": {
       "type": "SEQ",
       "members": [
         {

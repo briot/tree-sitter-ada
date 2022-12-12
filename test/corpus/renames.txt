@@ -48,6 +48,5 @@ end P;
           (identifier)
           (identifier)))
       (handled_sequence_of_statements
-        (statement
-          (null_statement)))
+        (null_statement))
       (identifier))))

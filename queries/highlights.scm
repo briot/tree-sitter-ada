@@ -25,6 +25,7 @@
    "out"
    "pragma"
    "renames"
+   "task"
    "terminate"
    "when"
 ] @keyword
@@ -50,7 +51,6 @@
    "protected"
    "record"
    "subtype"
-   "task"
    "type"
 ] @type.definition
 [
@@ -144,6 +144,7 @@
 (signed_integer_type_definition "range" @type.definition)
 (index_subtype_definition "range" @type.definition)
 (private_type_declaration "is" @type.definition "private" @type.definition)
+(task_type_declaration "task" @type.definition "is" @type.definition)
 
 ;; Gray the body of expression functions
 (expression_function_declaration

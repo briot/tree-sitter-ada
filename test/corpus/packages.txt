@@ -104,12 +104,10 @@ end Child.P2;
         (package_body
           (identifier)
           (handled_sequence_of_statements
-            (statement
-              (null_statement)))
+            (null_statement))
           (identifier)))
       (handled_sequence_of_statements
-        (statement
-          (null_statement)))
+        (null_statement))
       (selected_component
         (identifier)
         (identifier)))))

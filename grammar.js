@@ -272,7 +272,7 @@ module.exports = grammar({
             optional(reservedWord('private')),
             $._declarative_item,
          ),
-         $.statement,
+         $._statement,
          $.subunit,
          $.entry_declaration,
       ),
@@ -1946,7 +1946,7 @@ module.exports = grammar({
          ),
       ),
       _sequence_of_statements: $ => prec.left(seq(
-         repeat1($.statement),
+         repeat1($._statement),
          repeat($.label),
       )),
       _simple_statement: $ => choice(
@@ -1962,7 +1962,7 @@ module.exports = grammar({
          $.raise_statement,
          $.pragma_g,
       ),
-      statement: $ => seq(
+      _statement: $ => seq(
          repeat($.label),
          choice(
             $._simple_statement,

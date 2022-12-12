@@ -155,8 +155,7 @@ end;
               (identifier)
               (identifier)))
           (handled_sequence_of_statements
-            (statement
-              (null_statement)))
+            (null_statement))
           (identifier))))))
 
 ================================================================================
@@ -474,11 +473,10 @@ end "<";
         (result_profile
           (identifier)))
       (handled_sequence_of_statements
-        (statement
-          (simple_return_statement
-            (expression
-              (term
-                (identifier))))))
+        (simple_return_statement
+          (expression
+            (term
+              (identifier)))))
       (string_literal))))
 
 ================================================================================
@@ -510,17 +508,16 @@ Subprogram and field access
 
 (compilation
   (compilation_unit
-    (statement
-      (assignment_statement
-        (identifier)
-        (expression
-          (term
-            (selected_component
-              (function_call
-                (identifier)
-                (actual_parameter_part
-                  (parameter_association
-                    (expression
-                      (term
-                        (numeric_literal))))))
-              (identifier))))))))
+    (assignment_statement
+      (identifier)
+      (expression
+        (term
+          (selected_component
+            (function_call
+              (identifier)
+              (actual_parameter_part
+                (parameter_association
+                  (expression
+                    (term
+                      (numeric_literal))))))
+            (identifier)))))))

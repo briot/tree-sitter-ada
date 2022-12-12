@@ -275,23 +275,22 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (statement
-          (assignment_statement
-            (identifier)
-            (expression
-              (term
-                (record_aggregate
-                  (record_component_association_list
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal)))
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal)))))))))))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (record_aggregate
+                (record_component_association_list
+                  (component_choice_list
+                    (identifier))
+                  (expression
+                    (term
+                      (numeric_literal)))
+                  (component_choice_list
+                    (identifier))
+                  (expression
+                    (term
+                      (numeric_literal))))))))))))
 
 ================================================================================
 record aggregate extension
@@ -310,21 +309,20 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (statement
-          (assignment_statement
-            (identifier)
-            (expression
-              (term
-                (extension_aggregate
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (extension_aggregate
+                (expression
+                  (term
+                    (identifier)))
+                (record_component_association_list
+                  (component_choice_list
+                    (identifier))
                   (expression
                     (term
-                      (identifier)))
-                  (record_component_association_list
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal)))))))))))))
+                      (numeric_literal))))))))))))
 
 ================================================================================
 record delta aggregate
@@ -343,18 +341,17 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (statement
-          (assignment_statement
-            (identifier)
-            (expression
-              (term
-                (record_delta_aggregate
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (record_delta_aggregate
+                (expression
+                  (term
+                    (identifier)))
+                (record_component_association_list
+                  (component_choice_list
+                    (identifier))
                   (expression
                     (term
-                      (identifier)))
-                  (record_component_association_list
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal)))))))))))))
+                      (numeric_literal))))))))))))

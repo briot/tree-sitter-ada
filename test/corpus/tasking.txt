@@ -57,44 +57,39 @@ end P;
               (identifier)
               (identifier)))
           (handled_sequence_of_statements
-            (statement
-              (accept_statement
-                (identifier)
-                (formal_part
-                  (parameter_specification
-                    (identifier)
-                    (identifier)))
-                (handled_sequence_of_statements
-                  (statement
-                    (null_statement)))
-                (identifier)))
-            (statement
-              (timed_entry_call
-                (entry_call_alternative
-                  (procedure_call_statement
-                    (identifier)
-                    (actual_parameter_part
-                      (parameter_association
-                        (expression
-                          (term
-                            (numeric_literal)))))))
-                (delay_alternative
-                  (delay_relative_statement
-                    (expression
-                      (term
-                        (numeric_literal)))))))
-            (statement
-              (conditional_entry_call
-                (entry_call_alternative
-                  (procedure_call_statement
-                    (identifier)
-                    (actual_parameter_part
-                      (parameter_association
-                        (expression
-                          (term
-                            (numeric_literal)))))))
-                (statement
-                  (null_statement)))))
+            (accept_statement
+              (identifier)
+              (formal_part
+                (parameter_specification
+                  (identifier)
+                  (identifier)))
+              (handled_sequence_of_statements
+                (null_statement))
+              (identifier))
+            (timed_entry_call
+              (entry_call_alternative
+                (procedure_call_statement
+                  (identifier)
+                  (actual_parameter_part
+                    (parameter_association
+                      (expression
+                        (term
+                          (numeric_literal)))))))
+              (delay_alternative
+                (delay_relative_statement
+                  (expression
+                    (term
+                      (numeric_literal))))))
+            (conditional_entry_call
+              (entry_call_alternative
+                (procedure_call_statement
+                  (identifier)
+                  (actual_parameter_part
+                    (parameter_association
+                      (expression
+                        (term
+                          (numeric_literal)))))))
+              (null_statement)))
           (identifier)))
       (identifier))))
 
@@ -171,33 +166,27 @@ end;
         (task_body
           (identifier)
           (handled_sequence_of_statements
-            (statement
-              (asynchronous_select
-                (triggering_alternative
-                  (procedure_call_statement
-                    (function_call
-                      (identifier)
-                      (actual_parameter_part
-                        (parameter_association
-                          (expression
-                            (term
-                              (numeric_literal)))))))
-                  (statement
-                    (null_statement)))
-                (statement
-                  (procedure_call_statement
-                    (identifier))))))))))
+            (asynchronous_select
+              (triggering_alternative
+                (procedure_call_statement
+                  (function_call
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
+                        (expression
+                          (term
+                            (numeric_literal)))))))
+                (null_statement))
+              (procedure_call_statement
+                (identifier))))))))
   (compilation_unit
-    (statement
-      (null_statement)))
+    (null_statement))
   (compilation_unit
-    (statement
-      (procedure_call_statement
-        (identifier))))
+    (procedure_call_statement
+      (identifier)))
   (compilation_unit
-    (statement
-      (procedure_call_statement
-        (identifier)))))
+    (procedure_call_statement
+      (identifier))))
 
 ================================================================================
 Accept
@@ -211,20 +200,18 @@ end Start;
 
 (compilation
   (compilation_unit
-    (statement
-      (accept_statement
-        (identifier)
-        (formal_part
-          (parameter_specification
-            (identifier)
-            (identifier))
-          (parameter_specification
-            (identifier)
-            (identifier)))
-        (handled_sequence_of_statements
-          (statement
-            (null_statement)))
-        (identifier)))))
+    (accept_statement
+      (identifier)
+      (formal_part
+        (parameter_specification
+          (identifier)
+          (identifier))
+        (parameter_specification
+          (identifier)
+          (identifier)))
+      (handled_sequence_of_statements
+        (null_statement))
+      (identifier))))
 
 ================================================================================
 Select terminate
@@ -240,11 +227,10 @@ end select;
 
 (compilation
   (compilation_unit
-    (statement
-      (selective_accept
-        (select_alternative
-          (accept_alternative
-            (accept_statement
-              (identifier))))
-        (select_alternative
-          (terminate_alternative))))))
+    (selective_accept
+      (select_alternative
+        (accept_alternative
+          (accept_statement
+            (identifier))))
+      (select_alternative
+        (terminate_alternative)))))
