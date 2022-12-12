@@ -51,7 +51,6 @@ module.exports = grammar({
       [$.at_clause, $._name],
 
       // 'case' '(' identifier . '=>' ...
-      //  ??? Invalid Ada
       [$._name, $.component_choice_list],
 
       // 'case' '(' expression . ',' ...
@@ -63,11 +62,6 @@ module.exports = grammar({
       // "procedure name is" could be either a procedure specification, or
       // a generic_instantiation.
       [$.generic_instantiation, $.procedure_specification],
-
-      // Same for "package_specification ;"
-      [$.generic_package_declaration, $._package_declaration],
-
-      [$.attribute_definition_clause, $._attribute_reference],
 
       // identifier . ':' ...
       [$._defining_identifier_list, $.object_renaming_declaration,
@@ -81,30 +75,31 @@ module.exports = grammar({
       [$.generic_formal_part, $.generic_renaming_declaration],
 
       // 'type' identifier 'is' 'new' _subtype_indication . 'with'
-      // which could be either a record_extension_part or
-      // an aspect_specification.
+      // could be either a record_extension_part or an aspect_specification.
       [$.derived_type_definition],
 
       // 'for' name 'use' '(' 'for' identifier 'in' name . 'use'
       [$.iterator_specification, $._subtype_indication],
 
       // 'type' identifier known_discriminant_part . 'is' ...
+      // This could be either a _discriminant_part or known_discriminant_part,
+      // the latter in case we are declaring a private type. We can't make the
+      // difference until we have seen "private".
       [$.full_type_declaration, $._discriminant_part],
 
       // 'type' identifier 'is' 'new' _subtype_indication . 'with' .
       [$.private_extension_declaration, $.derived_type_definition],
 
-      // _subprogram_specification 'is' 'begin'
-      //    handled_sequence_of_statements 'end' string_literal . ';'
-      [$._name, $.subprogram_body],
+      // 'generic' 'type' identifier 'is' 'new' _name . 'with' ...
+      // The with could be either part of formal_derived_type_definition, as
+      // "is new Foo with private", or an aspect
+      // (via formal_complete_type_declaration)
+      [$.formal_derived_type_definition],
 
       [$.function_call, $.procedure_call_statement],
-      [$.function_call, $._name],
-      [$.formal_derived_type_definition],
       [$._name, $._aspect_mark],
-      [$._name, $._attribute_reference, $.qualified_expression],
       [$._name, $.package_body_stub],
-
+      [$.attribute_definition_clause, $._attribute_reference],
    ],
 
    rules: {
@@ -255,8 +250,8 @@ module.exports = grammar({
          reservedWord('mod'),
       ),
       function_call: $ => seq(             // ARM 6.4
-         field('function_name', $._name),
-         $.actual_parameter_part,
+         field('name', $._name),
+         $.actual_parameter_part,  // should be optional, but covered by _name
       ),
       qualified_expression: $ => seq(      // ARM 4.7
          field('subtype_name', $._name),
@@ -810,16 +805,16 @@ module.exports = grammar({
          optional($.aspect_specification),
          ';',
       ),
-      _discriminant_part: $ => choice(
+      _discriminant_part: $ => choice(   // ARM 3.7
          $.known_discriminant_part,
          $.unknown_discriminant_part,
       ),
-      unknown_discriminant_part: $ => seq(
+      unknown_discriminant_part: $ => seq(   // ARM 3.7
          '(',
          '<>',
          ')',
       ),
-      known_discriminant_part: $ => seq(
+      known_discriminant_part: $ => seq(   // ARM 3.7
          '(',
          $.discriminant_specification_list,
          ')',
@@ -1110,11 +1105,11 @@ module.exports = grammar({
          $.expression,
          $.global_aspect_definition,
       ),
-      _aspect_mark: $ => seq(
+      _aspect_mark: $ => seq(   // ARM 13.1.1
          $.identifier,
          optional(seq(
             $.tick,
-            $.identifier,
+            reservedWord('Class'),
          )),
       ),
       aspect_mark_list: $ => comma_separated_list_of($.aspect_association),
@@ -2203,7 +2198,7 @@ module.exports = grammar({
          $.access_definition,
       ),
       procedure_call_statement: $ => seq(    // ARM 6.4
-         field('name', $._name),  // not an operator
+         field('name', $._name),
          optional($.actual_parameter_part),
          ';',
       ),

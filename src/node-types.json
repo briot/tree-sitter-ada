@@ -4960,7 +4960,7 @@
     "type": "function_call",
     "named": true,
     "fields": {
-      "function_name": {
+      "name": {
         "multiple": true,
         "required": true,
         "types": [

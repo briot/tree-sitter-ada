@@ -863,7 +863,7 @@
       "members": [
         {
           "type": "FIELD",
-          "name": "function_name",
+          "name": "name",
           "content": {
             "type": "SYMBOL",
             "name": "_name"
@@ -6349,8 +6349,20 @@
                   "name": "tick"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "identifier"
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "TOKEN",
+                    "content": {
+                      "type": "PREC",
+                      "value": 2,
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[CC][lL][aA][sS][sS]"
+                      }
+                    }
+                  },
+                  "named": false,
+                  "value": "Class"
                 }
               ]
             },
@@ -14601,10 +14613,6 @@
       "_name"
     ],
     [
-      "_name",
-      "component_choice_list"
-    ],
-    [
       "record_component_association_list",
       "positional_array_aggregate"
     ],
@@ -14615,14 +14623,6 @@
     [
       "generic_instantiation",
       "procedure_specification"
-    ],
-    [
-      "generic_package_declaration",
-      "_package_declaration"
-    ],
-    [
-      "attribute_definition_clause",
-      "_attribute_reference"
     ],
     [
       "_defining_identifier_list",
@@ -14663,19 +14663,11 @@
       "derived_type_definition"
     ],
     [
-      "_name",
-      "subprogram_body"
+      "formal_derived_type_definition"
     ],
     [
       "function_call",
       "procedure_call_statement"
-    ],
-    [
-      "function_call",
-      "_name"
-    ],
-    [
-      "formal_derived_type_definition"
     ],
     [
       "_name",
@@ -14683,12 +14675,11 @@
     ],
     [
       "_name",
-      "_attribute_reference",
-      "qualified_expression"
+      "package_body_stub"
     ],
     [
-      "_name",
-      "package_body_stub"
+      "attribute_definition_clause",
+      "_attribute_reference"
     ]
   ],
   "precedences": [],

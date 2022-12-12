@@ -70,3 +70,24 @@ end;
             (expression
               (term
                 (string_literal)))))))))
+
+================================================================================
+formal derived types
+================================================================================
+
+generic
+    type T is new P with private;
+procedure A;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (generic_subprogram_declaration
+      (generic_formal_part
+        (formal_complete_type_declaration
+          (identifier)
+          (formal_derived_type_definition
+            (identifier))))
+      (procedure_specification
+        (identifier)))))
