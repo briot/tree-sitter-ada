@@ -25,6 +25,7 @@
    "out"
    "pragma"
    "renames"
+   "terminate"
    "when"
 ] @keyword
 [

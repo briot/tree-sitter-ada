@@ -579,7 +579,7 @@ module.exports = grammar({
             ),
          ),
       ),
-      actual_parameter_part: $ => seq(
+      actual_parameter_part: $ => seq(    // ARM 6.4
          '(',
          choice(
             comma_separated_list_of($.parameter_association),
@@ -1355,7 +1355,7 @@ module.exports = grammar({
          $.exception_handler,
          $.pragma_g,
       )),
-      formal_part: $ => seq(
+      formal_part: $ => seq(    // ARM 6.1
          '(',
          $._parameter_specification_list,
          ')',
@@ -1945,15 +1945,10 @@ module.exports = grammar({
             $.access_definition,
          ),
       ),
-
-      // In general, we do not need a separate node in the tree for the
-      // sequence of statements, except when queries might make use of that.
       _sequence_of_statements: $ => prec.left(seq(
          repeat1($.statement),
          repeat($.label),
       )),
-      // sequence_of_statements_as_node: $ => $.sequence_of_statements,
-
       _simple_statement: $ => choice(
          $.null_statement,
          $.assignment_statement,
@@ -2041,24 +2036,36 @@ module.exports = grammar({
          field('condition', $.expression),
          '=>',
       ),
-      _guard_select: $ => seq(
-         $.guard,
-         $._select_alternative,
+      select_alternative: $ => choice(    // ARM 9.7.1
+         $.accept_alternative,
+         $.delay_alternative,
+         $.terminate_alternative,
       ),
-      _select_alternative: $ => seq(
+      accept_alternative: $ => seq(  // ARM 9.7.1
          $.accept_statement,
          optional($._sequence_of_statements),
       ),
-      selective_accept: $ => seq(
+      delay_alternative: $ => seq(   // ARM 9.7.1
+         $._delay_statement,
+         optional($._sequence_of_statements),
+      ),
+      terminate_alternative: $ => seq(  // ARM 9.7.1
+         reservedWord("terminate"),
+         ';',
+      ),
+      selective_accept: $ => seq(    // ARM 9.7.1
          reservedWord('select'),
-         list_of(reservedWord('or'), $._guard_select),
+         list_of(reservedWord('or'), seq(
+            optional($.guard),
+            $.select_alternative,
+         )),
          optional(seq(
             reservedWord('else'),
             $._sequence_of_statements,
          )),
          reservedWord('end'),
          reservedWord('select'),
-         reservedWord(';'),
+         ';',
       ),
       abort_statement: $ => seq(
          reservedWord('abort'),
@@ -2074,20 +2081,20 @@ module.exports = grammar({
          )),
          ';',
       ),
-      accept_statement: $ => seq(
+      accept_statement: $ => seq(   //  ARM 9.5.2
          reservedWord('accept'),
-         $.identifier,
+         field('entry_direct_name', $.identifier),
          optional(seq(
             '(',
             field('entry_index', $.expression),
             ')',
          )),
-         field('parameter_profile', optional($.formal_part)),
+         optional(field('parameter_profile', $.formal_part)),
          optional(seq(
             reservedWord('do'),
             $.handled_sequence_of_statements,
             reservedWord('end'),
-            optional($.identifier),
+            optional(field('entry_identifier', $.identifier)),
          )),
          ';',
       ),

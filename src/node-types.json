@@ -55,9 +55,52 @@
     }
   },
   {
+    "type": "accept_alternative",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "accept_statement",
+          "named": true
+        },
+        {
+          "type": "label",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "accept_statement",
     "named": true,
     "fields": {
+      "entry_direct_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "entry_identifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "entry_index": {
         "multiple": false,
         "required": false,
@@ -80,15 +123,11 @@
       }
     },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
           "type": "handled_sequence_of_statements",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -8226,6 +8265,29 @@
     }
   },
   {
+    "type": "select_alternative",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "accept_alternative",
+          "named": true
+        },
+        {
+          "type": "delay_alternative",
+          "named": true
+        },
+        {
+          "type": "terminate_alternative",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "selected_component",
     "named": true,
     "fields": {
@@ -8308,15 +8370,15 @@
       "required": true,
       "types": [
         {
-          "type": "accept_statement",
-          "named": true
-        },
-        {
           "type": "guard",
           "named": true
         },
         {
           "type": "label",
+          "named": true
+        },
+        {
+          "type": "select_alternative",
           "named": true
         },
         {
@@ -9400,6 +9462,11 @@
     }
   },
   {
+    "type": "terminate_alternative",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "timed_entry_call",
     "named": true,
     "fields": {},
@@ -10080,6 +10147,10 @@
   },
   {
     "type": "task",
+    "named": false
+  },
+  {
+    "type": "terminate",
     "named": false
   },
   {

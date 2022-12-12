@@ -198,3 +198,53 @@ end;
     (statement
       (procedure_call_statement
         (identifier)))))
+
+================================================================================
+Accept
+================================================================================
+
+accept Start (A : Integer; B : Integer) do
+   null;
+end Start;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (statement
+      (accept_statement
+        (identifier)
+        (formal_part
+          (parameter_specification
+            (identifier)
+            (identifier))
+          (parameter_specification
+            (identifier)
+            (identifier)))
+        (handled_sequence_of_statements
+          (statement
+            (null_statement)))
+        (identifier)))))
+
+================================================================================
+Select terminate
+================================================================================
+
+select
+   accept Start;
+or
+   terminate;
+end select;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (statement
+      (selective_accept
+        (select_alternative
+          (accept_alternative
+            (accept_statement
+              (identifier))))
+        (select_alternative
+          (terminate_alternative))))))
