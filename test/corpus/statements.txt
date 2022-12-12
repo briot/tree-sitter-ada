@@ -101,13 +101,14 @@ end P;
         (statement
           (loop_statement
             (iteration_scheme
-              (iterator_specification
+              (loop_parameter_specification
                 (identifier)
-                (identifier)
-                (identifier)
-                (tick)
-                (attribute_designator
-                  (identifier))))
+                (range_g
+                  (selected_component
+                    (identifier)
+                    (identifier))
+                  (tick)
+                  (range_attribute_designator))))
             (statement
               (goto_statement
                 (identifier)))
@@ -472,8 +473,9 @@ end;
               (term
                 (allocator
                   (subpool_specification
-                    (identifier)
-                    (identifier))
+                    (selected_component
+                      (identifier)
+                      (identifier)))
                   (qualified_expression
                     (identifier)
                     (tick)
@@ -542,9 +544,10 @@ end;
       (handled_sequence_of_statements
         (statement
           (assignment_statement
-            (identifier)
             (function_call
-              (identifier)
+              (selected_component
+                (identifier)
+                (identifier))
               (actual_parameter_part
                 (parameter_association
                   (expression
@@ -558,9 +561,10 @@ end;
                 (numeric_literal)))))
         (statement
           (assignment_statement
-            (identifier)
             (function_call
-              (identifier)
+              (selected_component
+                (identifier)
+                (identifier))
               (actual_parameter_part
                 (parameter_association
                   (expression

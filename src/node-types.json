@@ -32,6 +32,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -99,10 +103,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -124,6 +124,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -173,10 +177,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -198,6 +198,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -341,6 +345,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -414,10 +422,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -439,6 +443,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -565,10 +573,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -590,6 +594,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -680,10 +688,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -705,6 +709,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -923,10 +931,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -948,6 +952,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -1238,10 +1246,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -1263,6 +1267,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -1331,10 +1339,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -1356,6 +1360,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -1601,10 +1609,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -1626,6 +1630,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -1700,6 +1708,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -1754,10 +1766,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -1779,6 +1787,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -1859,10 +1871,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -1884,6 +1892,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2092,10 +2104,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2117,6 +2125,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2190,10 +2202,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2215,6 +2223,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2303,10 +2315,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2328,6 +2336,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2388,10 +2400,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2413,6 +2421,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2505,10 +2517,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2530,6 +2538,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2585,10 +2597,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2610,6 +2618,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2747,10 +2759,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2772,6 +2780,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -2879,10 +2891,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -2904,6 +2912,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3001,10 +3013,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3026,6 +3034,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3131,10 +3143,6 @@
             "named": false
           },
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "allocator",
             "named": true
           },
@@ -3219,6 +3227,10 @@
             "named": true
           },
           {
+            "type": "selected_component",
+            "named": true
+          },
+          {
             "type": "string_literal",
             "named": true
           },
@@ -3241,10 +3253,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3266,6 +3274,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3299,10 +3311,6 @@
             "named": false
           },
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "allocator",
             "named": true
           },
@@ -3384,6 +3392,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3499,10 +3511,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3524,6 +3532,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3653,10 +3665,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3678,6 +3686,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3728,6 +3740,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -3770,10 +3786,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3795,6 +3807,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3878,10 +3894,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3903,6 +3915,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -3969,10 +3985,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -3994,6 +4006,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4166,10 +4182,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4191,6 +4203,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4232,10 +4248,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4257,6 +4269,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4346,10 +4362,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4371,6 +4383,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4396,10 +4412,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4421,6 +4433,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4485,10 +4501,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4510,6 +4522,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4535,10 +4551,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4560,6 +4572,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4585,10 +4601,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4610,6 +4622,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4635,10 +4651,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4660,6 +4672,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4751,10 +4767,6 @@
             "named": false
           },
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4776,6 +4788,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -4832,10 +4848,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -4857,6 +4869,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -5038,10 +5054,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -5063,6 +5075,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -5124,10 +5140,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -5149,6 +5161,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -5201,6 +5217,10 @@
         },
         {
           "type": "reduction_attribute_designator",
+          "named": true
+        },
+        {
+          "type": "selected_component",
           "named": true
         },
         {
@@ -5300,10 +5320,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -5325,6 +5341,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -5350,10 +5370,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -5375,6 +5391,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -5491,10 +5511,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -5516,6 +5532,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -5937,10 +5957,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -5962,6 +5978,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6043,10 +6063,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6068,6 +6084,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6093,10 +6113,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6118,6 +6134,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6195,10 +6215,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6220,6 +6236,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6245,10 +6265,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6270,6 +6286,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6338,10 +6358,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6363,6 +6379,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6388,10 +6408,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6413,6 +6429,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6454,10 +6474,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6479,6 +6495,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6504,10 +6524,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6529,6 +6545,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6693,10 +6713,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6718,6 +6734,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6853,10 +6873,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -6878,6 +6894,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -6956,6 +6976,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -7014,10 +7038,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7039,6 +7059,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7080,10 +7104,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7105,6 +7125,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7303,6 +7327,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -7330,10 +7358,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7355,6 +7379,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7467,10 +7495,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7492,6 +7516,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7541,10 +7569,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7566,6 +7590,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7637,10 +7665,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7662,6 +7686,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7835,10 +7863,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7860,6 +7884,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -7885,10 +7913,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -7910,6 +7934,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8017,6 +8045,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -8076,10 +8108,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8101,6 +8129,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8132,10 +8164,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8157,6 +8185,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8191,6 +8223,80 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "selected_component",
+    "named": true,
+    "fields": {
+      "prefix": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "attribute_designator",
+            "named": true
+          },
+          {
+            "type": "character_literal",
+            "named": true
+          },
+          {
+            "type": "function_call",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "qualified_expression",
+            "named": true
+          },
+          {
+            "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "target_name",
+            "named": true
+          },
+          {
+            "type": "tick",
+            "named": true
+          },
+          {
+            "type": "value_sequence",
+            "named": true
+          }
+        ]
+      },
+      "selector_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "character_literal",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -8299,6 +8405,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -8351,6 +8461,10 @@
         },
         {
           "type": "reduction_attribute_designator",
+          "named": true
+        },
+        {
+          "type": "selected_component",
           "named": true
         },
         {
@@ -8488,10 +8602,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8513,6 +8623,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8544,10 +8658,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8569,6 +8679,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8699,10 +8813,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8724,6 +8834,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8755,10 +8869,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8780,6 +8890,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8833,10 +8947,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8858,6 +8968,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -8923,10 +9037,6 @@
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -8948,6 +9058,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -9121,6 +9235,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -9152,10 +9270,6 @@
         "required": false,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
-          {
             "type": "attribute_designator",
             "named": true
           },
@@ -9177,6 +9291,10 @@
           },
           {
             "type": "reduction_attribute_designator",
+            "named": true
+          },
+          {
+            "type": "selected_component",
             "named": true
           },
           {
@@ -9395,6 +9513,10 @@
           "named": true
         },
         {
+          "type": "selected_component",
+          "named": true
+        },
+        {
           "type": "string_literal",
           "named": true
         },
@@ -9547,6 +9669,10 @@
         },
         {
           "type": "reduction_attribute_designator",
+          "named": true
+        },
+        {
+          "type": "selected_component",
           "named": true
         },
         {

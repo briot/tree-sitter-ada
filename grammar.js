@@ -106,10 +106,6 @@ module.exports = grammar({
       [$._name, $.package_body_stub],
 
    ],
-   inline: $ => [
-      // To avoid conflicts
-      $.selected_component,
-   ],
 
    rules: {
       compilation: $ => repeat(
@@ -145,13 +141,17 @@ module.exports = grammar({
          $.string_literal, // name of an operator. However, in a number of
                            // places using a string doesn't make sense.
       ),
-      selected_component: $ => seq(   // RM 4.1.3
-         $.identifier,
+      selected_component: $ => prec.left(seq(   // RM 4.1.3
+         field('prefix', $._name),
          seq(
             '.',
-            $._name,
+            field('selector_name', choice(
+               $.identifier,
+               $.character_literal,
+               $.string_literal,
+            )),
          ),
-      ),
+      )),
       target_name: $ => '@',       // RM 5.2.1
       _name_list: $ => prec.left(comma_separated_list_of($._name)),
       _defining_identifier_list: $ => comma_separated_list_of($.identifier),

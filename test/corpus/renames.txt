@@ -33,8 +33,9 @@ end P;
           (identifier))
         (package_renaming_declaration
           (identifier)
-          (identifier)
-          (identifier))
+          (selected_component
+            (identifier)
+            (identifier)))
         (subprogram_renaming_declaration
           (procedure_specification
             (identifier)

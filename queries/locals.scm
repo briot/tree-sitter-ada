@@ -2,9 +2,11 @@
 ;;  references. However, this is not yet supported by neovim
 ;;  See https://tree-sitter.github.io/tree-sitter/syntax-highlighting#local-variables
 
+(compilation) @scope
 (package_specification) @scope
-(procedure_specification) @scope
-(function_specification) @scope
+(package_body) @scope
+(subprogram_declaration) @scope
+(subprogram_body) @scope
 (block_statement) @scope
 
 (with_clause (identifier) @definition.import)

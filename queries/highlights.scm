@@ -98,6 +98,7 @@
 (comment)         @spell       ;; spell-check comments
 (string_literal)  @string
 (string_literal)  @spell       ;; spell-check strings
+(character_literal) @string
 (identifier)      @variable
 (numeric_literal) @number
 
@@ -141,6 +142,7 @@
 (range_constraint "range" @type.definition)
 (signed_integer_type_definition "range" @type.definition)
 (index_subtype_definition "range" @type.definition)
+(private_type_declaration "is" @type.definition "private" @type.definition)
 
 ;; Gray the body of expression functions
 (expression_function_declaration

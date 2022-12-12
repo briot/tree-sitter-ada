@@ -70,15 +70,16 @@ end;
             (identifier)
             (expression
               (term
-                (identifier)
-                (identifier)))))
+                (selected_component
+                  (identifier)
+                  (identifier))))))
         (statement
           (procedure_call_statement
-            (identifier)
-            (function_call
+            (selected_component
               (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      (numeric_literal))))))))))))
+              (identifier))
+            (actual_parameter_part
+              (parameter_association
+                (expression
+                  (term
+                    (numeric_literal)))))))))))

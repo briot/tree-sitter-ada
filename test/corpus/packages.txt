@@ -13,8 +13,9 @@ use Ada.Text_IO, System;
 (compilation
   (compilation_unit
     (with_clause
-      (identifier)
-      (identifier)
+      (selected_component
+        (identifier)
+        (identifier))
       (identifier)))
   (comment)
   (compilation_unit
@@ -29,8 +30,9 @@ use Ada.Text_IO, System;
       (identifier)))
   (compilation_unit
     (use_clause
-      (identifier)
-      (identifier)
+      (selected_component
+        (identifier)
+        (identifier))
       (identifier))))
 
 ================================================================================
@@ -72,8 +74,9 @@ end;
       (identifier)))
   (compilation_unit
     (package_specification
-      (identifier)
-      (identifier)
+      (selected_component
+        (identifier)
+        (identifier))
       (comment))))
 
 ================================================================================
@@ -94,8 +97,9 @@ end Child.P2;
 (compilation
   (compilation_unit
     (package_body
-      (identifier)
-      (identifier)
+      (selected_component
+        (identifier)
+        (identifier))
       (non_empty_declarative_part
         (package_body
           (identifier)
@@ -106,8 +110,9 @@ end Child.P2;
       (handled_sequence_of_statements
         (statement
           (null_statement)))
-      (identifier)
-      (identifier))))
+      (selected_component
+        (identifier)
+        (identifier)))))
 
 ================================================================================
 separate

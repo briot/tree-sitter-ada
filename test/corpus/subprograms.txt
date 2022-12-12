@@ -499,3 +499,28 @@ procedure Proc (A : access Integer);
             (identifier)
             (access_definition
               (identifier))))))))
+
+================================================================================
+Subprogram and field access
+================================================================================
+
+  V := Func (2).Value;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (statement
+      (assignment_statement
+        (identifier)
+        (expression
+          (term
+            (selected_component
+              (function_call
+                (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        (numeric_literal))))))
+              (identifier))))))))
