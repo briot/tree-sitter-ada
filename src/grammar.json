@@ -143,7 +143,7 @@
       "type": "STRING",
       "value": "'"
     },
-    "_name": {
+    "_name_not_function_call": {
       "type": "CHOICE",
       "members": [
         {
@@ -160,10 +160,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "function_call"
-        },
-        {
-          "type": "SYMBOL",
           "name": "qualified_expression"
         },
         {
@@ -172,11 +168,28 @@
         },
         {
           "type": "SYMBOL",
+          "name": "slice"
+        },
+        {
+          "type": "SYMBOL",
           "name": "character_literal"
         },
         {
           "type": "SYMBOL",
           "name": "string_literal"
+        }
+      ]
+    },
+    "_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_name_not_function_call"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function_call"
         }
       ]
     },
@@ -282,6 +295,31 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "slice": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "prefix",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "range_g"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -855,23 +893,6 @@
           },
           "named": false,
           "value": "mod"
-        }
-      ]
-    },
-    "function_call": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_name"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "actual_parameter_part"
         }
       ]
     },
@@ -1732,7 +1753,7 @@
           "name": "subtype_mark",
           "content": {
             "type": "SYMBOL",
-            "name": "_name"
+            "name": "_name_not_function_call"
           }
         },
         {
@@ -13944,6 +13965,49 @@
       ]
     },
     "procedure_call_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_name_not_function_call"
+              }
+            },
+            {
+              "type": "STRING",
+              "value": ";"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_name"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "actual_parameter_part"
+            },
+            {
+              "type": "STRING",
+              "value": ";"
+            }
+          ]
+        }
+      ]
+    },
+    "function_call": {
       "type": "SEQ",
       "members": [
         {
@@ -13955,20 +14019,8 @@
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "actual_parameter_part"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": ";"
+          "type": "SYMBOL",
+          "name": "actual_parameter_part"
         }
       ]
     },
@@ -14613,6 +14665,14 @@
       "_name"
     ],
     [
+      "_name",
+      "component_choice_list"
+    ],
+    [
+      "slice",
+      "_discrete_range"
+    ],
+    [
       "record_component_association_list",
       "positional_array_aggregate"
     ],
@@ -14676,6 +14736,15 @@
     [
       "_name",
       "package_body_stub"
+    ],
+    [
+      "_name",
+      "_subtype_indication"
+    ],
+    [
+      "_name",
+      "_subtype_indication",
+      "component_choice_list"
     ],
     [
       "attribute_definition_clause",

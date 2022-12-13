@@ -169,13 +169,12 @@ end;
             (asynchronous_select
               (triggering_alternative
                 (procedure_call_statement
-                  (function_call
-                    (identifier)
-                    (actual_parameter_part
-                      (parameter_association
-                        (expression
-                          (term
-                            (numeric_literal)))))))
+                  (identifier)
+                  (actual_parameter_part
+                    (parameter_association
+                      (expression
+                        (term
+                          (numeric_literal))))))
                 (null_statement))
               (procedure_call_statement
                 (identifier))))))))

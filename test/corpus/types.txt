@@ -146,18 +146,14 @@ end P;
             (array_component_association
               (discrete_choice_list
                 (discrete_choice
-                  (expression
-                    (term
-                      (identifier)))))
+                  (identifier)))
               (expression
                 (term
                   (numeric_literal))))
             (array_component_association
               (discrete_choice_list
                 (discrete_choice
-                  (expression
-                    (term
-                      (identifier)))))
+                  (identifier)))
               (expression
                 (term
                   (numeric_literal)))))))

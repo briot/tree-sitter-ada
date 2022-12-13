@@ -53,6 +53,9 @@ module.exports = grammar({
       // 'case' '(' identifier . '=>' ...
       [$._name, $.component_choice_list],
 
+      // 'case' '(' _name '(' _discrete_range ')' . '=>'
+      [$.slice, $._discrete_range],
+
       // 'case' '(' expression . ',' ...
       [$.record_component_association_list, $.positional_array_aggregate],
 
@@ -99,7 +102,12 @@ module.exports = grammar({
       [$.function_call, $.procedure_call_statement],
       [$._name, $._aspect_mark],
       [$._name, $.package_body_stub],
+      [$._name, $._subtype_indication],
+      [$._name, $._subtype_indication, $.component_choice_list],
       [$.attribute_definition_clause, $._attribute_reference],
+   ],
+   inline: $ => [
+      $._name_not_function_call,
    ],
 
    rules: {
@@ -124,17 +132,21 @@ module.exports = grammar({
       multiplying_operator: $ => choice('*', '/', 'mod', 'rem'),
       tick: $ => '\'',   // But is not the start of a character_literal
 
-      _name: $ => choice(           // RM 4.1
+      _name_not_function_call: $ => choice(           // RM 4.1
          $.identifier,
-         $.selected_component,      // rule is inlined above
+         $.selected_component,
          $._attribute_reference,
-         $.function_call,
          $.qualified_expression,
          $.target_name,
+         $.slice,
          // $.explicit_dereference, // covered by $.selected_component
          $.character_literal,
          $.string_literal, // name of an operator. However, in a number of
                            // places using a string doesn't make sense.
+      ),
+      _name: $ => choice(           // RM 4.1
+         $._name_not_function_call,
+         $.function_call,
       ),
       selected_component: $ => prec.left(seq(   // RM 4.1.3
          field('prefix', $._name),
@@ -150,6 +162,15 @@ module.exports = grammar({
       target_name: $ => '@',       // RM 5.2.1
       _name_list: $ => prec.left(comma_separated_list_of($._name)),
       _defining_identifier_list: $ => comma_separated_list_of($.identifier),
+      slice: $ => seq(   // RM 4.1.2
+         field('prefix', $._name),
+         '(',
+         $.range_g,  // ??? Should be a $._discrete_range, but then the
+                     // following  Proc(Arr (1 .. 2)) is parsed as a slice of
+                     // Proc, using a subtype_indication "Arr (1..2)"
+//         $._discrete_range,
+         ')',
+      ),
 
       _attribute_reference: $ => choice(
          seq(
@@ -242,16 +263,12 @@ module.exports = grammar({
          field('iterator_name', $._name),
          optional($.iterator_filter),
       ),
-      attribute_designator: $ => choice(
-         $.identifier,    //  missing  function_call
+      attribute_designator: $ => choice(   // ARM 4.1.4
+         $.identifier,
          reservedWord('access'),
          reservedWord('delta'),
          reservedWord('digits'),
          reservedWord('mod'),
-      ),
-      function_call: $ => seq(             // ARM 6.4
-         field('name', $._name),
-         $.actual_parameter_part,  // should be optional, but covered by _name
       ),
       qualified_expression: $ => seq(      // ARM 4.7
          field('subtype_name', $._name),
@@ -370,7 +387,7 @@ module.exports = grammar({
       ),
       _subtype_indication: $ => seq(        // ARM 3.2.2
          optional($.null_exclusion),
-         field('subtype_mark', $._name),
+         field('subtype_mark', $._name_not_function_call),
          optional($._constraint),
       ),
       _constraint: $ => choice(
@@ -870,7 +887,7 @@ module.exports = grammar({
          $._subtype_indication,
          $.range_g,
       ),
-      _discrete_range: $ => choice(  //  same as _discrete_subtype_definition
+      _discrete_range: $ => choice(  //  3.6.1 == _discrete_subtype_definition
          $._subtype_indication,
          $.range_g,
       ),
@@ -2197,10 +2214,20 @@ module.exports = grammar({
          $._subtype_indication,
          $.access_definition,
       ),
-      procedure_call_statement: $ => seq(    // ARM 6.4
-         field('name', $._name),
-         optional($.actual_parameter_part),
-         ';',
+      procedure_call_statement: $ => choice(    // ARM 6.4
+         seq(
+            field('name', $._name_not_function_call),
+            ';',
+         ),
+         seq(
+            field('name', $._name),   // includes function_call
+            $.actual_parameter_part,
+            ';',
+         ),
+      ),
+      function_call: $ => seq(             // ARM 6.4
+         field('name', $._name),   // itself includes a function_call
+         $.actual_parameter_part,  // should be optional, but covered by _name
       ),
       raise_statement: $ => seq(
          reservedWord('raise'),

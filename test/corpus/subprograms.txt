@@ -521,3 +521,32 @@ Subprogram and field access
                     (term
                       (numeric_literal))))))
             (identifier)))))))
+
+===============================
+Parameterless Procedure call
+===============================
+
+Proc;
+
+------
+
+(compilation
+  (compilation_unit
+    (procedure_call_statement
+      (identifier))))
+
+===============================
+Parameterless Function call
+===============================
+
+A := Func;
+
+------
+
+(compilation
+  (compilation_unit
+    (assignment_statement
+      (identifier)
+      (expression
+        (term
+          (identifier))))))

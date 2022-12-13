@@ -23,8 +23,8 @@ end;
       (non_empty_declarative_part
         (object_declaration
           (identifier)
-          (identifier)
-          (index_constraint
+          (slice
+            (identifier)
             (range_g
               (identifier)
               (tick)

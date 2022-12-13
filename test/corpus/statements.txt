@@ -405,13 +405,9 @@ end;
           (case_statement_alternative
             (discrete_choice_list
               (discrete_choice
-                (expression
-                  (term
-                    (character_literal))))
+                (character_literal))
               (discrete_choice
-                (expression
-                  (term
-                    (character_literal)))))
+                (character_literal)))
             (null_statement)))))))
 
 ================================================================================

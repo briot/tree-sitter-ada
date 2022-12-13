@@ -123,6 +123,7 @@
 (loop_parameter_specification "in" @keyword.repeat)
 (iterator_specification ["in" "of"] @keyword.repeat)
 (range_attribute_designator "range" @keyword.repeat)
+
 (raise_statement "with" @exception)
 
 (subprogram_declaration "is" @keyword.function "abstract"  @keyword.function)
@@ -150,9 +151,9 @@
 (expression_function_declaration
    (function_specification)
    "is"
-   (_) @function.expression
+   (_) @attribute
 )
-(subprogram_declaration (aspect_specification) @function.expression)
+(subprogram_declaration (aspect_specification) @attribute)
 
 ;; Highlight full subprogram specifications
 ;(subprogram_body

@@ -247,3 +247,43 @@ end;
                               (expression
                                 (term
                                   (identifier))))))))))))))))))
+
+================================================================================
+Slices
+================================================================================
+
+Proc (Arr (1 .. 2));
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (procedure_call_statement
+      (identifier)
+      (actual_parameter_part
+        (parameter_association
+          (expression
+            (term
+              (slice
+                (identifier)
+                (range_g
+                  (term
+                    (numeric_literal))
+                  (term
+                    (numeric_literal)))))))))))
+
+================================================================================
+Slices with subtype declaration
+================================================================================
+
+A : Arr (Boolean);
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (object_declaration
+      (identifier)
+      (identifier)
+      (index_constraint
+        (identifier)))))
