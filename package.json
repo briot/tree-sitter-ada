@@ -17,7 +17,7 @@
      {
        "scope": "source.ada",
        "file-types": [
-         "ada"
+         "adb", "ads"
        ],
        "highlights": [
          "queries/highlights.scm"
