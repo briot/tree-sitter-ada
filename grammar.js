@@ -1015,10 +1015,10 @@ module.exports = grammar({
             reservedWord('record'),
          ),
       ),
-      component_list: $ => choice(
+      component_list: $ => choice(   //  RM 3.8
          repeat1($._component_item),
          seq(
-            optional($._component_item),
+            repeat($._component_item),
             $.variant_part,
          ),
          seq(

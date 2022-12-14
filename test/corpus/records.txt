@@ -355,3 +355,106 @@ end;
                   (expression
                     (term
                       (numeric_literal))))))))))))
+
+================================================================================
+Variant records
+================================================================================
+
+type R (D : Boolean) is record
+   A : Integer;
+   case D is
+      when True => null;
+      when False =>
+         B : Integer := 1;
+         --  some comment
+   end case;
+end record;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (full_type_declaration
+      (identifier)
+      (known_discriminant_part
+        (discriminant_specification_list
+          (discriminant_specification
+            (identifier)
+            (identifier))))
+      (record_type_definition
+        (record_definition
+          (component_list
+            (component_declaration
+              (identifier)
+              (component_definition
+                (identifier)))
+            (variant_part
+              (identifier)
+              (variant_list
+                (variant
+                  (discrete_choice_list
+                    (discrete_choice
+                      (identifier)))
+                  (component_list))
+                (variant
+                  (discrete_choice_list
+                    (discrete_choice
+                      (identifier)))
+                  (component_list
+                    (component_declaration
+                      (identifier)
+                      (component_definition
+                        (identifier))
+                      (expression
+                        (term
+                          (numeric_literal)))))))
+              (comment))))))))
+
+================================================================================
+variants 2
+================================================================================
+
+   type R (S : Config_Side) is record
+      E : Duration;
+      F : Duration;
+
+      case Side is
+         when Config_Consumer =>
+            C : Duration;
+      end case;
+   end record;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (full_type_declaration
+      (identifier)
+      (known_discriminant_part
+        (discriminant_specification_list
+          (discriminant_specification
+            (identifier)
+            (identifier))))
+      (record_type_definition
+        (record_definition
+          (component_list
+            (component_declaration
+              (identifier)
+              (component_definition
+                (identifier)))
+            (component_declaration
+              (identifier)
+              (component_definition
+                (identifier)))
+            (variant_part
+              (identifier)
+              (variant_list
+                (variant
+                  (discrete_choice_list
+                    (discrete_choice
+                      (identifier)))
+                  (component_list
+                    (component_declaration
+                      (identifier)
+                      (component_definition
+                        (identifier)))))))))))))
