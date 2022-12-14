@@ -10807,6 +10807,10 @@
           "named": true
         },
         {
+          "type": "pragma_g",
+          "named": true
+        },
+        {
           "type": "record_representation_clause",
           "named": true
         }

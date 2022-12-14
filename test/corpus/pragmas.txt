@@ -60,3 +60,31 @@ end;
         (pragma_g
           (identifier))
         (null_statement)))))
+
+================================================================================
+pragma in tasks
+================================================================================
+
+package P is
+   task type T is
+       pragma Storage_Size (1024);
+   end T;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (identifier)
+      (full_type_declaration
+        (task_type_declaration
+          (identifier)
+          (task_definition
+            (pragma_g
+              (identifier)
+              (pragma_argument_association
+                (expression
+                  (term
+                    (numeric_literal)))))
+            (identifier)))))))

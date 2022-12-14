@@ -10843,6 +10843,10 @@
         {
           "type": "SYMBOL",
           "name": "_aspect_clause"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pragma_g"
         }
       ]
     },

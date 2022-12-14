@@ -1806,6 +1806,7 @@ module.exports = grammar({
       _task_item: $ => choice(
          $.entry_declaration,
          $._aspect_clause,
+         $.pragma_g,
       ),
       task_definition: $ => seq(   //  RM 9.1
          repeat($._task_item),
