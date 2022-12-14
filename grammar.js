@@ -690,7 +690,7 @@ module.exports = grammar({
          '(',
          $.expression,
          reservedWord('with'),
-         $.record_component_association_list,
+         $._record_component_association_list_or_expression,
          ')',
       ),
       record_delta_aggregate: $ => seq(
@@ -698,7 +698,7 @@ module.exports = grammar({
          $.expression,
          reservedWord('with'),
          reservedWord('delta'),
-         $.record_component_association_list,
+         $._record_component_association_list_or_expression,
          ')',
       ),
       array_delta_aggregate: $ => choice(
@@ -730,7 +730,7 @@ module.exports = grammar({
       // *  expression, {expression_or_named}
       //    expression_or_named:: expression | choice => expression
       // *  named {, named}
-      record_component_association_list: $ => choice(
+      record_component_association_list: $ => choice(    // RM 4.3.1
          seq(
             reservedWord('null'),
             reservedWord('record'),
@@ -745,6 +745,15 @@ module.exports = grammar({
          ),
          comma_separated_list_of($._named_record_component_association),
       ),
+
+      // We have modified record_component_association_list to accept a
+      // minimum of two positional expressions. However, in extension
+      // aggregates it is valid to have just "(parent with value)"
+      _record_component_association_list_or_expression: $ => choice(
+         $.record_component_association_list,
+         $.expression,
+      ),
+
       _named_record_component_association: $ => seq(  // adapted from ARM 4.3.1
          $.component_choice_list,
          '=>',

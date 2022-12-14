@@ -458,3 +458,52 @@ variants 2
                       (identifier)
                       (component_definition
                         (identifier)))))))))))))
+
+================================================================================
+Extension with aggregate
+================================================================================
+
+procedure Proc is
+   Null  : constant Rec := (Parent with A => null);
+   Null2 : constant Rec := (Parent with null);
+begin
+   null;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (non_empty_declarative_part
+        (object_declaration
+          (identifier)
+          (identifier)
+          (expression
+            (term
+              (extension_aggregate
+                (expression
+                  (term
+                    (identifier)))
+                (record_component_association_list
+                  (component_choice_list
+                    (identifier))
+                  (expression
+                    (term
+                      (primary_null))))))))
+        (object_declaration
+          (identifier)
+          (identifier)
+          (expression
+            (term
+              (extension_aggregate
+                (expression
+                  (term
+                    (identifier)))
+                (expression
+                  (term
+                    (primary_null))))))))
+      (handled_sequence_of_statements
+        (null_statement)))))

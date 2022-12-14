@@ -3531,7 +3531,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "record_component_association_list"
+          "name": "_record_component_association_list_or_expression"
         },
         {
           "type": "STRING",
@@ -3584,7 +3584,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "record_component_association_list"
+          "name": "_record_component_association_list_or_expression"
         },
         {
           "type": "STRING",
@@ -3840,6 +3840,19 @@
               }
             }
           ]
+        }
+      ]
+    },
+    "_record_component_association_list_or_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "record_component_association_list"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
         }
       ]
     },
