@@ -105,6 +105,8 @@ module.exports = grammar({
       [$._name, $._subtype_indication],
       [$._name, $._subtype_indication, $.component_choice_list],
       [$.attribute_definition_clause, $._attribute_reference],
+      [$.component_choice_list, $.discrete_choice],
+      [$.component_choice_list, $.positional_array_aggregate],
    ],
    inline: $ => [
       $._name_not_function_call,
@@ -666,8 +668,14 @@ module.exports = grammar({
          '=>',
          $.expression,
       ),
-      component_choice_list: $ =>
-         list_of('|', $.identifier),
+      component_choice_list: $ => choice(                 // RM 4.3.1
+         reservedWord('others'),
+         list_of('|', choice(  // Do not allow slice, function_call,...
+            $.identifier,      // as opposed to what the ARM allows
+            $.selected_component,
+            $.string_literal,
+         )),
+      ),
       _aggregate: $ => choice(                            // RM 4.3
          $.record_aggregate,
          $.extension_aggregate,

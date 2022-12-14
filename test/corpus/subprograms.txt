@@ -522,26 +522,26 @@ Subprogram and field access
                       (numeric_literal))))))
             (identifier)))))))
 
-===============================
+================================================================================
 Parameterless Procedure call
-===============================
+================================================================================
 
 Proc;
 
-------
+--------------------------------------------------------------------------------
 
 (compilation
   (compilation_unit
     (procedure_call_statement
       (identifier))))
 
-===============================
+================================================================================
 Parameterless Function call
-===============================
+================================================================================
 
 A := Func;
 
-------
+--------------------------------------------------------------------------------
 
 (compilation
   (compilation_unit
@@ -550,3 +550,33 @@ A := Func;
       (expression
         (term
           (identifier))))))
+
+================================================================================
+Parameter association for operators
+================================================================================
+
+package P is new Pack ("+" => "+", "-" => Imported."+");
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (generic_instantiation
+      (identifier)
+      (function_call
+        (identifier)
+        (actual_parameter_part
+          (parameter_association
+            (component_choice_list
+              (string_literal))
+            (expression
+              (term
+                (string_literal))))
+          (parameter_association
+            (component_choice_list
+              (string_literal))
+            (expression
+              (term
+                (selected_component
+                  (identifier)
+                  (string_literal))))))))))

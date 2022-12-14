@@ -44,8 +44,7 @@ end;
                   (term
                     (numeric_literal))))
               (parameter_association
-                (component_choice_list
-                  (identifier))))))
+                (component_choice_list)))))
         (formal_subprogram_declaration
           (formal_concrete_subprogram_declaration
             (procedure_specification

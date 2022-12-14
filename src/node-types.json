@@ -1599,10 +1599,18 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "selected_component",
+          "named": true
+        },
+        {
+          "type": "string_literal",
           "named": true
         }
       ]
