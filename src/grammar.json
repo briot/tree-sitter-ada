@@ -13,6 +13,10 @@
       "type": "PATTERN",
       "value": "[a-zA-Z\\u{80}-\\u{10FFFF}][0-9a-zA-Z_\\u{80}-\\u{10FFFF}]*"
     },
+    "gnatprep_identifier": {
+      "type": "PATTERN",
+      "value": "\\$[a-zA-Z\\u{80}-\\u{10FFFF}][0-9a-zA-Z_\\u{80}-\\u{10FFFF}]*"
+    },
     "comment": {
       "type": "TOKEN",
       "content": {
@@ -58,6 +62,95 @@
           }
         ]
       }
+    },
+    "git_conflict_mark": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[<<][<<][<<][<<][<<][<<][<<]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": "<<<<<<<"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[>>][>>][>>][>>][>>][>>][>>]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": ">>>>>>>"
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[==][==][==][==][==][==][==]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": "======="
+              },
+              {
+                "type": "PATTERN",
+                "value": ".*"
+              }
+            ]
+          }
+        }
+      ]
     },
     "relational_operator": {
       "type": "CHOICE",
@@ -149,6 +242,10 @@
         {
           "type": "SYMBOL",
           "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "gnatprep_identifier"
         },
         {
           "type": "SYMBOL",
@@ -7785,6 +7882,10 @@
         {
           "type": "SYMBOL",
           "name": "pragma_g"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "gnatprep_declarative_if_statement"
         }
       ]
     },
@@ -8305,13 +8406,6 @@
           "name": "_sequence_of_statements"
         }
       ]
-    },
-    "_exception_handler_list": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "SYMBOL",
-        "name": "exception_handler"
-      }
     },
     "formal_part": {
       "type": "SEQ",
@@ -10076,8 +10170,11 @@
                   "value": "exception"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "_exception_handler_list"
+                  "type": "REPEAT1",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "exception_handler"
+                  }
                 }
               ]
             },
@@ -12328,6 +12425,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "gnatprep_if_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "case_statement"
         },
         {
@@ -13663,6 +13764,358 @@
             "type": "SYMBOL",
             "name": "_sequence_of_statements"
           }
+        }
+      ]
+    },
+    "gnatprep_declarative_if_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[##][iI][fF]"
+              }
+            }
+          },
+          "named": false,
+          "value": "#if"
+        },
+        {
+          "type": "FIELD",
+          "name": "condition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[tT][hH][eE][nN]"
+              }
+            }
+          },
+          "named": false,
+          "value": "then"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "non_empty_declarative_part"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[##][eE][lL][sS][iI][fF]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": "#elsif"
+              },
+              {
+                "type": "FIELD",
+                "name": "condition",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "expression"
+                }
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[tT][hH][eE][nN]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": "then"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "non_empty_declarative_part"
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "TOKEN",
+                    "content": {
+                      "type": "PREC",
+                      "value": 2,
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[##][eE][lL][sS][eE]"
+                      }
+                    }
+                  },
+                  "named": false,
+                  "value": "#else"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "non_empty_declarative_part"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[##][eE][nN][dD]"
+              }
+            }
+          },
+          "named": false,
+          "value": "#end"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[iI][fF]"
+              }
+            }
+          },
+          "named": false,
+          "value": "if"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "gnatprep_if_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[##][iI][fF]"
+              }
+            }
+          },
+          "named": false,
+          "value": "#if"
+        },
+        {
+          "type": "FIELD",
+          "name": "condition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[tT][hH][eE][nN]"
+              }
+            }
+          },
+          "named": false,
+          "value": "then"
+        },
+        {
+          "type": "FIELD",
+          "name": "statements",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sequence_of_statements"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[##][eE][lL][sS][iI][fF]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": "#elsif"
+              },
+              {
+                "type": "FIELD",
+                "name": "condition",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "expression"
+                }
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "TOKEN",
+                  "content": {
+                    "type": "PREC",
+                    "value": 2,
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[tT][hH][eE][nN]"
+                    }
+                  }
+                },
+                "named": false,
+                "value": "then"
+              },
+              {
+                "type": "FIELD",
+                "name": "statements",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_sequence_of_statements"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "TOKEN",
+                    "content": {
+                      "type": "PREC",
+                      "value": 2,
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[##][eE][lL][sS][eE]"
+                      }
+                    }
+                  },
+                  "named": false,
+                  "value": "#else"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "else_statements",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_sequence_of_statements"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[##][eE][nN][dD]"
+              }
+            }
+          },
+          "named": false,
+          "value": "#end"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[iI][fF]"
+              }
+            }
+          },
+          "named": false,
+          "value": "if"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },

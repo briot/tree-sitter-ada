@@ -126,6 +126,10 @@
 
 (raise_statement "with" @exception)
 
+(gnatprep_declarative_if_statement)  @preproc
+(gnatprep_if_statement)              @preproc
+(gnatprep_identifier)                @preproc
+
 (subprogram_declaration "is" @keyword.function "abstract"  @keyword.function)
 (aspect_specification "with" @keyword.function)
 

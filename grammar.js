@@ -120,6 +120,8 @@ module.exports = grammar({
 
       identifier: $ =>
          /[a-zA-Z\u{80}-\u{10FFFF}][0-9a-zA-Z_\u{80}-\u{10FFFF}]*/u,
+      gnatprep_identifier: $ =>
+         /\$[a-zA-Z\u{80}-\u{10FFFF}][0-9a-zA-Z_\u{80}-\u{10FFFF}]*/u,
       comment: $ => token(seq('--', /.*/)),
       string_literal: $ => token(/"(""|[^"])*"/),
       character_literal: $ => token(/'.'/),
@@ -129,6 +131,11 @@ module.exports = grammar({
             /[0-9]+#[0-9a-fA-F._-]+#([eE][+-]?[0-9_]+)?/,
          )
       ),
+      git_conflict_mark: $ => choice(
+         token(seq(reservedWord('<<<<<<<'), /.*/)),
+         token(seq(reservedWord('>>>>>>>'), /.*/)),
+         token(seq(reservedWord('======='), /.*/)),
+      ),
       relational_operator: $ => choice('=', '/=', '<', '<=', '>', '>='),
       binary_adding_operator: $ => choice('+', '-', '&'),
       unary_adding_operator: $ => choice('+', '-'),
@@ -137,6 +144,7 @@ module.exports = grammar({
 
       _name_not_function_call: $ => choice(           // RM 4.1
          $.identifier,
+         $.gnatprep_identifier,
          $.selected_component,
          $._attribute_reference,
          $.qualified_expression,
@@ -1329,6 +1337,7 @@ module.exports = grammar({
       _declarative_item_pragma: $ => choice(
          $._declarative_item,
          $.pragma_g,
+         $.gnatprep_declarative_if_statement,
       ),
 
       // Although it doesn't add any new character, we keep this rule as an
@@ -2020,6 +2029,7 @@ module.exports = grammar({
       ),
       _compound_statement: $ => choice(
          $.if_statement,
+         $.gnatprep_if_statement,
          $.case_statement,
          $.loop_statement,
          $.block_statement,
@@ -2193,6 +2203,44 @@ module.exports = grammar({
          field('condition', $.expression),
          reservedWord('then'),
          field('statements', $._sequence_of_statements),
+      ),
+      gnatprep_declarative_if_statement: $ => seq(
+         reservedWord('#if'),
+         field('condition', $.expression),
+         reservedWord('then'),
+         $.non_empty_declarative_part,
+         repeat(seq(
+            reservedWord('#elsif'),
+            field('condition', $.expression),
+            reservedWord('then'),
+            $.non_empty_declarative_part,
+         )),
+         optional(seq(
+            reservedWord('#else'),
+            $.non_empty_declarative_part,
+         )),
+         reservedWord('#end'),
+         reservedWord('if'),
+         ';',
+      ),
+      gnatprep_if_statement: $ => seq(
+         reservedWord('#if'),
+         field('condition', $.expression),
+         reservedWord('then'),
+         field('statements', $._sequence_of_statements),
+         repeat(seq(
+            reservedWord('#elsif'),
+            field('condition', $.expression),
+            reservedWord('then'),
+            field('statements', $._sequence_of_statements),
+         )),
+         optional(seq(
+            reservedWord('#else'),
+            field('else_statements', $._sequence_of_statements),
+         )),
+         reservedWord('#end'),
+         reservedWord('if'),
+         ';',
       ),
       exit_statement: $ => seq(     // ARM 5.7
          reservedWord('exit'),
