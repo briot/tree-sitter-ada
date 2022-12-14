@@ -1054,8 +1054,9 @@ module.exports = grammar({
       _component_item: $ => choice(
          $.component_declaration,
          $._aspect_clause,
+         $.pragma_g,    // not in RM
       ),
-      component_declaration: $ => seq(
+      component_declaration: $ => seq(    // RM 3.8
          $._defining_identifier_list,
          ':',
          $.component_definition,
@@ -1842,7 +1843,7 @@ module.exports = grammar({
          ';',
          $.parameter_specification,
       ),
-      pragma_g: $ => seq(
+      pragma_g: $ => seq(    // RM 2.8
          reservedWord('pragma'),
          $.identifier,
          optional(seq(
