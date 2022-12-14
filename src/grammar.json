@@ -928,25 +928,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "("
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "expression"
-                },
-                {
-                  "type": "STRING",
-                  "value": ")"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_aggregate"
             },
             {
               "type": "SYMBOL",
-              "name": "_aggregate"
+              "name": "_parenthesized_expression"
             }
           ]
         }
@@ -8322,17 +8309,8 @@
     "_exception_handler_list": {
       "type": "REPEAT1",
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "exception_handler"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "pragma_g"
-          }
-        ]
+        "type": "SYMBOL",
+        "name": "exception_handler"
       }
     },
     "formal_part": {

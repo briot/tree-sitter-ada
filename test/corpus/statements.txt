@@ -542,3 +542,102 @@ end;
                     (expression
                       (term
                         (target_name)))))))))))))
+
+=======
+if-expressions
+=======
+
+procedure P is
+begin
+   S := new String'((if N /= "" then N else "12"));
+   S := new String'(if N /= "" then N else "12");
+end;
+
+-----
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (handled_sequence_of_statements
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (allocator
+                (qualified_expression
+                  (identifier)
+                  (tick)
+                  (expression
+                    (term
+                      (if_expression
+                        (expression
+                          (term
+                            (identifier))
+                          (relational_operator)
+                          (term
+                            (string_literal)))
+                        (expression
+                          (term
+                            (identifier)))
+                        (expression
+                          (term
+                            (string_literal)))))))))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (allocator
+                (qualified_expression
+                  (identifier)
+                  (tick)
+                  (if_expression
+                    (expression
+                      (term
+                        (identifier))
+                      (relational_operator)
+                      (term
+                        (string_literal)))
+                    (expression
+                      (term
+                        (identifier)))
+                    (expression
+                      (term
+                        (string_literal)))))))))))))
+
+=======
+Re-raise
+=======
+
+procedure P is
+begin
+   null;
+exception
+   when others =>
+      Proc;
+      pragma Assert (True);
+      raise;
+end;
+
+------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (handled_sequence_of_statements
+        (null_statement)
+        (exception_handler
+          (exception_choice_list
+            (exception_choice))
+          (procedure_call_statement
+            (identifier))
+          (pragma_g
+            (identifier)
+            (pragma_argument_association
+              (expression
+                (term
+                  (identifier)))))
+          (raise_statement))))))

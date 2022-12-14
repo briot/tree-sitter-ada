@@ -283,8 +283,14 @@ module.exports = grammar({
          field('subtype_name', $._name),
          $.tick,
          choice(
-            seq('(', $.expression, ')'),
             $._aggregate,
+
+            // In the RM grammar, this is a simple '(expression)', but
+            // conditional expression would require a second nested pair of
+            // parenthesis, whereas this is not mandatory anymore in the
+            // text of the RM.
+            //     seq('(', $.expression, ')'),
+            $._parenthesized_expression,
          ),
       ),
       compilation_unit: $ => choice(
@@ -1387,7 +1393,7 @@ module.exports = grammar({
          optional($.aspect_specification),
          ';',
       ),
-      exception_handler: $ => seq(
+      exception_handler: $ => seq(  // RM 11.2
          reservedWord('when'),
          optional(seq(
             $.choice_parameter_specification,
@@ -1397,10 +1403,6 @@ module.exports = grammar({
          '=>',
          $._sequence_of_statements,
       ),
-      _exception_handler_list: $ => repeat1(choice(
-         $.exception_handler,
-         $.pragma_g,
-      )),
       formal_part: $ => seq(    // ARM 6.1
          '(',
          $._parameter_specification_list,
@@ -1687,7 +1689,7 @@ module.exports = grammar({
          $._sequence_of_statements,
          optional(seq(
             reservedWord('exception'),
-            $._exception_handler_list,
+            repeat1($.exception_handler),
          )),
       ),
       loop_label: $ => seq(    // matches label_opt in ada-mode grammar

@@ -8886,11 +8886,23 @@
           "named": true
         },
         {
+          "type": "case_expression",
+          "named": true
+        },
+        {
+          "type": "declare_expression",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         },
         {
           "type": "extension_aggregate",
+          "named": true
+        },
+        {
+          "type": "if_expression",
           "named": true
         },
         {
@@ -8903,6 +8915,10 @@
         },
         {
           "type": "positional_array_aggregate",
+          "named": true
+        },
+        {
+          "type": "quantified_expression",
           "named": true
         },
         {
