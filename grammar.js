@@ -110,6 +110,7 @@ module.exports = grammar({
    ],
    inline: $ => [
       $._name_not_function_call,
+      $._name_for_component_choice,
    ],
 
    rules: {
@@ -150,6 +151,12 @@ module.exports = grammar({
          $._name_not_function_call,
          $.function_call,
       ),
+      _name_for_component_choice: $ => choice(
+         // Do not allow slice, function_call,... as opposed to what RM allows
+         $.identifier,
+         $.string_literal,
+      ),
+
       selected_component: $ => prec.left(seq(   // RM 4.1.3
          field('prefix', $._name),
          seq(
@@ -392,9 +399,22 @@ module.exports = grammar({
          field('subtype_mark', $._name_not_function_call),
          optional($._constraint),
       ),
-      _constraint: $ => choice(
+      discriminant_constraint: $ => seq(    // RM 3.7.1
+         '(',
+         comma_separated_list_of($.discriminant_association),
+         ')',
+      ),
+      discriminant_association: $ => seq(  // RM 3.7.1
+         optional(seq(
+            list_of('|', $._name_for_component_choice),
+            '=>',
+         )),
+         $.expression,
+      ),
+      _constraint: $ => choice(   // RM 3.2.2
          $._scalar_constraint,
          $.index_constraint,
+         $.discriminant_constraint,
       ),
       _scalar_constraint: $ => choice(
          $.range_constraint,
@@ -670,11 +690,7 @@ module.exports = grammar({
       ),
       component_choice_list: $ => choice(                 // RM 4.3.1
          reservedWord('others'),
-         list_of('|', choice(  // Do not allow slice, function_call,...
-            $.identifier,      // as opposed to what the ARM allows
-            $.selected_component,
-            $.string_literal,
-         )),
+         list_of('|', $._name_for_component_choice),
       ),
       _aggregate: $ => choice(                            // RM 4.3
          $.record_aggregate,
@@ -766,7 +782,7 @@ module.exports = grammar({
          reservedWord('not'),
          reservedWord('null'),
       ),
-      index_constraint: $ => seq(
+      index_constraint: $ => seq(    // RM 3.6.1
          '(',
          comma_separated_list_of($._discrete_range),
          ')',

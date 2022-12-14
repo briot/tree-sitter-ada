@@ -367,6 +367,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "general_access_modifier",
           "named": true
         },
@@ -621,6 +625,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -1313,6 +1321,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -1606,10 +1618,6 @@
           "named": true
         },
         {
-          "type": "selected_component",
-          "named": true
-        },
-        {
           "type": "string_literal",
           "named": true
         }
@@ -1822,6 +1830,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -2263,6 +2275,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "function_call",
           "named": true
         },
@@ -2420,6 +2436,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         },
@@ -2452,6 +2472,44 @@
       "types": [
         {
           "type": "discrete_choice",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "discriminant_association",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "discriminant_constraint",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "discriminant_association",
           "named": true
         }
       ]
@@ -2934,6 +2992,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -3029,6 +3091,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -3694,6 +3760,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -6324,6 +6394,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "index_constraint",
           "named": true
         },
@@ -6660,6 +6734,10 @@
           "named": true
         },
         {
+          "type": "discriminant_constraint",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -6798,6 +6876,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -7344,6 +7426,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -8300,6 +8386,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {
@@ -10524,6 +10614,10 @@
         },
         {
           "type": "digits_constraint",
+          "named": true
+        },
+        {
+          "type": "discriminant_constraint",
           "named": true
         },
         {

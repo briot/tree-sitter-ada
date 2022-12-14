@@ -507,3 +507,42 @@ end;
                     (primary_null))))))))
       (handled_sequence_of_statements
         (null_statement)))))
+
+========================
+Record with discr
+========================
+
+procedure Proc is
+   type Rec (Len : Natural) is null record;
+   R : Rec (0);
+begin
+   null;
+end;
+
+--------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (non_empty_declarative_part
+        (full_type_declaration
+          (identifier)
+          (known_discriminant_part
+            (discriminant_specification_list
+              (discriminant_specification
+                (identifier)
+                (identifier))))
+          (record_type_definition
+            (record_definition)))
+        (object_declaration
+          (identifier)
+          (identifier)
+          (discriminant_constraint
+            (discriminant_association
+              (expression
+                (term
+                  (numeric_literal)))))))
+      (handled_sequence_of_statements
+        (null_statement)))))

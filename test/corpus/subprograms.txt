@@ -580,3 +580,24 @@ package P is new Pack ("+" => "+", "-" => Imported."+");
                 (selected_component
                   (identifier)
                   (string_literal))))))))))
+
+================================================================================
+Function renaming
+================================================================================
+
+function F (S : String) return Boolean renames F2;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (subprogram_renaming_declaration
+      (function_specification
+        (identifier)
+        (formal_part
+          (parameter_specification
+            (identifier)
+            (identifier)))
+        (result_profile
+          (identifier)))
+      (identifier))))
