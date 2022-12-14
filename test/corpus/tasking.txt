@@ -233,3 +233,62 @@ end select;
             (identifier))))
       (select_alternative
         (terminate_alternative)))))
+
+================================================================================
+Task type with discriminant
+================================================================================
+
+package P is
+   task type T (A : Integer) is
+   end T;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (identifier)
+      (full_type_declaration
+        (task_type_declaration
+          (identifier)
+          (known_discriminant_part
+            (discriminant_specification_list
+              (discriminant_specification
+                (identifier)
+                (identifier))))
+          (task_definition
+            (identifier)))))))
+
+================================================================================
+Task type with aspect
+================================================================================
+
+package P is
+   task type T (A : Integer) with Priority => 1 is
+   end T;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_specification
+      (identifier)
+      (full_type_declaration
+        (task_type_declaration
+          (identifier)
+          (known_discriminant_part
+            (discriminant_specification_list
+              (discriminant_specification
+                (identifier)
+                (identifier))))
+          (aspect_specification
+            (aspect_mark_list
+              (aspect_association
+                (identifier)
+                (expression
+                  (term
+                    (numeric_literal))))))
+          (task_definition
+            (identifier)))))))

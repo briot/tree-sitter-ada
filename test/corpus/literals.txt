@@ -48,3 +48,20 @@ A : Integer := 12_14.12_122E+11_2;
       (expression
         (term
           (numeric_literal))))))
+
+=======================
+Based numerals
+=======================
+
+A : Integer := 16#FA01#E+02;
+
+-----
+
+(compilation
+  (compilation_unit
+    (object_declaration
+      (identifier)
+      (identifier)
+      (expression
+        (term
+          (numeric_literal))))))

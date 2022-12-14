@@ -126,7 +126,7 @@ module.exports = grammar({
       numeric_literal: $ => token(
          choice(
             /[0-9][0-9_]*(\.[0-9_]+)?([eE][+-]?[0-9_]+)?/,
-            /[0-9]+#[0-9a-fA-F._-]+#/
+            /[0-9]+#[0-9a-fA-F._-]+#([eE][+-]?[0-9_]+)?/,
          )
       ),
       relational_operator: $ => choice('=', '/=', '<', '<=', '>', '>='),
@@ -1765,7 +1765,7 @@ module.exports = grammar({
          )),
          ';',
       ),
-      task_type_declaration: $ => seq(
+      task_type_declaration: $ => seq(     // RM 9.1
          reservedWord('task'),
          reservedWord('type'),
          $.identifier,
@@ -1807,11 +1807,11 @@ module.exports = grammar({
          $.entry_declaration,
          $._aspect_clause,
       ),
-      task_definition: $ => seq(
-         repeat1($._task_item),
+      task_definition: $ => seq(   //  RM 9.1
+         repeat($._task_item),
          optional(seq(
             reservedWord('private'),
-            repeat1($._task_item),
+            repeat($._task_item),
          )),
          reservedWord('end'),
          field('endname', optional($.identifier)),

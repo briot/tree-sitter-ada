@@ -54,7 +54,7 @@
           },
           {
             "type": "PATTERN",
-            "value": "[0-9]+#[0-9a-fA-F._-]+#"
+            "value": "[0-9]+#[0-9a-fA-F._-]+#([eE][+-]?[0-9_]+)?"
           }
         ]
       }
@@ -10850,7 +10850,7 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
             "name": "_task_item"
@@ -10879,7 +10879,7 @@
                   "value": "private"
                 },
                 {
-                  "type": "REPEAT1",
+                  "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
                     "name": "_task_item"
