@@ -124,7 +124,7 @@ module.exports = grammar({
       character_literal: $ => token(/'.'/),
       numeric_literal: $ => token(
          choice(
-            /[0-9][0-9_]*(\.[0-9]+)?([eE][0-9_-]+)?/,
+            /[0-9][0-9_]*(\.[0-9_]+)?([eE][+-]?[0-9_]+)?/,
             /[0-9]+#[0-9a-fA-F._-]+#/
          )
       ),

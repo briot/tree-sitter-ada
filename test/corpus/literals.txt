@@ -4,7 +4,7 @@ String literals
 
 A : String := "12'34";
 
---------
+--------------------------------------------------------------------------------
 
 (compilation
   (compilation_unit
@@ -21,7 +21,7 @@ String literals with quotes
 
 A : String := "12""23";
 
---------
+--------------------------------------------------------------------------------
 
 (compilation
   (compilation_unit
@@ -32,3 +32,19 @@ A : String := "12""23";
         (term
           (string_literal))))))
 
+================================================================================
+Numeric literals with underscore
+================================================================================
+
+A : Integer := 12_14.12_122E+11_2;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (object_declaration
+      (identifier)
+      (identifier)
+      (expression
+        (term
+          (numeric_literal))))))
