@@ -2589,7 +2589,27 @@
       "required": true,
       "types": [
         {
+          "type": "case_expression",
+          "named": true
+        },
+        {
+          "type": "declare_expression",
+          "named": true
+        },
+        {
           "type": "discriminant_association",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "if_expression",
+          "named": true
+        },
+        {
+          "type": "quantified_expression",
           "named": true
         }
       ]

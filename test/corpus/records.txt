@@ -508,18 +508,19 @@ end;
       (handled_sequence_of_statements
         (null_statement)))))
 
-========================
+================================================================================
 Record with discr
-========================
+================================================================================
 
 procedure Proc is
    type Rec (Len : Natural) is null record;
    R : Rec (0);
+   R2 : Rec (if N > 0 then 1 else 0);
 begin
    null;
 end;
 
---------
+--------------------------------------------------------------------------------
 
 (compilation
   (compilation_unit
@@ -540,7 +541,23 @@ end;
           (identifier)
           (identifier)
           (discriminant_constraint
-            (discriminant_association
+            (expression
+              (term
+                (numeric_literal)))))
+        (object_declaration
+          (identifier)
+          (identifier)
+          (discriminant_constraint
+            (if_expression
+              (expression
+                (term
+                  (identifier))
+                (relational_operator)
+                (term
+                  (numeric_literal)))
+              (expression
+                (term
+                  (numeric_literal)))
               (expression
                 (term
                   (numeric_literal)))))))

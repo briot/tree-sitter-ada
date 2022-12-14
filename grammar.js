@@ -107,6 +107,7 @@ module.exports = grammar({
       [$.attribute_definition_clause, $._attribute_reference],
       [$.component_choice_list, $.discrete_choice],
       [$.component_choice_list, $.positional_array_aggregate],
+      [$.discriminant_association, $._parenthesized_expression],
    ],
    inline: $ => [
       $._name_not_function_call,
@@ -413,10 +414,16 @@ module.exports = grammar({
          field('subtype_mark', $._name_not_function_call),
          optional($._constraint),
       ),
-      discriminant_constraint: $ => seq(    // RM 3.7.1
-         '(',
-         comma_separated_list_of($.discriminant_association),
-         ')',
+      discriminant_constraint: $ => choice(    // RM 3.7.1
+         //  If we have a single positional discriminant, it can be an
+         //  if-expression without additional parenthesis  "A : R (if cond then
+         //  1 else 0)" but otherwise extra parenthesis are needed.
+         $._parenthesized_expression,   // not in ARM
+         seq(
+            '(',
+            comma_separated_list_of($.discriminant_association),
+            ')',
+         ),
       ),
       discriminant_association: $ => seq(  // RM 3.7.1
          optional(seq(
