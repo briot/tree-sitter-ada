@@ -2215,16 +2215,16 @@ module.exports = grammar({
          reservedWord('#if'),
          field('condition', $.expression),
          reservedWord('then'),
-         $.non_empty_declarative_part,
+         repeat($._declarative_item_pragma),
          repeat(seq(
             reservedWord('#elsif'),
             field('condition', $.expression),
             reservedWord('then'),
-            $.non_empty_declarative_part,
+            repeat($._declarative_item_pragma),
          )),
          optional(seq(
             reservedWord('#else'),
-            $.non_empty_declarative_part,
+            repeat($._declarative_item_pragma),
          )),
          reservedWord('#end'),
          reservedWord('if'),
@@ -2234,16 +2234,16 @@ module.exports = grammar({
          reservedWord('#if'),
          field('condition', $.expression),
          reservedWord('then'),
-         field('statements', $._sequence_of_statements),
+         repeat($._statement),  // can be empty
          repeat(seq(
             reservedWord('#elsif'),
             field('condition', $.expression),
             reservedWord('then'),
-            field('statements', $._sequence_of_statements),
+            repeat($._statement),  // can be empty
          )),
          optional(seq(
             reservedWord('#else'),
-            field('else_statements', $._sequence_of_statements),
+            repeat($._statement),  // can be empty
          )),
          reservedWord('#end'),
          reservedWord('if'),

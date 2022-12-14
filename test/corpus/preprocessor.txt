@@ -23,13 +23,12 @@ end;
             (term
               (factor_not
                 (identifier))))
-          (non_empty_declarative_part
-            (pragma_g
-              (identifier)
-              (pragma_argument_association
-                (expression
-                  (term
-                    (identifier))))))))
+          (pragma_g
+            (identifier)
+            (pragma_argument_association
+              (expression
+                (term
+                  (identifier)))))))
       (handled_sequence_of_statements
         (null_statement)))))
 
@@ -53,3 +52,32 @@ end;
         (expression
           (term
             (gnatprep_identifier)))))))
+
+================================================================================
+Preprocess empty (GNAT)
+================================================================================
+
+procedure P is
+   #if not CHECKING_MODE then
+      --  pragma Suppress (Access_Checks);
+   #end if;
+begin
+   null;
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (non_empty_declarative_part
+        (gnatprep_declarative_if_statement
+          (expression
+            (term
+              (factor_not
+                (identifier))))
+          (comment)))
+      (handled_sequence_of_statements
+        (null_statement)))))

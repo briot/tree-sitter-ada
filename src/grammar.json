@@ -13820,8 +13820,11 @@
           "value": "then"
         },
         {
-          "type": "SYMBOL",
-          "name": "non_empty_declarative_part"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_declarative_item_pragma"
+          }
         },
         {
           "type": "REPEAT",
@@ -13869,8 +13872,11 @@
                 "value": "then"
               },
               {
-                "type": "SYMBOL",
-                "name": "non_empty_declarative_part"
+                "type": "REPEAT",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_declarative_item_pragma"
+                }
               }
             ]
           }
@@ -13898,8 +13904,11 @@
                   "value": "#else"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "non_empty_declarative_part"
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_declarative_item_pragma"
+                  }
                 }
               ]
             },
@@ -13990,11 +13999,10 @@
           "value": "then"
         },
         {
-          "type": "FIELD",
-          "name": "statements",
+          "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_sequence_of_statements"
+            "name": "_statement"
           }
         },
         {
@@ -14043,11 +14051,10 @@
                 "value": "then"
               },
               {
-                "type": "FIELD",
-                "name": "statements",
+                "type": "REPEAT",
                 "content": {
                   "type": "SYMBOL",
-                  "name": "_sequence_of_statements"
+                  "name": "_statement"
                 }
               }
             ]
@@ -14076,11 +14083,10 @@
                   "value": "#else"
                 },
                 {
-                  "type": "FIELD",
-                  "name": "else_statements",
+                  "type": "REPEAT",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_sequence_of_statements"
+                    "name": "_statement"
                   }
                 }
               ]
