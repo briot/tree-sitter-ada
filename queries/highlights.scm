@@ -44,7 +44,7 @@
    "range"
    "synchronized"
    "tagged"
-] @StorageClass
+] @storageclass
 [
    "mod"
    "new"
@@ -52,7 +52,7 @@
    "record"
    "subtype"
    "type"
-] @type.definition
+] @keyword.type
 [
    "with"
    "use"
@@ -133,23 +133,23 @@
 (subprogram_declaration "is" @keyword.function "abstract"  @keyword.function)
 (aspect_specification "with" @keyword.function)
 
-(full_type_declaration "is" @type.definition)
-(subtype_declaration "is" @type.definition)
-(record_definition "end" @type.definition)
-(full_type_declaration (_ "access" @type.definition))
-(array_type_definition "array" @type.definition "of" @type.definition)
-(access_to_object_definition "access" @type.definition)
-(access_to_object_definition "access" @type.definition
+(full_type_declaration "is" @keyword.type)
+(subtype_declaration "is" @keyword.type)
+(record_definition "end" @keyword.type)
+(full_type_declaration (_ "access" @keyword.type))
+(array_type_definition "array" @keyword.type "of" @keyword.type)
+(access_to_object_definition "access" @keyword.type)
+(access_to_object_definition "access" @keyword.type
    [
-      (general_access_modifier "constant" @type.definition)
-      (general_access_modifier "all" @type.definition)
+      (general_access_modifier "constant" @keyword.type)
+      (general_access_modifier "all" @keyword.type)
    ]
 )
-(range_constraint "range" @type.definition)
-(signed_integer_type_definition "range" @type.definition)
-(index_subtype_definition "range" @type.definition)
-(private_type_declaration "is" @type.definition "private" @type.definition)
-(task_type_declaration "task" @type.definition "is" @type.definition)
+(range_constraint "range" @keyword.type)
+(signed_integer_type_definition "range" @keyword.type)
+(index_subtype_definition "range" @keyword.type)
+(private_type_declaration "is" @keyword.type "private" @keyword.type)
+(task_type_declaration "task" @keyword.type "is" @keyword.type)
 
 ;; Gray the body of expression functions
 (expression_function_declaration
