@@ -7,43 +7,43 @@
 [
    "abort"
    "abs"
+   "abstract"
    "accept"
+   "access"
    "all"
+   "array"
    "at"
    "begin"
    "declare"
    "delay"
-   "until"
+   "delta"
+   "digits"
    "do"
    "end"
    "entry"
    "exit"
    "generic"
+   "interface"
    "is"
+   "limited"
    "null"
+   "of"
    "others"
    "out"
    "pragma"
-   "renames"
-   "task"
-   "terminate"
-   "when"
-] @keyword
-[
-   "abstract"
-   "access"
-   "aliased"
-   "array"
-   "constant"
-   "delta"
-   "digits"
-   "interface"
-   "limited"
-   "of"
    "private"
    "range"
    "synchronized"
    "tagged"
+   "task"
+   "terminate"
+   "until"
+   "when"
+] @keyword
+[
+   "aliased"
+   "constant"
+   "renames"
 ] @storageclass
 [
    "mod"
@@ -149,6 +149,8 @@
 (signed_integer_type_definition "range" @keyword.type)
 (index_subtype_definition "range" @keyword.type)
 (private_type_declaration "is" @keyword.type "private" @keyword.type)
+(private_type_declaration "tagged" @keyword.type)
+(private_type_declaration "limited" @keyword.type)
 (task_type_declaration "task" @keyword.type "is" @keyword.type)
 
 ;; Gray the body of expression functions
