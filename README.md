@@ -126,3 +126,11 @@ Execute the following commands:
    npm run test
 ```
 
+## Documentation
+
+The grammar itself is fully described in the file grammar.js.
+When it processes it, TreeSitter generates src/grammar.json, which can be
+converted to a EBNF format via https://github.com/mingodad/plgh/blob/main/json2ebnf.js
+and rendered into a diagram on https://www.bottlecaps.de/rr/ui if you
+prefer graphical visualization (you can also copy-paste from issue #1 a
+pre-processed version of grammar.json).
