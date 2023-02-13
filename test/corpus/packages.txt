@@ -46,7 +46,7 @@ enD;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier))))
 
 ================================================================================
@@ -66,14 +66,14 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
-      (package_specification
+      (package_declaration
         (identifier)
         (identifier))
       (identifier)))
   (compilation_unit
-    (package_specification
+    (package_declaration
       (selected_component
         (identifier)
         (identifier))
@@ -142,7 +142,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (private_type_declaration
         (identifier))
@@ -175,7 +175,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (incomplete_type_declaration
         (identifier))

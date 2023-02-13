@@ -1157,7 +1157,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_package_declaration"
+          "name": "package_declaration"
         },
         {
           "type": "SYMBOL",
@@ -1177,12 +1177,12 @@
         }
       ]
     },
-    "_package_declaration": {
+    "package_declaration": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "package_specification"
+          "name": "_package_specification"
         },
         {
           "type": "STRING",
@@ -1190,7 +1190,7 @@
         }
       ]
     },
-    "package_specification": {
+    "_package_specification": {
       "type": "SEQ",
       "members": [
         {
@@ -8574,11 +8574,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "package_specification"
-        },
-        {
-          "type": "STRING",
-          "value": ";"
+          "name": "package_declaration"
         }
       ]
     },

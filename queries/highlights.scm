@@ -79,7 +79,7 @@
    "parallel"
    "reverse"
    "some"
-] @keyword.repeat
+] @repeat
 [
    "return"
 ] @keyword.return
@@ -100,15 +100,15 @@
 (string_literal)  @string
 (string_literal)  @spell       ;; spell-check strings
 (character_literal) @string
-(identifier)      @variable
 (numeric_literal) @number
 
 ;; Highlight the name of subprograms
 (procedure_specification name: (_) @function)
 (function_specification name: (_) @function)
-(package_specification name: (_) @function)
+(package_declaration name: (_) @function)
 (package_body name: (_) @function)
 (generic_instantiation name: (_) @function)
+(entry_declaration . (identifier) @function)
 
 ;; Some keywords should take different categories depending on the context
 (use_clause "use"  @include "type" @include)
@@ -148,6 +148,10 @@
 (range_constraint "range" @keyword.type)
 (signed_integer_type_definition "range" @keyword.type)
 (index_subtype_definition "range" @keyword.type)
+(record_type_definition "abstract" @keyword.type)
+(record_type_definition "tagged" @keyword.type)
+(record_type_definition "limited" @keyword.type)
+(record_type_definition (record_definition "null" @keyword.type))
 (private_type_declaration "is" @keyword.type "private" @keyword.type)
 (private_type_declaration "tagged" @keyword.type)
 (private_type_declaration "limited" @keyword.type)

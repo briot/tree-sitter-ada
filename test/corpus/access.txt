@@ -15,7 +15,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (full_type_declaration
         (identifier)

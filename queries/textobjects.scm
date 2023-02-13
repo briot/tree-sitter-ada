@@ -12,7 +12,8 @@
 (subprogram_body (handled_sequence_of_statements) @function.inner)
 (function_specification) @function.outer
 (procedure_specification) @function.outer
-(package_specification) @function.outer
+(package_declaration) @function.outer
+(generic_package_declaration) @function.outer
 (package_body) @function.outer
 (if_statement) @block.outer
 (if_statement statements: (_) @block.inner)

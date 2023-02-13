@@ -44,7 +44,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (object_declaration
         (identifier)

@@ -10,7 +10,7 @@ end P;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (full_type_declaration
         (identifier)
@@ -34,7 +34,7 @@ end P;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (full_type_declaration
         (identifier)
@@ -61,7 +61,7 @@ end P;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (full_type_declaration
         (identifier)
@@ -85,7 +85,7 @@ end P;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (full_type_declaration
         (identifier)
@@ -132,7 +132,7 @@ end P;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (full_type_declaration
         (identifier)
@@ -172,7 +172,7 @@ end P;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (subtype_declaration
         (identifier)

@@ -57,7 +57,7 @@ end;
               (result_profile
                 (identifier)))
             (subprogram_default))))
-      (package_specification
+      (package_declaration
         (identifier)
         (pragma_g
           (identifier)

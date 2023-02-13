@@ -330,17 +330,17 @@ module.exports = grammar({
          $.subprogram_declaration,
          $.expression_function_declaration,
          $.null_procedure_declaration,
-         $._package_declaration,
+         $.package_declaration,
          $._renaming_declaration,
          $.exception_declaration,
          $._generic_declaration,
          $.generic_instantiation,
       ),
-      _package_declaration: $ => seq(
-         $.package_specification,
+      package_declaration: $ => seq(
+         $._package_specification,
          ';',
       ),
-      package_specification: $ => seq(
+      _package_specification: $ => seq(
          reservedWord('package'),
          field('name', $._name),
          optional($.aspect_specification),
@@ -1453,8 +1453,7 @@ module.exports = grammar({
       ),
       generic_package_declaration: $ => seq(
          $.generic_formal_part,
-         $.package_specification,
-         ';',
+         $.package_declaration,
       ),
       generic_instantiation: $ => seq(     // ARM 12.3
          choice(

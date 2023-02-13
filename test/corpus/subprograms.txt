@@ -12,7 +12,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (null_procedure_declaration
         (procedure_specification
@@ -42,7 +42,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (subprogram_declaration
         (procedure_specification
@@ -73,7 +73,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (subprogram_declaration
         (procedure_specification
@@ -100,7 +100,7 @@ end;
 
 (compilation
   (compilation_unit
-    (package_specification
+    (package_declaration
       (identifier)
       (subprogram_declaration
         (function_specification
