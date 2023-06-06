@@ -5,6 +5,7 @@
    (package_declaration)
    (generic_package_declaration)
    (package_body)
+   (subprogram_declaration)
    (subprogram_body)
    (block_statement)
    (if_statement)
