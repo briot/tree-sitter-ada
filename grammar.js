@@ -46,9 +46,6 @@ module.exports = grammar({
       // specified in at_clause.
       [$.at_clause, $._name],
 
-      // 'case' '(' identifier . '=>' ...
-      [$._name, $.component_choice_list],
-
       // 'case' '(' _name '(' _discrete_range ')' . '=>'
       [$.slice, $._discrete_range],
 
@@ -77,9 +74,6 @@ module.exports = grammar({
       // could be either a record_extension_part or an aspect_specification.
       [$.derived_type_definition],
 
-      // 'for' name 'use' '(' 'for' identifier 'in' name . 'use'
-      [$.iterator_specification, $._subtype_indication],
-
       // 'type' identifier known_discriminant_part . 'is' ...
       // This could be either a _discriminant_part or known_discriminant_part,
       // the latter in case we are declaring a private type. We can't make the
@@ -95,7 +89,6 @@ module.exports = grammar({
       // (via formal_complete_type_declaration)
       [$.formal_derived_type_definition],
 
-      [$.function_call, $.procedure_call_statement],
       [$._name, $._aspect_mark],
       [$._name, $.package_body_stub],
       [$._name, $._subtype_indication],
