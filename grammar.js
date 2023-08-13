@@ -3,13 +3,9 @@
  */
 const reservedWord = word =>
    // word ||  // when debugging conflict error msgs
-   alias(reserved(caseInsensitive(word)), word)
+   alias(reserved(word), word)
    ;
-const reserved = regex => token(prec(2, new RegExp(regex)));
-const caseInsensitive = word =>
-  word.split('')
-    .map(letter => `[${letter}${letter.toUpperCase()}]`)
-    .join('');
+const reserved = regex => token(prec(2, new RegExp(regex, 'i')));
 
 /**
  * A list of rules
