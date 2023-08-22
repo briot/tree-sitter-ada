@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-     "tree-sitter": "0.20.0",
-     "tree-sitter-cli": "0.20.7"
+     "tree-sitter": "0.20.5",
+     "tree-sitter-cli": "0.20.8"
   },
   "scripts": {
      "generate": "tree-sitter generate",
      "test": "tree-sitter generate && time tree-sitter test",
      "testquick": "time tree-sitter test",
      "update-test": "tree-sitter test --update",
-     "install": "cp queries/*scm ~/.local/share/nvim/site/pack/packer/start/nvim-treesitter/queries/ada; echo 'RUN :TSInstall ada' in nvim"
+     "local_install": "cp queries/*scm ~/.local/share/nvim/site/pack/packer/start/nvim-treesitter/queries/ada; echo 'RUN :TSInstall ada' in nvim"
   },
   "main": "bindings/node",
   "tree-sitter": [
