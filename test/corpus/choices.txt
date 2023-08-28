@@ -1,0 +1,45 @@
+================================================================================
+Discrete Choices and characters
+================================================================================
+
+declare
+   type Color_Type is (Red, 'W');
+   Color : Color_Type := 'W';
+begin
+   case Color is
+      when Red => null;
+      when 'W' => null;
+   end case;
+end;
+
+--------------------------------------------------------------------------------
+(compilation
+  (compilation_unit
+    (block_statement
+      (non_empty_declarative_part
+        (full_type_declaration
+          (identifier)
+          (enumeration_type_definition
+            (identifier)
+            (character_literal)))
+        (object_declaration
+          (identifier)
+          (identifier)
+          (expression
+            (term
+              (character_literal)))))
+      (handled_sequence_of_statements
+        (case_statement
+          (expression
+            (term
+              (identifier)))
+          (case_statement_alternative
+            (discrete_choice_list
+              (discrete_choice
+                (identifier)))
+            (null_statement))
+          (case_statement_alternative
+            (discrete_choice_list
+              (discrete_choice
+                (character_literal)))
+            (null_statement)))))))
