@@ -3618,8 +3618,12 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_name_for_component_choice"
+              "type": "PREC_DYNAMIC",
+              "value": 1,
+              "content": {
+                "type": "SYMBOL",
+                "name": "_name_for_component_choice"
+              }
             },
             {
               "type": "REPEAT",
@@ -3631,8 +3635,12 @@
                     "value": "|"
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "_name_for_component_choice"
+                    "type": "PREC_DYNAMIC",
+                    "value": 1,
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_name_for_component_choice"
+                    }
                   }
                 ]
               }
@@ -6491,8 +6499,12 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "expression"
+          "type": "PREC_DYNAMIC",
+          "value": 1,
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
         },
         {
           "type": "SYMBOL",

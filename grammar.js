@@ -704,7 +704,7 @@ module.exports = grammar({
       ),
       component_choice_list: $ => choice(                 // RM 4.3.1
          reservedWord('others'),
-         list_of('|', $._name_for_component_choice),
+         list_of('|', prec.dynamic(1, $._name_for_component_choice)),
       ),
       _aggregate: $ => choice(                            // RM 4.3
          $.record_aggregate,
@@ -1148,7 +1148,7 @@ module.exports = grammar({
       ),
       discrete_choice_list: $ => list_of('|', $.discrete_choice),
       discrete_choice: $ => choice(    // ARM 3.8.1
-         $.expression,
+         prec.dynamic(1, $.expression),
          $._subtype_indication,
          $.range_g,
          reservedWord('others'),

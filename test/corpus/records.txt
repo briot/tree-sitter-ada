@@ -394,12 +394,16 @@ end record;
                 (variant
                   (discrete_choice_list
                     (discrete_choice
-                      (identifier)))
+                      (expression
+                        (term
+                          (identifier)))))
                   (component_list))
                 (variant
                   (discrete_choice_list
                     (discrete_choice
-                      (identifier)))
+                      (expression
+                        (term
+                          (identifier)))))
                   (component_list
                     (component_declaration
                       (identifier)
@@ -452,7 +456,9 @@ variants 2
                 (variant
                   (discrete_choice_list
                     (discrete_choice
-                      (identifier)))
+                      (expression
+                        (term
+                          (identifier)))))
                   (component_list
                     (component_declaration
                       (identifier)
