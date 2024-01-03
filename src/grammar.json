@@ -3336,11 +3336,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "if_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "case_expression"
+          "name": "_conditional_expression"
         },
         {
           "type": "SYMBOL",
