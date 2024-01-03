@@ -685,6 +685,7 @@ module.exports = grammar({
       _declare_item: $ => choice(
          $.object_declaration,
          $.object_renaming_declaration,
+         $.pragma_g,
       ),
       quantifier: $ => choice(
          reservedWord('all'),

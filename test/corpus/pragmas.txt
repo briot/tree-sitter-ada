@@ -88,3 +88,44 @@ end;
                   (term
                     (numeric_literal)))))
             (identifier)))))))
+
+================================================================================
+pragma in declare expression
+================================================================================
+
+package P is
+   X : Integer :=
+      (declare
+         Y : constant Integer := 123;
+         pragma Assert (True);
+       begin
+         Y);
+end;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_declaration
+      (identifier)
+      (object_declaration
+        (identifier)
+        (identifier)
+        (expression
+          (term
+            (declare_expression
+              (object_declaration
+                (identifier)
+                (identifier)
+                (expression
+                  (term
+                    (numeric_literal))))
+              (pragma_g
+                (identifier)
+                (pragma_argument_association
+                  (expression
+                    (term
+                      (identifier)))))
+              (expression
+                (term
+                  (identifier))))))))))

@@ -2095,6 +2095,10 @@
         {
           "type": "object_renaming_declaration",
           "named": true
+        },
+        {
+          "type": "pragma_g",
+          "named": true
         }
       ]
     }
