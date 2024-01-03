@@ -3903,6 +3903,10 @@
           "named": true
         },
         {
+          "type": "aspect_specification",
+          "named": true
+        },
+        {
           "type": "delta_constraint",
           "named": true
         },

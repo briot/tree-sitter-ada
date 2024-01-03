@@ -2294,6 +2294,7 @@ module.exports = grammar({
          optional(reservedWord('constant')),
          $._return_subtype_indication,
          optional($._assign_value),
+         optional($.aspect_specification),
       ),
       _return_subtype_indication: $ => choice(
          $._subtype_indication,

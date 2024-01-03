@@ -157,6 +157,11 @@ begin
    return A : My_Rec := (F => 1) do
       null;
    end return;
+   return Y : Integer
+     with Address => X'Address
+   do
+      null;
+   end return;
 end F;
 
 --------------------------------------------------------------------------------
@@ -186,6 +191,22 @@ end F;
                     (expression
                       (term
                         (numeric_literal))))))))
+          (handled_sequence_of_statements
+            (null_statement)))
+        (extended_return_statement
+          (extended_return_object_declaration
+            (identifier)
+            (identifier)
+            (aspect_specification
+              (aspect_mark_list
+                (aspect_association
+                  (identifier)
+                  (expression
+                    (term
+                      (identifier)
+                      (tick)
+                      (attribute_designator
+                        (identifier))))))))
           (handled_sequence_of_statements
             (null_statement))))
       (identifier))))
