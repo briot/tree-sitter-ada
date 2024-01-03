@@ -1362,7 +1362,12 @@ module.exports = grammar({
       entry_body: $ => seq(
          reservedWord('entry'),
          $.identifier,
-         optional($.non_empty_entry_body_formal_part),
+         optional(seq(
+            '(',
+            $.entry_index_specification,
+            ')',
+         )),
+         field('parameter_profile', optional($.formal_part)),
          optional($.aspect_specification),
          $.entry_barrier,
          reservedWord('is'),
@@ -1792,14 +1797,6 @@ module.exports = grammar({
             $.task_definition,
          )),
          ';',
-      ),
-      non_empty_entry_body_formal_part: $ => seq(
-         optional(seq(
-            '(',
-            $.entry_index_specification,
-            ')',
-         )),
-         field('parameter_profile', $.formal_part),
       ),
       entry_declaration: $ => seq(
          optional($.overriding_indicator),
