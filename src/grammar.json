@@ -8248,6 +8248,18 @@
         {
           "type": "SYMBOL",
           "name": "_discrete_subtype_definition"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "aspect_specification"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
