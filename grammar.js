@@ -662,8 +662,7 @@ module.exports = grammar({
          $.case_expression,
       ),
       _conditional_quantified_declare_expression: $ => choice(
-         $.if_expression,
-         $.case_expression,
+         $._conditional_expression,
          $.quantified_expression,
          $.declare_expression,
       ),
