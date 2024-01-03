@@ -541,9 +541,7 @@ module.exports = grammar({
          '(',
          choice(
             $.expression,
-            $._conditional_expression,
-            $.quantified_expression,
-            $.declare_expression,
+            $._conditional_quantified_declare_expression,
          ),
          ')',
       ),
@@ -636,9 +634,7 @@ module.exports = grammar({
             // instantiations, which get the actual parameter part via $._name
             // and its $.function_call
             // ????
-            $._conditional_expression,
-            $.quantified_expression,
-            $.declare_expression,
+            $._conditional_quantified_declare_expression,
          ),
          ')',
       ),

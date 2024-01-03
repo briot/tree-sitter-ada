@@ -2669,15 +2669,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_conditional_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "quantified_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "declare_expression"
+              "name": "_conditional_quantified_declare_expression"
             }
           ]
         },
@@ -3261,15 +3253,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_conditional_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "quantified_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "declare_expression"
+              "name": "_conditional_quantified_declare_expression"
             }
           ]
         },
