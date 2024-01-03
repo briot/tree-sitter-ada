@@ -8866,6 +8866,10 @@
           "named": true
         },
         {
+          "type": "declare_expression",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
