@@ -903,6 +903,7 @@ module.exports = grammar({
             $.access_definition,
          ),
          optional($._assign_value),
+         optional($.aspect_specification),
       ),
       _type_definition: $ => choice(
          $.enumeration_type_definition,

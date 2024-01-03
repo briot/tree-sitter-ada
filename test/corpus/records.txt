@@ -109,7 +109,7 @@ Discriminated
 ================================================================================
 
 package P is
-   type R (A : Integer; B : Integer) is record
+   type R (A : Integer; B : Integer with Import) is record
       F : Float;
    end record;
 end;
@@ -129,7 +129,11 @@ end;
               (identifier))
             (discriminant_specification
               (identifier)
-              (identifier))))
+              (identifier)
+              (aspect_specification
+                (aspect_mark_list
+                  (aspect_association
+                    (identifier)))))))
         (record_type_definition
           (record_definition
             (component_list

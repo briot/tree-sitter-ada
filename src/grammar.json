@@ -4923,6 +4923,18 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "aspect_specification"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
