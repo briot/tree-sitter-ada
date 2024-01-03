@@ -2883,7 +2883,18 @@
   {
     "type": "entry_body",
     "named": true,
-    "fields": {},
+    "fields": {
+      "parameter_profile": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "formal_part",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -2897,6 +2908,10 @@
           "named": true
         },
         {
+          "type": "entry_index_specification",
+          "named": true
+        },
+        {
           "type": "handled_sequence_of_statements",
           "named": true
         },
@@ -2906,10 +2921,6 @@
         },
         {
           "type": "non_empty_declarative_part",
-          "named": true
-        },
-        {
-          "type": "non_empty_entry_body_formal_part",
           "named": true
         }
       ]
@@ -7786,32 +7797,6 @@
         },
         {
           "type": "use_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "non_empty_entry_body_formal_part",
-    "named": true,
-    "fields": {
-      "parameter_profile": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "formal_part",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "entry_index_specification",
           "named": true
         }
       ]
