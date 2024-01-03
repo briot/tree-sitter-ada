@@ -3456,6 +3456,10 @@
         {
           "type": "SYMBOL",
           "name": "object_renaming_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pragma_g"
         }
       ]
     },
