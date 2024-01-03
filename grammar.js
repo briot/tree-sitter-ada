@@ -1383,6 +1383,7 @@ module.exports = grammar({
          $.identifier,
          reservedWord('in'),
          $._discrete_subtype_definition,
+         optional($.aspect_specification),
       ),
       enumeration_aggregate: $ => $._array_aggregate,  //  ??? inline  ARM 13.4
       enumeration_representation_clause: $ => seq(    // ARM 13.4
