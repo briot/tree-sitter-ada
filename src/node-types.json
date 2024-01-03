@@ -2691,6 +2691,10 @@
           "named": true
         },
         {
+          "type": "aspect_specification",
+          "named": true
+        },
+        {
           "type": "expression",
           "named": true
         },
