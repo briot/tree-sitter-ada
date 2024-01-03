@@ -129,3 +129,38 @@ end;
               (expression
                 (term
                   (identifier))))))))))
+
+================================================================================
+declare expression in pragma
+================================================================================
+
+package P is
+   pragma Assert
+     (declare
+        E : constant Integer := 123;
+      begin
+        E = 123);
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (package_declaration
+      (identifier)
+      (pragma_g
+        (identifier)
+        (declare_expression
+          (object_declaration
+            (identifier)
+            (identifier)
+            (expression
+              (term
+                (numeric_literal))))
+          (expression
+            (term
+              (identifier))
+            (relational_operator)
+            (term
+              (numeric_literal)))))
+      (identifier))))

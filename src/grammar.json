@@ -3331,7 +3331,7 @@
         }
       ]
     },
-    "_conditional_quantified_expression": {
+    "_conditional_quantified_declare_expression": {
       "type": "CHOICE",
       "members": [
         {
@@ -3345,6 +3345,10 @@
         {
           "type": "SYMBOL",
           "name": "quantified_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "declare_expression"
         }
       ]
     },
@@ -11287,7 +11291,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "_conditional_quantified_expression"
+                      "name": "_conditional_quantified_declare_expression"
                     }
                   ]
                 },

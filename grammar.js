@@ -661,10 +661,11 @@ module.exports = grammar({
          $.if_expression,
          $.case_expression,
       ),
-      _conditional_quantified_expression: $ => choice(
+      _conditional_quantified_declare_expression: $ => choice(
          $.if_expression,
          $.case_expression,
          $.quantified_expression,
+         $.declare_expression,
       ),
       quantified_expression: $ => seq(          // ARM 4.5.8
          reservedWord('for'),
@@ -1862,7 +1863,7 @@ module.exports = grammar({
             '(',
             choice(
                comma_separated_list_of($.pragma_argument_association),
-               $._conditional_quantified_expression,
+               $._conditional_quantified_declare_expression,
             ),
             ')',
          )),
