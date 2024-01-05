@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-     "tree-sitter": "0.20.5",
+     "tree-sitter": "0.20.6",
      "tree-sitter-cli": "0.20.8"
   },
   "scripts": {
