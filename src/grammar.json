@@ -303,6 +303,23 @@
         }
       ]
     },
+    "_subtype_mark": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "selected_component"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_attribute_reference"
+        }
+      ]
+    },
     "selected_component": {
       "type": "PREC_LEFT",
       "value": 0,
@@ -2772,8 +2789,17 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_subtype_indication_paren_constraint"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_subtype_indication_paren_constraint"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "qualified_expression"
+            }
+          ]
         }
       ]
     },
@@ -2793,15 +2819,32 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_name"
+          "type": "FIELD",
+          "name": "subtype_mark",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_subtype_mark"
+          }
         },
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "index_constraint"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PREC_DYNAMIC",
+                  "value": 1,
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "discriminant_constraint"
+                  }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "index_constraint"
+                }
+              ]
             },
             {
               "type": "BLANK"
@@ -15361,6 +15404,10 @@
       "_name",
       "_subtype_indication",
       "component_choice_list"
+    ],
+    [
+      "_name",
+      "_subtype_mark"
     ],
     [
       "attribute_definition_clause",

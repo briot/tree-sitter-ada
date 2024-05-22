@@ -97,6 +97,7 @@ module.exports = grammar({
       [$._name, $.package_body_stub],
       [$._name, $._subtype_indication],
       [$._name, $._subtype_indication, $.component_choice_list],
+      [$._name, $._subtype_mark],
       [$.attribute_definition_clause, $._attribute_reference],
       [$.component_choice_list, $.discrete_choice],
       [$.component_choice_list, $.positional_array_aggregate],
@@ -158,6 +159,10 @@ module.exports = grammar({
          $.identifier,
          $.string_literal,
       ),
+      _subtype_mark: $ => choice(
+         $.identifier,
+         $.selected_component,
+         $._attribute_reference),
 
       selected_component: $ => prec.left(seq(   // RM 4.1.3
          field('prefix', $._name),
@@ -565,12 +570,22 @@ module.exports = grammar({
       allocator: $ => seq(
          reservedWord('new'),
          optional($.subpool_specification),
-         $._subtype_indication_paren_constraint,
+         choice(
+            $._subtype_indication_paren_constraint,
+            $.qualified_expression)
       ),
       _subtype_indication_paren_constraint: $ => seq(
+         // Ada 2012+ doesn't allow null exclusion here -- RM 4.8(2)
+         // Before Ada 2012, null exclusion raises Constraint_Error (AI05-0104)
          optional($.null_exclusion),
-         $._name,
-         optional($.index_constraint),
+         field('subtype_mark', $._subtype_mark),
+         optional(choice(
+            // Choose discriminant_constraint over index_constraint,
+            // when syntax ambiguity arises, to avoid potential
+            // highlighting of names in a discriminant_constraint as
+            // subtype names.
+            prec.dynamic(1, $.discriminant_constraint),
+            $.index_constraint)),
       ),
       subpool_specification: $ => seq(
          '(',
