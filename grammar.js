@@ -1371,7 +1371,7 @@ module.exports = grammar({
             $._discrete_subtype_definition,
             ')',
          )),
-         optional($.formal_part),
+         field('parameter_profile', optional($.formal_part)),
          optional($.aspect_specification),
          ';',
       ),
@@ -1813,19 +1813,6 @@ module.exports = grammar({
             )),
             $.task_definition,
          )),
-         ';',
-      ),
-      entry_declaration: $ => seq(
-         optional($.overriding_indicator),
-         reservedWord('entry'),
-         $.identifier,
-         optional(seq(
-            '(',
-            $._discrete_subtype_definition,
-            ')',
-         )),
-         field('parameter_profile', optional($.formal_part)),
-         optional($.aspect_specification),
          ';',
       ),
       _task_item: $ => choice(

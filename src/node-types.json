@@ -3056,6 +3056,16 @@
     "type": "entry_declaration",
     "named": true,
     "fields": {
+      "entry_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "parameter_profile": {
         "multiple": false,
         "required": false,
@@ -3127,7 +3137,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "aspect_specification",
@@ -3143,10 +3153,6 @@
         },
         {
           "type": "discriminant_constraint",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
