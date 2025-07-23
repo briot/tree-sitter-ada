@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "ada",
   "word": "identifier",
   "rules": {
@@ -11,11 +12,13 @@
     },
     "identifier": {
       "type": "PATTERN",
-      "value": "[a-zA-Z\\u{80}-\\u{10FFFF}][0-9a-zA-Z_\\u{80}-\\u{10FFFF}]*"
+      "value": "[a-zA-Z\\u{80}-\\u{10FFFF}][0-9a-zA-Z_\\u{80}-\\u{10FFFF}]*",
+      "flags": "u"
     },
     "gnatprep_identifier": {
       "type": "PATTERN",
-      "value": "\\$[a-zA-Z\\u{80}-\\u{10FFFF}][0-9a-zA-Z_\\u{80}-\\u{10FFFF}]*"
+      "value": "\\$[a-zA-Z\\u{80}-\\u{10FFFF}][0-9a-zA-Z_\\u{80}-\\u{10FFFF}]*",
+      "flags": "u"
     },
     "comment": {
       "type": "TOKEN",
@@ -15436,6 +15439,6 @@
     "_name_not_function_call",
     "_name_for_component_choice"
   ],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }
-
