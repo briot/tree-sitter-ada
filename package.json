@@ -1,28 +1,53 @@
 {
   "name": "tree-sitter-ada",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-     "tree-sitter": "0.20.6",
-     "tree-sitter-cli": "0.20.8"
-  },
-  "scripts": {
-     "generate": "tree-sitter generate",
-     "test": "tree-sitter generate && time tree-sitter test",
-     "testquick": "time tree-sitter test",
-     "update-test": "tree-sitter test --update",
-     "local_install": "cp queries/*scm ~/.local/share/nvim/site/pack/packer/start/nvim-treesitter/queries/ada; echo 'RUN :TSInstall ada' in nvim"
+  "description": "Ada grammar for tree-sitter",
+  "repository": "https://github.com/briot/tree-sitter-ada",
+  "license": "MIT",
+  "author": {
+    "name": "Emmanuel Briot"
   },
   "main": "bindings/node",
-  "tree-sitter": [
-     {
-       "scope": "source.ada",
-       "file-types": [
-         "adb", "ads"
-       ],
-       "highlights": [
-         "queries/highlights.scm"
-       ]
-     }
-   ]
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "ada"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.3.1",
+    "node-gyp-build": "^4.8.4"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.1",
+    "tree-sitter-cli": "^0.24.7"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.22.4"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "generate": "tree-sitter generate",
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "tree-sitter generate && time tree-sitter test && node --test bindings/node/*_test.js",
+    "testquick": "time tree-sitter test",
+    "update-test": "tree-sitter test --update"
+  }
 }
