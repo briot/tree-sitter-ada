@@ -233,7 +233,7 @@ module.exports = grammar({
             $._discrete_subtype_definition,
          ),
       ),
-      iterated_element_association: $ => seq(         // RM 4.3.5
+      iterated_element_association: $ => seq(        // RM 4.3.5
          reservedWord('for'),
          choice(
             $.loop_parameter_specification,
