@@ -5,7 +5,7 @@ on:
     # Maintainers: Jobs are not yet triggered. Create registry accounts,
     # provide secrets through GitHub Settings -> Actions -> Secrets, then add
     # ["*"] to tags.
-    tags: []
+    tags: ["*"]
 
 permissions:
   contents: write
