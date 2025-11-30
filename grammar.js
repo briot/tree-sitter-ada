@@ -94,6 +94,7 @@ module.exports = grammar({
       [$.formal_derived_type_definition],
 
       [$._name, $._aspect_mark],
+      [$._name, $.iterator_procedure_call],
       [$._name, $.package_body_stub],
       [$._name, $._subtype_indication],
       [$._name, $._subtype_indication, $.component_choice_list],
@@ -2035,7 +2036,7 @@ module.exports = grammar({
          $.loop_statement,
          $.block_statement,
          $.extended_return_statement,
-//         $.parallel_block_statement,
+         $.parallel_block_statement,
          $.accept_statement,
          $._select_statement,
       ),
@@ -2183,6 +2184,24 @@ module.exports = grammar({
          $.handled_sequence_of_statements,
          reservedWord('end'),
          optional($.identifier),
+         ';',
+      ),
+      parallel_block_statement: $ => seq( // ARM 5.6.1
+         reservedWord('parallel'),
+         optional(seq(
+            '(',
+            $.chunk_specification,
+            ')',
+         )),
+         optional($.aspect_specification),
+         reservedWord('do'),
+         field('statements', $._sequence_of_statements),
+         repeat1(seq(
+            reservedWord('and'),
+            field('statements', $._sequence_of_statements),
+         )),
+         reservedWord('end'),
+         reservedWord('do'),
          ';',
       ),
       if_statement: $ => seq(
@@ -2337,36 +2356,53 @@ module.exports = grammar({
          optional($.identifier),
          ';',
       ),
+      procedural_iterator: $ => seq( // ARM 5.5.3
+         $.iterator_parameter_specification,
+         reservedWord('of'),
+         $.iterator_procedure_call,
+         optional($.iterator_filter),
+      ),
+      iterator_parameter_specification: $ => choice(
+         $.formal_part,
+         seq(
+            '(',
+            comma_separated_list_of($.identifier),
+            ')',
+         ),
+      ),
+      iterator_procedure_call: $ => seq(
+         field('name', $._name_not_function_call),
+         optional($.actual_parameter_part),
+      ),
       iteration_scheme: $ => choice(
          seq(
             reservedWord('while'),
             field('condition', $.expression),
          ),
          seq(
+            optional(seq(
+               field('is_parallel', reservedWord('parallel')),
+               optional($.aspect_specification),
+            )),
+            reservedWord('for'),
+            $.procedural_iterator,
+         ),
+         seq(
+            optional(seq(
+               field('is_parallel', reservedWord('parallel')),
+               optional(seq(
+                  '(',
+                  $.chunk_specification,
+                  ')',
+               )),
+               optional($.aspect_specification),
+            )),
             reservedWord('for'),
             choice(
                $.loop_parameter_specification,
                $.iterator_specification,
             ),
          ),
-//         seq(
-//            optional(reservedWord('parallel')),
-//            reservedWord('for'),
-//            $.procedural_iterator,
-//         ),
-//         seq(
-//            reservedWord('parallel'),
-//            optional(seq(
-//               '(',
-//               $.chunk_specification,
-//               ')',
-//            )),
-//            reservedWord('for'),
-//            choice(
-//               $.loop_parameter_specification,
-//               $.iterator_specification,
-//            ),
-//         ),
       ),
       assignment_statement: $ => seq(    // ARM 5.2
          field('variable_name', $._name),
