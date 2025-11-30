@@ -10,6 +10,9 @@
         "ads",
         "adb"
       ],
+      "highlights": [
+        "queries/highlights.scm"
+      ],
       "injection-regex": "^ada$",
       "class-name": "TreeSitterAda"
     }

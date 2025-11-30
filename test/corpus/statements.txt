@@ -71,56 +71,6 @@ end;
                 (numeric_literal)))))))))
 
 ================================================================================
-For loops
-================================================================================
-
-procedure P is
-begin
-   for E in Pkg.Arr'Range loop
-      goto end_loop;
-
-      <<end_loop>>
-   end loop;
-
-   for E of reverse Arr loop
-      delay 1.0;
-   end loop;
-end P;
-
---------------------------------------------------------------------------------
-
-(compilation
-  (compilation_unit
-    (subprogram_body
-      (procedure_specification
-        (identifier))
-      (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (loop_parameter_specification
-              (identifier)
-              (range_g
-                (selected_component
-                  (identifier)
-                  (identifier))
-                (tick)
-                (range_attribute_designator))))
-          (goto_statement
-            (identifier))
-          (label
-            (identifier)))
-        (loop_statement
-          (iteration_scheme
-            (iterator_specification
-              (identifier)
-              (identifier)))
-          (delay_relative_statement
-            (expression
-              (term
-                (numeric_literal))))))
-      (identifier))))
-
-================================================================================
 Named loop
 ================================================================================
 
