@@ -1,0 +1,57 @@
+==========
+As keyword
+==========
+
+procedure Main is
+begin
+   null;
+finally
+   null;
+end Main;
+
+----------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (handled_sequence_of_statements
+        (null_statement)
+        (finally_part
+          (null_statement)))
+      (identifier))))
+
+=============
+As Identifier
+=============
+
+procedure Main is
+   Finally : Integer := 3;
+begin
+   Finally := Finally * Finally;
+end Main;
+
+-------------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (non_empty_declarative_part
+        (object_declaration
+          (identifier)
+          (identifier)
+          (expression
+            (term
+              (numeric_literal)))))
+      (handled_sequence_of_statements
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (identifier)))))
+      (identifier))))

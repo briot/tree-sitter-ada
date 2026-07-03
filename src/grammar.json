@@ -10165,6 +10165,31 @@
         }
       ]
     },
+    "finally_part": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[fF][iI][nN][aA][lL][lL][yY]"
+              }
+            }
+          },
+          "named": false,
+          "value": "finally"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sequence_of_statements"
+        }
+      ]
+    },
     "global_aspect_definition": {
       "type": "CHOICE",
       "members": [
@@ -10306,6 +10331,22 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "FIELD",
+          "name": "finally_part",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "finally_part"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
         }
       ]
     },

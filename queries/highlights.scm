@@ -22,6 +22,7 @@
    "end"
    "entry"
    "exit"
+   "finally"
    "generic"
    "interface"
    "is"

@@ -1694,6 +1694,10 @@ module.exports = grammar({
 //            comma_separated_list_of($.dispatching_operation_specifier),
 //         ),
       ),
+      finally_part: $ => seq(
+         reservedWord('finally'),
+         $._sequence_of_statements,
+      ),
       global_aspect_definition: $ => choice(     // ARM 6.1.2
          seq(
             $.global_mode,
@@ -1723,6 +1727,7 @@ module.exports = grammar({
             reservedWord('exception'),
             repeat1($.exception_handler),
          )),
+         field('finally_part', optional($.finally_part)),
       ),
       loop_label: $ => seq(    // matches label_opt in ada-mode grammar
          field('statement_identifier', $.identifier),
