@@ -96,4 +96,9 @@ clean:
 test:
 	$(TS) test
 
+python-build:
+	./.venv/bin/python3 -m build
+python-publish:
+	./.venv/bin/twine upload dist/*
+
 .PHONY: all install uninstall clean test
