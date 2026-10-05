@@ -135,7 +135,7 @@ module.exports = grammar({
       relational_operator: $ => choice('=', '/=', '<', '<=', '>', '>='),
       binary_adding_operator: $ => choice('+', '-', '&'),
       unary_adding_operator: $ => choice('+', '-'),
-      multiplying_operator: $ => choice('*', '/', 'mod', 'rem'),
+      multiplying_operator: $ => choice('*', '/', reservedWord('mod'), reservedWord('rem')),
       tick: $ => '\'',   // But is not the start of a character_literal
 
       _name_not_function_call: $ => choice(           // RM 4.1
