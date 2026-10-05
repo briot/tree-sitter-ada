@@ -570,3 +570,81 @@ end;
                 (term
                   (identifier)))))
           (raise_statement))))))
+
+================================================================================
+Case-insensitive mod and rem
+================================================================================
+
+procedure P is
+   A : Integer := 7;
+   B : Integer;
+begin
+   B := A mod 3;
+   B := A MOD 3;
+   B := A MoD 3;
+   B := A rem 3;
+   B := A REM 3;
+   B := A ReM 3;
+end P;
+
+--------------------------------------------------------------------------------
+
+(compilation
+  (compilation_unit
+    (subprogram_body
+      (procedure_specification
+        (identifier))
+      (non_empty_declarative_part
+        (object_declaration
+          (identifier)
+          (identifier)
+          (expression
+            (term
+              (numeric_literal))))
+        (object_declaration
+          (identifier)
+          (identifier)))
+      (handled_sequence_of_statements
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (numeric_literal))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (numeric_literal))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (numeric_literal))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (numeric_literal))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (numeric_literal))))
+        (assignment_statement
+          (identifier)
+          (expression
+            (term
+              (identifier)
+              (multiplying_operator)
+              (numeric_literal)))))
+      (identifier))))

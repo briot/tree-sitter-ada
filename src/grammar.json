@@ -226,11 +226,35 @@
           "value": "/"
         },
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][oO][dD]"
+              }
+            }
+          },
+          "named": false,
           "value": "mod"
         },
         {
-          "type": "STRING",
+          "type": "ALIAS",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "PATTERN",
+                "value": "[rR][eE][mM]"
+              }
+            }
+          },
+          "named": false,
           "value": "rem"
         }
       ]
