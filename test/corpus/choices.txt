@@ -13,6 +13,7 @@ begin
 end;
 
 --------------------------------------------------------------------------------
+
 (compilation
   (compilation_unit
     (block_statement
@@ -29,24 +30,27 @@ end;
             (term
               (character_literal)))))
       (handled_sequence_of_statements
-        (case_statement
-          (expression
-            (term
-              (identifier)))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (expression
-                  (term
-                    (identifier)))))
-            (null_statement))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (expression
-                  (term
-                    (character_literal)))))
-            (null_statement)))))))
+        (sequence_of_statements
+          (case_statement
+            (expression
+              (term
+                (identifier)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (expression
+                    (term
+                      (identifier)))))
+              (sequence_of_statements
+                (null_statement)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (expression
+                    (term
+                      (character_literal)))))
+              (sequence_of_statements
+                (null_statement)))))))))
 
 ================================================================================
 Discrete Choice subtype indication
@@ -63,6 +67,7 @@ begin
 end;
 
 --------------------------------------------------------------------------------
+
 (compilation
   (compilation_unit
     (block_statement
@@ -74,39 +79,43 @@ end;
             (term
               (numeric_literal)))))
       (handled_sequence_of_statements
-        (case_statement
-          (expression
-            (term
-              name: (identifier)))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                subtype_mark: (identifier)
-                (range_constraint
-                  (range_g
-                    (term
-                      (numeric_literal))
-                    (term
-                      name: (identifier)
-                      name: (tick)
-                      name: (attribute_designator
-                        (identifier)))))))
-            (null_statement))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                subtype_mark: (identifier)
-                (range_constraint
-                  (range_g
-                    (term
-                      (numeric_literal))
-                    (term
-                      (numeric_literal))))))
-            (null_statement))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice))
-            (null_statement)))))))
+        (sequence_of_statements
+          (case_statement
+            (expression
+              (term
+                name: (identifier)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  subtype_mark: (identifier)
+                  (range_constraint
+                    (range_g
+                      (term
+                        (numeric_literal))
+                      (term
+                        name: (identifier)
+                        name: (tick)
+                        name: (attribute_designator
+                          (identifier)))))))
+              (sequence_of_statements
+                (null_statement)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  subtype_mark: (identifier)
+                  (range_constraint
+                    (range_g
+                      (term
+                        (numeric_literal))
+                      (term
+                        (numeric_literal))))))
+              (sequence_of_statements
+                (null_statement)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice))
+              (sequence_of_statements
+                (null_statement)))))))))
 
 ================================================================================
 Discrete Choice range
@@ -123,6 +132,7 @@ begin
 end;
 
 --------------------------------------------------------------------------------
+
 (compilation
   (compilation_unit
     (block_statement
@@ -134,29 +144,33 @@ end;
             (term
               name: (character_literal)))))
       (handled_sequence_of_statements
-        (case_statement
-          (expression
-            (term
-              name: (identifier)))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (range_g
-                  (term
-                    name: (character_literal))
-                  (term
-                    name: (character_literal)))))
-            (null_statement))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (range_g
-                  (term
-                    name: (character_literal))
-                  (term
-                    name: (character_literal)))))
-            (null_statement))
+        (sequence_of_statements
+          (case_statement
+            (expression
+              (term
+                name: (identifier)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (range_g
+                    (term
+                      name: (character_literal))
+                    (term
+                      name: (character_literal)))))
+              (sequence_of_statements
+                (null_statement)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (range_g
+                    (term
+                      name: (character_literal))
+                    (term
+                      name: (character_literal)))))
+              (sequence_of_statements
+                (null_statement)))
             (case_statement_alternative
               (discrete_choice_list
                 (discrete_choice))
-            (null_statement)))))))
+              (sequence_of_statements
+                (null_statement)))))))))

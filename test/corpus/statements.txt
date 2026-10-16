@@ -56,19 +56,21 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (expression
-              (term
-                (identifier))))
-          (exit_statement)
-          (exit_statement
-            (expression
-              (term
-                (identifier))
-              (relational_operator)
-              (term
-                (numeric_literal)))))))))
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (expression
+                (term
+                  (identifier))))
+            (sequence_of_statements
+              (exit_statement)
+              (exit_statement
+                (expression
+                  (term
+                    (identifier))
+                  (relational_operator)
+                  (term
+                    (numeric_literal)))))))))))
 
 ================================================================================
 Named loop
@@ -90,12 +92,14 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (loop_label
-            (identifier))
-          (exit_statement
-            (identifier))
-          (identifier))))))
+        (sequence_of_statements
+          (loop_statement
+            (loop_label
+              (identifier))
+            (sequence_of_statements
+              (exit_statement
+                (identifier)))
+            (identifier)))))))
 
 ================================================================================
 Return
@@ -124,41 +128,44 @@ end F;
         (result_profile
           (identifier)))
       (handled_sequence_of_statements
-        (simple_return_statement
-          (expression
-            (term
-              (identifier))))
-        (extended_return_statement
-          (extended_return_object_declaration
-            (identifier)
-            (identifier)
+        (sequence_of_statements
+          (simple_return_statement
             (expression
               (term
-                (record_aggregate
-                  (record_component_association_list
-                    (component_choice_list
-                      (identifier))
+                (identifier))))
+          (extended_return_statement
+            (extended_return_object_declaration
+              (identifier)
+              (identifier)
+              (expression
+                (term
+                  (record_aggregate
+                    (record_component_association_list
+                      (component_choice_list
+                        (identifier))
+                      (expression
+                        (term
+                          (numeric_literal))))))))
+            (handled_sequence_of_statements
+              (sequence_of_statements
+                (null_statement))))
+          (extended_return_statement
+            (extended_return_object_declaration
+              (identifier)
+              (identifier)
+              (aspect_specification
+                (aspect_mark_list
+                  (aspect_association
+                    (identifier)
                     (expression
                       (term
-                        (numeric_literal))))))))
-          (handled_sequence_of_statements
-            (null_statement)))
-        (extended_return_statement
-          (extended_return_object_declaration
-            (identifier)
-            (identifier)
-            (aspect_specification
-              (aspect_mark_list
-                (aspect_association
-                  (identifier)
-                  (expression
-                    (term
-                      (identifier)
-                      (tick)
-                      (attribute_designator
-                        (identifier))))))))
-          (handled_sequence_of_statements
-            (null_statement))))
+                        (identifier)
+                        (tick)
+                        (attribute_designator
+                          (identifier))))))))
+            (handled_sequence_of_statements
+              (sequence_of_statements
+                (null_statement))))))
       (identifier))))
 
 ================================================================================
@@ -182,17 +189,18 @@ end P;
             (identifier)
             (identifier))))
       (handled_sequence_of_statements
-        (procedure_call_statement
-          (identifier)
-          (actual_parameter_part
-            (parameter_association
-              (expression
-                (term
-                  (numeric_literal))))
-            (parameter_association
-              (expression
-                (term
-                  (identifier)))))))
+        (sequence_of_statements
+          (procedure_call_statement
+            (identifier)
+            (actual_parameter_part
+              (parameter_association
+                (expression
+                  (term
+                    (numeric_literal))))
+              (parameter_association
+                (expression
+                  (term
+                    (identifier))))))))
       (identifier))))
 
 ================================================================================
@@ -213,13 +221,14 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (raise_statement
-          (identifier))
-        (raise_statement
-          (identifier)
-          (expression
-            (term
-              (string_literal))))))))
+        (sequence_of_statements
+          (raise_statement
+            (identifier))
+          (raise_statement
+            (identifier)
+            (expression
+              (term
+                (string_literal)))))))))
 
 ================================================================================
 Function calls
@@ -243,19 +252,20 @@ end;
           (identifier)
           (identifier)))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (function_call
-                (identifier)
-                (actual_parameter_part
-                  (parameter_association
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal)))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (function_call
+                  (identifier)
+                  (actual_parameter_part
+                    (parameter_association
+                      (component_choice_list
+                        (identifier))
+                      (expression
+                        (term
+                          (numeric_literal))))))))))))))
 
 ================================================================================
 if statement
@@ -291,43 +301,51 @@ end P;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (if_statement
-          (expression
-            (term
-              (identifier))
-            (relational_operator)
-            (term
-              (numeric_literal))
-            (term
-              (identifier))
-            (relational_operator)
-            (term
-              (numeric_literal)))
-          (block_statement
-            (handled_sequence_of_statements
-              (null_statement)))
-          (elsif_statement_item
+        (sequence_of_statements
+          (if_statement
             (expression
               (term
                 (identifier))
               (relational_operator)
               (term
+                (numeric_literal))
+              (term
+                (identifier))
+              (relational_operator)
+              (term
                 (numeric_literal)))
-            (block_statement
-              (non_empty_declarative_part
-                (object_declaration
-                  (identifier)
-                  (identifier)))
-              (handled_sequence_of_statements
-                (null_statement)
-                (exception_handler
-                  (exception_choice_list
-                    (exception_choice
+            (sequence_of_statements
+              (block_statement
+                (handled_sequence_of_statements
+                  (sequence_of_statements
+                    (null_statement)))))
+            (elsif_statement_item
+              (expression
+                (term
+                  (identifier))
+                (relational_operator)
+                (term
+                  (numeric_literal)))
+              (sequence_of_statements
+                (block_statement
+                  (non_empty_declarative_part
+                    (object_declaration
+                      (identifier)
                       (identifier)))
-                  (null_statement)))))
-          (block_statement
-            (handled_sequence_of_statements
-              (null_statement)))))
+                  (handled_sequence_of_statements
+                    (sequence_of_statements
+                      (null_statement))
+                    (exception_handler
+                      (exception_choice_list
+                        (exception_choice
+                          (identifier)))
+                      (sequence_of_statements
+                        (null_statement)))))))
+            (sequence_of_statements
+              (block_statement
+                (handled_sequence_of_statements
+                  (sequence_of_statements
+                    (null_statement))))))))
       (identifier))))
 
 ================================================================================
@@ -352,38 +370,41 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (case_statement
-          (expression
-            (term
-              (function_call
-                (identifier)
-                (actual_parameter_part
-                  (parameter_association
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal))))))))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (range_g
-                  (term
-                    (character_literal))
-                  (term
-                    (character_literal)))))
-            (null_statement))
-          (case_statement_alternative
-            (discrete_choice_list
-              (discrete_choice
-                (expression
-                  (term
-                    (character_literal))))
-              (discrete_choice
-                (expression
-                  (term
-                    (character_literal)))))
-            (null_statement)))))))
+        (sequence_of_statements
+          (case_statement
+            (expression
+              (term
+                (function_call
+                  (identifier)
+                  (actual_parameter_part
+                    (parameter_association
+                      (component_choice_list
+                        (identifier))
+                      (expression
+                        (term
+                          (numeric_literal))))))))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (range_g
+                    (term
+                      (character_literal))
+                    (term
+                      (character_literal)))))
+              (sequence_of_statements
+                (null_statement)))
+            (case_statement_alternative
+              (discrete_choice_list
+                (discrete_choice
+                  (expression
+                    (term
+                      (character_literal))))
+                (discrete_choice
+                  (expression
+                    (term
+                      (character_literal)))))
+              (sequence_of_statements
+                (null_statement)))))))))
 
 ================================================================================
 Filtered for loops
@@ -404,19 +425,21 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (iterator_specification
-              (identifier)
-              (identifier)
-              (iterator_filter
-                (expression
-                  (term
-                    (identifier))
-                  (relational_operator)
-                  (term
-                    (numeric_literal))))))
-          (null_statement))))))
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (iterator_specification
+                (identifier)
+                (identifier)
+                (iterator_filter
+                  (expression
+                    (term
+                      (identifier))
+                    (relational_operator)
+                    (term
+                      (numeric_literal))))))
+            (sequence_of_statements
+              (null_statement))))))))
 
 ================================================================================
 Assignment target name
@@ -436,41 +459,42 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (function_call
-            (selected_component
-              (identifier)
-              (identifier))
-            (actual_parameter_part
-              (parameter_association
-                (expression
-                  (term
-                    (identifier))))))
-          (expression
-            (term
-              (target_name))
-            (binary_adding_operator)
-            (term
-              (numeric_literal))))
-        (assignment_statement
-          (function_call
-            (selected_component
-              (identifier)
-              (identifier))
-            (actual_parameter_part
-              (parameter_association
-                (expression
-                  (term
-                    (identifier))))))
-          (expression
-            (term
-              (function_call
+        (sequence_of_statements
+          (assignment_statement
+            (function_call
+              (selected_component
                 (identifier)
-                (actual_parameter_part
-                  (parameter_association
-                    (expression
-                      (term
-                        (target_name)))))))))))))
+                (identifier))
+              (actual_parameter_part
+                (parameter_association
+                  (expression
+                    (term
+                      (identifier))))))
+            (expression
+              (term
+                (target_name))
+              (binary_adding_operator)
+              (term
+                (numeric_literal))))
+          (assignment_statement
+            (function_call
+              (selected_component
+                (identifier)
+                (identifier))
+              (actual_parameter_part
+                (parameter_association
+                  (expression
+                    (term
+                      (identifier))))))
+            (expression
+              (term
+                (function_call
+                  (identifier)
+                  (actual_parameter_part
+                    (parameter_association
+                      (expression
+                        (term
+                          (target_name))))))))))))))
 
 ================================================================================
 if-expressions
@@ -490,50 +514,51 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  (identifier)
-                  (tick)
-                  (expression
-                    (term
-                      (if_expression
-                        (expression
-                          (term
-                            (identifier))
-                          (relational_operator)
-                          (term
-                            (string_literal)))
-                        (expression
-                          (term
-                            (identifier)))
-                        (expression
-                          (term
-                            (string_literal)))))))))))
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  (identifier)
-                  (tick)
-                  (if_expression
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    (identifier)
+                    (tick)
                     (expression
                       (term
-                        (identifier))
-                      (relational_operator)
-                      (term
-                        (string_literal)))
-                    (expression
-                      (term
-                        (identifier)))
-                    (expression
-                      (term
-                        (string_literal)))))))))))))
+                        (if_expression
+                          (expression
+                            (term
+                              (identifier))
+                            (relational_operator)
+                            (term
+                              (string_literal)))
+                          (expression
+                            (term
+                              (identifier)))
+                          (expression
+                            (term
+                              (string_literal)))))))))))
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    (identifier)
+                    (tick)
+                    (if_expression
+                      (expression
+                        (term
+                          (identifier))
+                        (relational_operator)
+                        (term
+                          (string_literal)))
+                      (expression
+                        (term
+                          (identifier)))
+                      (expression
+                        (term
+                          (string_literal))))))))))))))
 
 ================================================================================
 Re-raise
@@ -557,19 +582,21 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (null_statement)
+        (sequence_of_statements
+          (null_statement))
         (exception_handler
           (exception_choice_list
             (exception_choice))
-          (procedure_call_statement
-            (identifier))
-          (pragma_g
-            (identifier)
-            (pragma_argument_association
-              (expression
-                (term
-                  (identifier)))))
-          (raise_statement))))))
+          (sequence_of_statements
+            (procedure_call_statement
+              (identifier))
+            (pragma_g
+              (identifier)
+              (pragma_argument_association
+                (expression
+                  (term
+                    (identifier)))))
+            (raise_statement)))))))
 
 ================================================================================
 Case-insensitive mod and rem
@@ -605,46 +632,47 @@ end P;
           (identifier)
           (identifier)))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (numeric_literal))))
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (numeric_literal))))
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (numeric_literal))))
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (numeric_literal))))
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (numeric_literal))))
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (numeric_literal)))))
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (numeric_literal))))
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (numeric_literal))))
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (numeric_literal))))
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (numeric_literal))))
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (numeric_literal))))
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (numeric_literal))))))
       (identifier))))

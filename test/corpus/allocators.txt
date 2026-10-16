@@ -15,12 +15,13 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (identifier)))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (identifier))))))))))
 
 ================================================================================
 subtype indication (subtype mark: selected component)
@@ -39,14 +40,15 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (selected_component
-                  prefix: (identifier)
-                  selector_name: (identifier))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (selected_component
+                    prefix: (identifier)
+                    selector_name: (identifier)))))))))))
 
 ================================================================================
 subtype indication (subtype mark: attribute reference)
@@ -65,15 +67,16 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (identifier)
-                subtype_mark: (tick)
-                subtype_mark: (attribute_designator
-                  (identifier))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (identifier)
+                  subtype_mark: (tick)
+                  subtype_mark: (attribute_designator
+                    (identifier)))))))))))
 
 ================================================================================
 subtype indication (null exclusion)
@@ -92,13 +95,14 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (null_exclusion)
-                subtype_mark: (identifier)))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (null_exclusion)
+                  subtype_mark: (identifier))))))))))
 
 ================================================================================
 subtype indication (constraint: index constraint)
@@ -117,23 +121,24 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (identifier)
-                (index_constraint
-                  (range_g
-                    (term
-                      (numeric_literal))
-                    (term
-                      (numeric_literal)))
-                  (range_g
-                    (term
-                      (numeric_literal))
-                    (term
-                      (numeric_literal))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (identifier)
+                  (index_constraint
+                    (range_g
+                      (term
+                        (numeric_literal))
+                      (term
+                        (numeric_literal)))
+                    (range_g
+                      (term
+                        (numeric_literal))
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 subtype indication (constraint: discriminant constraint - numeric literal)
@@ -152,16 +157,17 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (identifier)
-                (discriminant_constraint
-                  (expression
-                    (term
-                      (numeric_literal))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (identifier)
+                  (discriminant_constraint
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 subtype indication (constraint: discriminant constraint - discriminant association)
@@ -180,18 +186,19 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (identifier)
-                (discriminant_constraint
-                  (discriminant_association
-                    (identifier)
-                    (expression
-                      (term
-                        (numeric_literal)))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (identifier)
+                  (discriminant_constraint
+                    (discriminant_association
+                      (identifier)
+                      (expression
+                        (term
+                          (numeric_literal))))))))))))))
 
 ================================================================================
 subtype indication (constraint: discriminant constraint - identifier)
@@ -210,16 +217,17 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                subtype_mark: (identifier)
-                (discriminant_constraint
-                  (expression
-                    (term
-                      name: (identifier))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  subtype_mark: (identifier)
+                  (discriminant_constraint
+                    (expression
+                      (term
+                        name: (identifier)))))))))))))
 
 ================================================================================
 qualified expression (aggregate: positional array aggregate)
@@ -238,24 +246,25 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  subtype_name: (identifier)
-                  (tick)
-                  (positional_array_aggregate
-                    (expression
-                      (term
-                        (numeric_literal)))
-                    (expression
-                      (term
-                        (numeric_literal)))
-                    (expression
-                      (term
-                        (numeric_literal)))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    (tick)
+                    (positional_array_aggregate
+                      (expression
+                        (term
+                          (numeric_literal)))
+                      (expression
+                        (term
+                          (numeric_literal)))
+                      (expression
+                        (term
+                          (numeric_literal))))))))))))))
 
 ================================================================================
 qualified expression (aggregate: record aggregate)
@@ -274,21 +283,22 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  subtype_name: (identifier)
-                  (tick)
-                (record_aggregate
-                  (record_component_association_list
-                    (component_choice_list
-                      (identifier))
-                    (expression
-                      (term
-                        (numeric_literal))))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    (tick)
+                    (record_aggregate
+                      (record_component_association_list
+                        (component_choice_list
+                          (identifier))
+                        (expression
+                          (term
+                            (numeric_literal)))))))))))))))
 
 ================================================================================
 qualified expression (aggregate: named array aggregate)
@@ -307,37 +317,38 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  subtype_name: (identifier)
-                  (tick)
-                  (named_array_aggregate
-                    (array_component_association
-                      (discrete_choice_list
-                        (discrete_choice
-                          (range_g
-                            (term
-                              (numeric_literal))
-                            (term
-                              (numeric_literal)))))
-                      (expression
-                        (term
-                          (named_array_aggregate
-                            (array_component_association
-                              (discrete_choice_list
-                                (discrete_choice
-                                  (range_g
-                                    (term
-                                      (numeric_literal))
-                                    (term
-                                      (numeric_literal)))))
-                              (expression
-                                (term
-                                  (numeric_literal))))))))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    (tick)
+                    (named_array_aggregate
+                      (array_component_association
+                        (discrete_choice_list
+                          (discrete_choice
+                            (range_g
+                              (term
+                                (numeric_literal))
+                              (term
+                                (numeric_literal)))))
+                        (expression
+                          (term
+                            (named_array_aggregate
+                              (array_component_association
+                                (discrete_choice_list
+                                  (discrete_choice
+                                    (range_g
+                                      (term
+                                        (numeric_literal))
+                                      (term
+                                        (numeric_literal)))))
+                                (expression
+                                  (term
+                                    (numeric_literal)))))))))))))))))))
 
 ================================================================================
 qualified expression (expression: numeric literal)
@@ -356,17 +367,18 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  subtype_name: (identifier)
-                  (tick)
-                  (expression
-                    (term
-                      (numeric_literal))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    (tick)
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 qualified expression (expression: identifier)
@@ -385,17 +397,18 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  subtype_name: (identifier)
-                  (tick)
-                  (expression
-                    (term
-                      name: (identifier))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    (tick)
+                    (expression
+                      (term
+                        name: (identifier)))))))))))))
 
 ================================================================================
 qualified expression (subtype mark: attribute reference)
@@ -414,20 +427,21 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (qualified_expression
-                  subtype_name: (identifier)
-                  subtype_name: (tick)
-                  subtype_name: (attribute_designator
-                    (identifier))
-                  (tick)
-                  (expression
-                    (term
-                      (numeric_literal))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    subtype_name: (tick)
+                    subtype_name: (attribute_designator
+                      (identifier))
+                    (tick)
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 subpool specification
@@ -447,28 +461,29 @@ end;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (subpool_specification
-                  subpool_handle_name: (selected_component
-                    prefix: (identifier)
-                    selector_name: (identifier)))
-                subtype_mark: (identifier)))))
-        (assignment_statement
-          variable_name: (identifier)
-          (expression
-            (term
-              (allocator
-                (subpool_specification
-                  subpool_handle_name: (selected_component
-                    prefix: (identifier)
-                    selector_name: (identifier)))
-                (qualified_expression
-                  subtype_name: (identifier)
-                  (tick)
-                  (expression
-                    (term
-                      (numeric_literal))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (subpool_specification
+                    subpool_handle_name: (selected_component
+                      prefix: (identifier)
+                      selector_name: (identifier)))
+                  subtype_mark: (identifier)))))
+          (assignment_statement
+            variable_name: (identifier)
+            (expression
+              (term
+                (allocator
+                  (subpool_specification
+                    subpool_handle_name: (selected_component
+                      prefix: (identifier)
+                      selector_name: (identifier)))
+                  (qualified_expression
+                    subtype_name: (identifier)
+                    (tick)
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))

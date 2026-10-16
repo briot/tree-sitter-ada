@@ -19,25 +19,22 @@ end P;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (loop_parameter_specification
-              (identifier)
-              (range_g
-                prefix:
-                  (selected_component
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (loop_parameter_specification
+                (identifier)
+                (range_g
+                  prefix: (selected_component
                     prefix: (identifier)
                     selector_name: (identifier))
-                range_attribute_reference:
-                  (tick)
-                range_attribute_reference:
-                  (range_attribute_designator))))
-          statements:
-            (goto_statement
-              label_name: (identifier))
-          statements:
-            (label
-              statement_identifier: (identifier))))
+                  range_attribute_reference: (tick)
+                  range_attribute_reference: (range_attribute_designator))))
+            statements: (sequence_of_statements
+              (goto_statement
+                label_name: (identifier))
+              (label
+                statement_identifier: (identifier))))))
       endname: (identifier))))
 
 ================================================================================
@@ -59,16 +56,17 @@ end P;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (iterator_specification
-              (identifier)
-              iterator_name: (identifier)))
-          statements:
-            (delay_relative_statement
-              (expression
-                (term
-                  (numeric_literal))))))
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (iterator_specification
+                (identifier)
+                iterator_name: (identifier)))
+            statements: (sequence_of_statements
+              (delay_relative_statement
+                (expression
+                  (term
+                    (numeric_literal))))))))
       endname: (identifier))))
 
 ================================================================================
@@ -94,55 +92,53 @@ end P;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (procedural_iterator
-              (iterator_parameter_specification
-                (formal_part
-                  (parameter_specification
-                    (identifier)
-                    subtype_mark: (identifier))))
-              (iterator_procedure_call
-                name:
-                  (selected_component
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (procedural_iterator
+                (iterator_parameter_specification
+                  (formal_part
+                    (parameter_specification
+                      (identifier)
+                      subtype_mark: (identifier))))
+                (iterator_procedure_call
+                  name: (selected_component
                     prefix: (identifier)
                     selector_name: (identifier)))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier)))))))
-        (loop_statement
-          (iteration_scheme
-            (procedural_iterator
-              (iterator_parameter_specification
-                (identifier)
-                (identifier))
-              (iterator_procedure_call
-                name:
-                  (selected_component
-                    prefix:
-                      (selected_component
-                        prefix: (identifier)
-                        selector_name: (identifier))
-                    selector_name: (identifier))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
                 (actual_parameter_part
-                  (parameter_association)))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier))))
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier))))))))
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))
+          (loop_statement
+            (iteration_scheme
+              (procedural_iterator
+                (iterator_parameter_specification
+                  (identifier)
+                  (identifier))
+                (iterator_procedure_call
+                  name: (selected_component
+                    prefix: (selected_component
+                      prefix: (identifier)
+                      selector_name: (identifier))
+                    selector_name: (identifier))
+                  (actual_parameter_part
+                    (parameter_association)))))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))))
       endname: (identifier))))
 
 ================================================================================
@@ -175,105 +171,91 @@ end P;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (loop_parameter_specification
-              (identifier)
-              (range_g
-                prefix:
-                  (selected_component
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (loop_parameter_specification
+                (identifier)
+                (range_g
+                  prefix: (selected_component
                     prefix: (identifier)
                     selector_name: (identifier))
-                range_attribute_reference:
-                  (tick)
-                range_attribute_reference:
-                  (range_attribute_designator))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name:
-                        (function_call
-                          name:
-                            (selected_component
-                              prefix: (identifier)
-                              selector_name: (identifier))
-                          (actual_parameter_part
-                            (parameter_association
-                              (expression
-                                (term
-                                  name: (identifier))))))))))))
-        (loop_statement
-          (iteration_scheme
-            (chunk_specification
-              (term
-                (numeric_literal)))
-            (loop_parameter_specification
-              (identifier)
-              (range_g
-                prefix:
-                  (selected_component
-                    prefix: (identifier)
-                    selector_name: (identifier))
-                range_attribute_reference:
-                  (tick)
-                range_attribute_reference:
-                  (range_attribute_designator))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name:
-                        (function_call
-                          name:
-                            (selected_component
-                              prefix: (identifier)
-                              selector_name: (identifier))
-                          (actual_parameter_part
-                            (parameter_association
-                              (expression
-                                (term
-                                  name: (identifier))))))))))))
-        (loop_statement
-          (iteration_scheme
-            (chunk_specification
-              (identifier)
-              subtype_mark: (identifier))
-            (loop_parameter_specification
-              (identifier)
-              (range_g
-                prefix:
-                  (selected_component
-                    prefix: (identifier)
-                    selector_name: (identifier))
-                range_attribute_reference:
-                  (tick)
-                range_attribute_reference:
-                  (range_attribute_designator))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name:
-                        (function_call
-                          name:
-                            (selected_component
-                              prefix: (identifier)
-                              selector_name: (identifier))
+                  range_attribute_reference: (tick)
+                  range_attribute_reference: (range_attribute_designator))))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (function_call
+                          name: (selected_component
+                            prefix: (identifier)
+                            selector_name: (identifier))
                           (actual_parameter_part
                             (parameter_association
                               (expression
                                 (term
                                   name: (identifier)))))))))))))
+          (loop_statement
+            (iteration_scheme
+              (chunk_specification
+                (term
+                  (numeric_literal)))
+              (loop_parameter_specification
+                (identifier)
+                (range_g
+                  prefix: (selected_component
+                    prefix: (identifier)
+                    selector_name: (identifier))
+                  range_attribute_reference: (tick)
+                  range_attribute_reference: (range_attribute_designator))))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (function_call
+                          name: (selected_component
+                            prefix: (identifier)
+                            selector_name: (identifier))
+                          (actual_parameter_part
+                            (parameter_association
+                              (expression
+                                (term
+                                  name: (identifier)))))))))))))
+          (loop_statement
+            (iteration_scheme
+              (chunk_specification
+                (identifier)
+                subtype_mark: (identifier))
+              (loop_parameter_specification
+                (identifier)
+                (range_g
+                  prefix: (selected_component
+                    prefix: (identifier)
+                    selector_name: (identifier))
+                  range_attribute_reference: (tick)
+                  range_attribute_reference: (range_attribute_designator))))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (function_call
+                          name: (selected_component
+                            prefix: (identifier)
+                            selector_name: (identifier))
+                          (actual_parameter_part
+                            (parameter_association
+                              (expression
+                                (term
+                                  name: (identifier)))))))))))))))
       endname: (identifier))))
 
 ================================================================================
@@ -306,51 +288,52 @@ end P;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (iterator_specification
-              (identifier)
-              iterator_name: (identifier)))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier)))))))
-        (loop_statement
-          (iteration_scheme
-            (chunk_specification
-              (term
-                (numeric_literal)))
-            (iterator_specification
-              (identifier)
-              iterator_name: (identifier)))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier)))))))
-        (loop_statement
-          (iteration_scheme
-            (chunk_specification
-              (identifier)
-              subtype_mark: (identifier))
-            (iterator_specification
-              (identifier)
-              iterator_name: (identifier)))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier))))))))
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (iterator_specification
+                (identifier)
+                iterator_name: (identifier)))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))
+          (loop_statement
+            (iteration_scheme
+              (chunk_specification
+                (term
+                  (numeric_literal)))
+              (iterator_specification
+                (identifier)
+                iterator_name: (identifier)))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))
+          (loop_statement
+            (iteration_scheme
+              (chunk_specification
+                (identifier)
+                subtype_mark: (identifier))
+              (iterator_specification
+                (identifier)
+                iterator_name: (identifier)))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))))
       endname: (identifier))))
 
 ================================================================================
@@ -378,53 +361,51 @@ end P;
       (procedure_specification
         name: (identifier))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (procedural_iterator
-              (iterator_parameter_specification
-                (formal_part
-                  (parameter_specification
-                    (identifier)
-                    subtype_mark: (identifier))))
-              (iterator_procedure_call
-                name:
-                  (selected_component
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (procedural_iterator
+                (iterator_parameter_specification
+                  (formal_part
+                    (parameter_specification
+                      (identifier)
+                      subtype_mark: (identifier))))
+                (iterator_procedure_call
+                  name: (selected_component
                     prefix: (identifier)
                     selector_name: (identifier)))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier)))))))
-        (loop_statement
-          (iteration_scheme
-            (procedural_iterator
-              (iterator_parameter_specification
-                (identifier)
-                (identifier))
-              (iterator_procedure_call
-                name:
-                  (selected_component
-                    prefix:
-                      (selected_component
-                        prefix: (identifier)
-                        selector_name: (identifier))
-                    selector_name: (identifier))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
                 (actual_parameter_part
-                  (parameter_association)))))
-          statements:
-            (procedure_call_statement
-              name: (identifier)
-              (actual_parameter_part
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier))))
-                (parameter_association
-                  (expression
-                    (term
-                      name: (identifier))))))))
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))
+          (loop_statement
+            (iteration_scheme
+              (procedural_iterator
+                (iterator_parameter_specification
+                  (identifier)
+                  (identifier))
+                (iterator_procedure_call
+                  name: (selected_component
+                    prefix: (selected_component
+                      prefix: (identifier)
+                      selector_name: (identifier))
+                    selector_name: (identifier))
+                  (actual_parameter_part
+                    (parameter_association)))))
+            statements: (sequence_of_statements
+              (procedure_call_statement
+                name: (identifier)
+                (actual_parameter_part
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))
+                  (parameter_association
+                    (expression
+                      (term
+                        name: (identifier))))))))))
       endname: (identifier))))

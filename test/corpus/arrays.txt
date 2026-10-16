@@ -224,29 +224,30 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (named_array_aggregate
-                (array_component_association
-                  (iterated_element_association
-                    (loop_parameter_specification
-                      (identifier)
-                      (range_g
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (named_array_aggregate
+                  (array_component_association
+                    (iterated_element_association
+                      (loop_parameter_specification
+                        (identifier)
+                        (range_g
+                          (term
+                            (numeric_literal))
+                          (term
+                            (identifier))))
+                      (expression
                         (term
-                          (numeric_literal))
-                        (term
-                          (identifier))))
-                    (expression
-                      (term
-                        (function_call
-                          (identifier)
-                          (actual_parameter_part
-                            (parameter_association
-                              (expression
-                                (term
-                                  (identifier))))))))))))))))))
+                          (function_call
+                            (identifier)
+                            (actual_parameter_part
+                              (parameter_association
+                                (expression
+                                  (term
+                                    (identifier)))))))))))))))))))
 
 ================================================================================
 Slices
