@@ -30,7 +30,8 @@ end;
                 (term
                   (identifier)))))))
       (handled_sequence_of_statements
-        (null_statement)))))
+        (sequence_of_statements
+          (null_statement))))))
 
 ================================================================================
 Preprocess substitution (GNAT)
@@ -80,4 +81,5 @@ end;
                 (identifier))))
           (comment)))
       (handled_sequence_of_statements
-        (null_statement)))))
+        (sequence_of_statements
+          (null_statement))))))

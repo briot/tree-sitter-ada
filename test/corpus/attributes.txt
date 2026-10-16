@@ -33,27 +33,30 @@ end;
                   (term
                     (numeric_literal))))))))
       (handled_sequence_of_statements
-        (loop_statement
-          (iteration_scheme
-            (loop_parameter_specification
-              (identifier)
-              (range_g
+        (sequence_of_statements
+          (loop_statement
+            (iteration_scheme
+              (loop_parameter_specification
                 (identifier)
-                (tick)
-                (range_attribute_designator))))
-          (null_statement))
-        (loop_statement
-          (iteration_scheme
-            (loop_parameter_specification
-              (identifier)
-              (range_g
+                (range_g
+                  (identifier)
+                  (tick)
+                  (range_attribute_designator))))
+            (sequence_of_statements
+              (null_statement)))
+          (loop_statement
+            (iteration_scheme
+              (loop_parameter_specification
                 (identifier)
-                (tick)
-                (range_attribute_designator
-                  (expression
-                    (term
-                      (numeric_literal)))))))
-          (null_statement))))))
+                (range_g
+                  (identifier)
+                  (tick)
+                  (range_attribute_designator
+                    (expression
+                      (term
+                        (numeric_literal)))))))
+            (sequence_of_statements
+              (null_statement))))))))
 
 ================================================================================
 Reduction
@@ -110,4 +113,5 @@ end;
                     (term
                       (numeric_literal)))))))))
       (handled_sequence_of_statements
-        (null_statement)))))
+        (sequence_of_statements
+          (null_statement))))))

@@ -56,10 +56,11 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (null_statement)
-        (pragma_g
-          (identifier))
-        (null_statement)))))
+        (sequence_of_statements
+          (null_statement)
+          (pragma_g
+            (identifier))
+          (null_statement))))))
 
 ================================================================================
 pragma in tasks

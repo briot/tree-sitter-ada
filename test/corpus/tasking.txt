@@ -57,39 +57,42 @@ end P;
               (identifier)
               (identifier)))
           (handled_sequence_of_statements
-            (accept_statement
-              (identifier)
-              (formal_part
-                (parameter_specification
-                  (identifier)
-                  (identifier)))
-              (handled_sequence_of_statements
-                (null_statement))
-              (identifier))
-            (timed_entry_call
-              (entry_call_alternative
-                (procedure_call_statement
-                  (identifier)
-                  (actual_parameter_part
-                    (parameter_association
-                      (expression
-                        (term
-                          (numeric_literal)))))))
-              (delay_alternative
-                (delay_relative_statement
-                  (expression
-                    (term
-                      (numeric_literal))))))
-            (conditional_entry_call
-              (entry_call_alternative
-                (procedure_call_statement
-                  (identifier)
-                  (actual_parameter_part
-                    (parameter_association
-                      (expression
-                        (term
-                          (numeric_literal)))))))
-              (null_statement)))
+            (sequence_of_statements
+              (accept_statement
+                (identifier)
+                (formal_part
+                  (parameter_specification
+                    (identifier)
+                    (identifier)))
+                (handled_sequence_of_statements
+                  (sequence_of_statements
+                    (null_statement)))
+                (identifier))
+              (timed_entry_call
+                (entry_call_alternative
+                  (procedure_call_statement
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
+                        (expression
+                          (term
+                            (numeric_literal)))))))
+                (delay_alternative
+                  (delay_relative_statement
+                    (expression
+                      (term
+                        (numeric_literal))))))
+              (conditional_entry_call
+                (entry_call_alternative
+                  (procedure_call_statement
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
+                        (expression
+                          (term
+                            (numeric_literal)))))))
+                (sequence_of_statements
+                  (null_statement)))))
           (identifier)))
       (identifier))))
 
@@ -166,18 +169,21 @@ end;
         (task_body
           (identifier)
           (handled_sequence_of_statements
-            (asynchronous_select
-              (triggering_alternative
-                (procedure_call_statement
-                  (identifier)
-                  (actual_parameter_part
-                    (parameter_association
-                      (expression
-                        (term
-                          (numeric_literal))))))
-                (null_statement))
-              (procedure_call_statement
-                (identifier))))))))
+            (sequence_of_statements
+              (asynchronous_select
+                (triggering_alternative
+                  (procedure_call_statement
+                    (identifier)
+                    (actual_parameter_part
+                      (parameter_association
+                        (expression
+                          (term
+                            (numeric_literal))))))
+                  (sequence_of_statements
+                    (null_statement)))
+                (sequence_of_statements
+                  (procedure_call_statement
+                    (identifier))))))))))
   (compilation_unit
     (null_statement))
   (compilation_unit
@@ -209,7 +215,8 @@ end Start;
           (identifier)
           (identifier)))
       (handled_sequence_of_statements
-        (null_statement))
+        (sequence_of_statements
+          (null_statement)))
       (identifier))))
 
 ================================================================================

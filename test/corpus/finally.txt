@@ -17,9 +17,11 @@ end Main;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (null_statement)
+        (sequence_of_statements
+          (null_statement))
         (finally_part
-          (null_statement)))
+          (sequence_of_statements
+            (null_statement))))
       (identifier))))
 
 =============
@@ -47,11 +49,12 @@ end Main;
             (term
               (numeric_literal)))))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (identifier)
-              (multiplying_operator)
-              (identifier)))))
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (identifier)
+                (multiplying_operator)
+                (identifier))))))
       (identifier))))

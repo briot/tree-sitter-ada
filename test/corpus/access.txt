@@ -65,19 +65,20 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (selected_component
-                (identifier)
-                (identifier)))))
-        (procedure_call_statement
-          (selected_component
+        (sequence_of_statements
+          (assignment_statement
             (identifier)
-            (identifier))
-          (actual_parameter_part
-            (parameter_association
-              (expression
-                (term
-                  (numeric_literal))))))))))
+            (expression
+              (term
+                (selected_component
+                  (identifier)
+                  (identifier)))))
+          (procedure_call_statement
+            (selected_component
+              (identifier)
+              (identifier))
+            (actual_parameter_part
+              (parameter_association
+                (expression
+                  (term
+                    (numeric_literal)))))))))))

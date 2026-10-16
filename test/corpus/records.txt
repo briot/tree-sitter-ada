@@ -279,22 +279,23 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (record_aggregate
-                (record_component_association_list
-                  (component_choice_list
-                    (identifier))
-                  (expression
-                    (term
-                      (numeric_literal)))
-                  (component_choice_list
-                    (identifier))
-                  (expression
-                    (term
-                      (numeric_literal))))))))))))
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (record_aggregate
+                  (record_component_association_list
+                    (component_choice_list
+                      (identifier))
+                    (expression
+                      (term
+                        (numeric_literal)))
+                    (component_choice_list
+                      (identifier))
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 record aggregate extension
@@ -313,20 +314,21 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (extension_aggregate
-                (expression
-                  (term
-                    (identifier)))
-                (record_component_association_list
-                  (component_choice_list
-                    (identifier))
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (extension_aggregate
                   (expression
                     (term
-                      (numeric_literal))))))))))))
+                      (identifier)))
+                  (record_component_association_list
+                    (component_choice_list
+                      (identifier))
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 record delta aggregate
@@ -345,20 +347,21 @@ end;
       (procedure_specification
         (identifier))
       (handled_sequence_of_statements
-        (assignment_statement
-          (identifier)
-          (expression
-            (term
-              (record_delta_aggregate
-                (expression
-                  (term
-                    (identifier)))
-                (record_component_association_list
-                  (component_choice_list
-                    (identifier))
+        (sequence_of_statements
+          (assignment_statement
+            (identifier)
+            (expression
+              (term
+                (record_delta_aggregate
                   (expression
                     (term
-                      (numeric_literal))))))))))))
+                      (identifier)))
+                  (record_component_association_list
+                    (component_choice_list
+                      (identifier))
+                    (expression
+                      (term
+                        (numeric_literal)))))))))))))
 
 ================================================================================
 Variant records
@@ -516,7 +519,8 @@ end;
                   (term
                     (primary_null))))))))
       (handled_sequence_of_statements
-        (null_statement)))))
+        (sequence_of_statements
+          (null_statement))))))
 
 ================================================================================
 Record with discr
@@ -572,4 +576,5 @@ end;
                 (term
                   (numeric_literal)))))))
       (handled_sequence_of_statements
-        (null_statement)))))
+        (sequence_of_statements
+          (null_statement))))))

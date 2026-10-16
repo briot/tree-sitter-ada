@@ -155,7 +155,8 @@ end;
               (identifier)
               (identifier)))
           (handled_sequence_of_statements
-            (null_statement))
+            (sequence_of_statements
+              (null_statement)))
           (identifier))))))
 
 ================================================================================
@@ -473,10 +474,11 @@ end "<";
         (result_profile
           (identifier)))
       (handled_sequence_of_statements
-        (simple_return_statement
-          (expression
-            (term
-              (identifier)))))
+        (sequence_of_statements
+          (simple_return_statement
+            (expression
+              (term
+                (identifier))))))
       (string_literal))))
 
 ================================================================================

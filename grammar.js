@@ -1434,7 +1434,7 @@ module.exports = grammar({
          )),
          $.exception_choice_list,
          '=>',
-         $._sequence_of_statements,
+         $.sequence_of_statements,
       ),
       formal_part: $ => seq(    // ARM 6.1
          '(',
@@ -1696,7 +1696,7 @@ module.exports = grammar({
       ),
       finally_part: $ => seq(
          reservedWord('finally'),
-         $._sequence_of_statements,
+         $.sequence_of_statements,
       ),
       global_aspect_definition: $ => choice(     // ARM 6.1.2
          seq(
@@ -1722,7 +1722,7 @@ module.exports = grammar({
          reservedWord('overriding'),
       ),
       handled_sequence_of_statements: $ => seq(
-         $._sequence_of_statements,
+         $.sequence_of_statements,
          optional(seq(
             reservedWord('exception'),
             repeat1($.exception_handler),
@@ -2010,7 +2010,7 @@ module.exports = grammar({
             $.access_definition,
          ),
       ),
-      _sequence_of_statements: $ => prec.left(seq(
+      sequence_of_statements: $ => prec.left(seq(
          repeat1($._statement),
          repeat($.label),
       )),
@@ -2053,14 +2053,14 @@ module.exports = grammar({
       ),
       entry_call_alternative: $ => seq(
          $.procedure_call_statement,
-         optional($._sequence_of_statements),
+         optional($.sequence_of_statements),
       ),
       asynchronous_select: $ => seq(
          reservedWord('select'),
          $.triggering_alternative,
          reservedWord('then'),
          reservedWord('abort'),
-         field('abortable_part', $._sequence_of_statements),
+         field('abortable_part', $.sequence_of_statements),
          reservedWord('end'),
          reservedWord('select'),
          ';',
@@ -2068,25 +2068,25 @@ module.exports = grammar({
       triggering_alternative: $ => choice(
          seq(
             $.procedure_call_statement,
-            optional($._sequence_of_statements),
+            optional($.sequence_of_statements),
          ),
          seq(
             $._delay_statement,
-            optional($._sequence_of_statements),
+            optional($.sequence_of_statements),
          ),
       ),
       conditional_entry_call: $ => seq(
          reservedWord('select'),
          $.entry_call_alternative,
          reservedWord('else'),
-         $._sequence_of_statements,
+         $.sequence_of_statements,
          reservedWord('end'),
          reservedWord('select'),
          ';',
       ),
       delay_alternative: $ => seq(
          $._delay_statement,
-         optional($._sequence_of_statements)
+         optional($.sequence_of_statements)
       ),
       timed_entry_call: $ => seq(
          reservedWord('select'),
@@ -2109,11 +2109,11 @@ module.exports = grammar({
       ),
       accept_alternative: $ => seq(  // ARM 9.7.1
          $.accept_statement,
-         optional($._sequence_of_statements),
+         optional($.sequence_of_statements),
       ),
       delay_alternative: $ => seq(   // ARM 9.7.1
          $._delay_statement,
-         optional($._sequence_of_statements),
+         optional($.sequence_of_statements),
       ),
       terminate_alternative: $ => seq(  // ARM 9.7.1
          reservedWord("terminate"),
@@ -2127,7 +2127,7 @@ module.exports = grammar({
          )),
          optional(seq(
             reservedWord('else'),
-            $._sequence_of_statements,
+            $.sequence_of_statements,
          )),
          reservedWord('end'),
          reservedWord('select'),
@@ -2168,7 +2168,7 @@ module.exports = grammar({
          reservedWord('when'),
          $.discrete_choice_list,
          '=>',
-         $._sequence_of_statements,
+         $.sequence_of_statements,
       ),
       case_statement: $ => seq(
          reservedWord('case'),
@@ -2200,10 +2200,10 @@ module.exports = grammar({
          )),
          optional($.aspect_specification),
          reservedWord('do'),
-         field('statements', $._sequence_of_statements),
+         field('statements', $.sequence_of_statements),
          repeat1(seq(
             reservedWord('and'),
-            field('statements', $._sequence_of_statements),
+            field('statements', $.sequence_of_statements),
          )),
          reservedWord('end'),
          reservedWord('do'),
@@ -2213,11 +2213,11 @@ module.exports = grammar({
          reservedWord('if'),
          field('condition', $.expression),
          reservedWord('then'),
-         field('statements', $._sequence_of_statements),
+         field('statements', $.sequence_of_statements),
          repeat($.elsif_statement_item),
          optional(seq(
             reservedWord('else'),
-            field('else_statements', $._sequence_of_statements),
+            field('else_statements', $.sequence_of_statements),
          )),
          reservedWord('end'),
          reservedWord('if'),
@@ -2227,7 +2227,7 @@ module.exports = grammar({
          reservedWord('elsif'),
          field('condition', $.expression),
          reservedWord('then'),
-         field('statements', $._sequence_of_statements),
+         field('statements', $.sequence_of_statements),
       ),
       gnatprep_declarative_if_statement: $ => seq(
          reservedWord('#if'),
@@ -2355,7 +2355,7 @@ module.exports = grammar({
          optional($.loop_label),
          optional($.iteration_scheme),
          reservedWord('loop'),
-         field('statements', $._sequence_of_statements),
+         field('statements', $.sequence_of_statements),
          reservedWord('end'),
          reservedWord('loop'),
          optional($.identifier),
