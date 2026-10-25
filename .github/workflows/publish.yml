@@ -16,11 +16,11 @@ permissions:
   attestations: write
 
 jobs:
-  github:
-    uses: tree-sitter/workflows/.github/workflows/release.yml@main
-    with:
-      generate: true
-      attestations: true
+  # github:
+  #   uses: tree-sitter/workflows/.github/workflows/release.yml@main
+  #   with:
+  #     generate: true
+  #     attestations: true
   # npm:
   #   uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
   #   secrets:
