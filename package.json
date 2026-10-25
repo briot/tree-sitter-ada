@@ -47,7 +47,7 @@
     "install": "node-gyp-build",
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
-    "test": "tree-sitter generate && time tree-sitter test && node --test bindings/node/*_test.js",
+    "test": "tree-sitter generate --abi=14 && time tree-sitter test && node --test bindings/node/*_test.js",
     "testquick": "time tree-sitter test",
     "update-test": "tree-sitter test --update"
   }
