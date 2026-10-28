@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-ada",
-  "version": "0.1.0",
+  "version": "0.9.2",
   "description": "Ada grammar for tree-sitter",
   "repository": "https://github.com/briot/tree-sitter-ada",
   "license": "MIT",
